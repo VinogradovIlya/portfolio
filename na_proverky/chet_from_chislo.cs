@@ -5,7 +5,7 @@ if (a < 0) Console.Write("error");
 int k;
 int finish = 0;
 for (k = 0; k < a - 1; k ++) {
-    if (k % 2 <= 0) {
+    if (k % 2 == 0) {
        finish = k + 2;
        Console.Write("{0} ", finish); 
     }
