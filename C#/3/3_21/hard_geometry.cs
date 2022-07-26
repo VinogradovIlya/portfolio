@@ -13,7 +13,7 @@ double z2 = Convert.ToDouble(Console.ReadLine());
 Diagonal(x1, y1, z1, x2, y2, z2);
 Console.Write($"{Diagonal(x1, y1, z1, x2, y2, z2)}");
 
-double Diagonal(double x1, double x2, double x3, double y1, double y2, double y3) {
+double Diagonal(double x1, double y1, double z1, double x2, double y2, double z2) {
     double xLine = (x2 - x1) * (x2 - x1);
     double yLine = (y2 - y1) * (y2 - y1);
     double zLine = (z2 - z1) * (z2 - z1);

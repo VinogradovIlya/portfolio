@@ -4,12 +4,13 @@ Console.Write("введите четверть: ");
 int vvod = Convert.ToInt32(Console.ReadLine());
 Chetverti(vvod);
 
-int Chetverti(int vvod) {
-    if (vvod > 0 || vvod < 4) {
+void Chetverti(int vvod) {
+    if (vvod > 0 && vvod < 5) {
         if (vvod == 1) Console.Write("x > 0 и y > 0");
         if (vvod == 2) Console.Write("x < 0 и y > 0");
         if (vvod == 3) Console.Write("x < 0 и y < 0");
         if (vvod == 4) Console.Write("x > 0 и y < 0");
+    } else {
+        Console.Write("error");
     }
-    return -1;
 }

@@ -4,6 +4,7 @@ Console.Write("введите число N: ");
 int vvod = Convert.ToInt32(Console.ReadLine());
 Codered(vvod);
 //Console.Write($"{Codered(vvod)}");
+// Console.Write("{0}", vvod);
 
 // int Codered(int vvod) {
 //     if (vvod > 0) {
