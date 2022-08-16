@@ -6,9 +6,8 @@ int n = Convert.ToInt32(Console.ReadLine());
 Cub(n);
 
 void Cub(int n) {
-    for (int count = 1; count < n; count++) {
+    for (int count = 1; count <= n; count++) {
         int cub = count * count * count;
         Console.Write("{0} ", cub);
     }
-    Console.Write("{0}", n);
 }
