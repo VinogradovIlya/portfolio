@@ -53,20 +53,24 @@ int desyatki = 1;
 // // }
 // // //Console.WriteLine("{0}", Summ(number, desyatki));
 
+//*******************************************************
+
 PrintArray(chislo);
 void PrintArray(string chislo) {
     for (int i = 0; i < chislo.Length; i++) {
-        int sum = Convert.ToInt32(chislo[i]);
+        double sum = Convert.ToInt32(chislo[i]);
         Console.Write("{0} = ", chislo[i]);
         Console.WriteLine("{0} ", sum);
     }
 }
+Console.WriteLine();
 
-// Console.WriteLine("{0}", PrintArray(chislo));
-// double PrintArray(string chislo) {
-//     for (int i = 1; i < chislo.Length; i++) {
-//         Console.Write("{0} ", chislo[i]);
-//         return chislo[i - 1] + chislo[i];
-//     }
-//     return 0;
-// }
+Console.WriteLine("{0}", Array(chislo));
+double Array(string chislo) {
+    for (int i = 1; i < chislo.Length; i++) {
+        Console.Write("{0} ", chislo[i]);
+        Console.Write("{0} ", chislo[i - 1]);
+        return chislo[i - 1] + chislo[i];
+    }
+    return 1;
+}
