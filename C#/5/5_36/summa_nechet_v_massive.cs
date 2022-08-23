@@ -8,8 +8,8 @@ MethodArrayOne(array);
 ShowArray(array);
 Console.WriteLine();
 // второй: считает сумму
-// MethodArrayTwo(array);
-// Console.WriteLine("{0}", MethodArrayTwo(array));
+MethodArrayTwo(array);
+Console.WriteLine("{0}", MethodArrayTwo(array));
 
 int[] MethodArrayOne(int[] array) {
     for (int i = 0; i < 10; i++) {
@@ -24,6 +24,13 @@ void ShowArray(int[] array) {
     }
 }
 
-// void MethodArrayTwo(int[] array) {
-
-// }
+int MethodArrayTwo(int[] array) {
+    int sum = 0;
+    for (int i = 0; i < array.Length; i++) {
+        int count = i % 2;
+        if (count == 0) {
+            sum += array[i];
+        }
+    }
+    return sum;
+}

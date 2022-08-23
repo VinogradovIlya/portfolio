@@ -20,13 +20,11 @@ int[] MetodArrayOne() {
     return array;
 }
 
-
 void MetodArrayTwo(int[] array) {
     for (int i = 0; i < array.Length; i++) {
         if (array[i] > 10 && array[i] < 100) Console.Write(array[i] + " ");
     }
 }
-
 
 void ShowArray(int[] array) {
     for (int i = 0; i < array.Length; i++) {
