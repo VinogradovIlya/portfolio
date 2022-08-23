@@ -1,6 +1,6 @@
 ﻿Console.WriteLine("Задайте массив вещественных чисел. Найдите разницу между максимальным и минимальным элементов массива.");
 
-int[] array = new int[10];
+double[] array = new double[10];
 
 /* три метода: 
 первый создает массив*/
@@ -9,23 +9,28 @@ ShowArray(array);
 Console.WriteLine();
 // второй: ищет наибольшее/наименьшее число
 MethodArrayTwo(array);
+Console.WriteLine();
 Console.WriteLine("{0}", MethodArrayTwo(array));
 // третий метод ищет сумму ?
 
-int[] MethodArrayOne(int[] array) {
+double[] MethodArrayOne(double[] array) {
+    Random rnd = new Random();
+    double chislo = 0;
     for (int i = 0; i < 10; i++) {
-        array[i] = new Random().Next(-999, 1000);
+        chislo = rnd.NextDouble();
+        array[i] = rnd.Next();
+        array[i] += chislo;
     }
     return array;
 }
 
-void ShowArray(int[] array) {
+void ShowArray(double[] array) {
     for (int i = 0; i < array.Length; i++) {
-        Console.Write(array[i] + " ");
+        Console.WriteLine(array[i] + " ");
     }
 }
 
-double MethodArrayTwo(int[] array) {
+double MethodArrayTwo(double[] array) {
     double min, max;
     min = max = 0;
     for (int i = 0; i < array.Length; i++) {
