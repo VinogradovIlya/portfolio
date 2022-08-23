@@ -1,10 +1,4 @@
 ﻿Console.WriteLine("Напишите программу, которая принимает на вход число и выдаёт сумму цифр в числе.");
-// /*
-// будет три метода: 
-// первый считает десятки
-// второй метод делит заданное число на цифры
-// третий считает сумму
-// */
 
 //ввод
 Console.Write("введите число: ");
@@ -13,6 +7,13 @@ int result = 0;
 int razryad = 0;
 int number = Convert.ToInt32(chislo);
 int desyatki = 1;
+
+// /*
+// будет три метода: 
+// первый считает десятки
+// второй метод делит заданное число на цифры
+// третий считает сумму
+// */
 
 // int Summ(int number, int desyatki, int chislo) {
 //     for (int i = 0; i < chislo.Length; i++) {
@@ -69,8 +70,15 @@ Console.WriteLine("{0}", Array(chislo));
 double Array(string chislo) {
     for (int i = 1; i < chislo.Length; i++) {
         Console.Write("{0} ", chislo[i]);
-        Console.Write("{0} ", chislo[i - 1]);
+        Console.Write("{0} ", chislo.GetLength(0));
         return chislo[i - 1] + chislo[i];
     }
     return 1;
+}
+
+//*******************************************************
+
+NumberSumm(number);
+void NumberSumm(int number) {
+    Console.WriteLine("{0}", number);
 }
