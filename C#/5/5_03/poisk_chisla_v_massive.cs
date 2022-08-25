@@ -16,7 +16,7 @@ MetodArrayTwo(array, chislo, count);
 
 int[] MetodArrayOne() {
     for (int i = 0; i < array.Length; i++) {
-        array[i] = new Random().Next(0, 1001);
+        array[i] = new Random().Next(0, 1000);
     }
     return array;
 }

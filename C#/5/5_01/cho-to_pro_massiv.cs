@@ -16,14 +16,12 @@ int[] CreateRandomArray(int size, int min, int max) {
     return array;
 }
 
-
 void ShowArray(int[] array) {
     for (int i = 0; i < array.Length; i++) {
         Console.Write(array[i] + " ");
     }
     Console.WriteLine();
 }
-
 
 void Summ(int[] array) {
     int summPositive = 0;
