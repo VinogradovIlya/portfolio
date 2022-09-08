@@ -5,16 +5,16 @@ int m = Convert.ToInt32(Console.ReadLine());
 Console.Write("введите n: ");
 int n = Convert.ToInt32(Console.ReadLine());
 
+int[,] newArray = new int[m,n];
+
 Show2dArray(
-    CreateRandom2dArray(m, n, -10, 10));
+    CreateRandom2dArray(newArray, -10, 10));
 Console.WriteLine();
 
 Show2dArray(
-    SquareArray(
-        CreateRandom2dArray(m, n, -10, 10)));
+    SquareArray(newArray));
 
-int[,] CreateRandom2dArray(int m, int n, int minValue, int maxValue) {
-    int[,] newArray = new int[m,n];
+int[,] CreateRandom2dArray(int[,] newArray, int minValue, int maxValue) {
     for (int i = 0; i < newArray.GetLength(0); i++) {
         for (int j = 0; j < newArray.GetLength(1); j++) {
             newArray[i,j] = new Random().Next(minValue, maxValue + 1);
@@ -32,13 +32,23 @@ void Show2dArray(int[,] array) {
     }
 }
 
-int[,] SquareArray(int[,] myArray) {
-    int[,] newArray = new int[m,n];
-    for (int i = 0; i < newArray.GetLength(0); i++) {
-        i++;
-        for (int j = 0; j < newArray.GetLength(1); j++) {
-            j++;
-            newArray[i,j] = newArray[i,j] * newArray[i,j];
+// // работает в шахматном порядке
+// int[,] SquareArray(int[,] newArray) {
+//     int i, j;
+//     for (i = 0; i < newArray.GetLength(0); i++) {
+//         for (j = 0; j < newArray.GetLength(1); j++) {
+//             if ((i % 2 == 1) || (j % 2 == 1)) newArray[i,j] = newArray[i,j] * newArray[i,j];
+//         }
+//     }
+//     return newArray;
+// }
+
+// оба индексы четные
+int[,] SquareArray(int[,] newArray) {
+    int i, j;
+    for (i = 0; i < newArray.GetLength(0); i++) {
+        for (j = 0; j < newArray.GetLength(1); j++) {
+            if ((i % 2 == 0) && (j % 2 == 0)) newArray[i,j] = newArray[i,j] * newArray[i,j];
         }
     }
     return newArray;

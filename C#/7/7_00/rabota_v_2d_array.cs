@@ -1,5 +1,12 @@
 ﻿Console.WriteLine("Задайте двумерный массив размером m×n, заполненный случайными целыми числами.");
 
+Console.WriteLine("введите m: ");
+int m = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("введите n: ");
+int n = Convert.ToInt32(Console.ReadLine());
+
+Show2dArray(CreateRandom2dArray(m, n, 0, 100));
+
 int[,] CreateRandom2dArray(int m, int n, int minValue, int maxValue) {
     int[,] newArray = new int[m,n];
     for (int i = 0; i < newArray.GetLength(0); i++) {
@@ -18,11 +25,3 @@ void Show2dArray(int[,] array) {
         Console.WriteLine();
     }
 }
-
-Console.WriteLine("введите m: ");
-int m = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine("введите n: ");
-int n = Convert.ToInt32(Console.ReadLine());
-
-int[,] myArray = CreateRandom2dArray(m, n, 0, 100);
-Show2dArray(myArray);
