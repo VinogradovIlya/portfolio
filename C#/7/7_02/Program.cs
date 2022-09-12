@@ -13,6 +13,10 @@ Console.WriteLine();
 
 Show2dArray(
     SquareArray(newArray));
+Console.WriteLine();
+
+Show2dArray(
+    Square2Array(newArray));
 
 int[,] CreateRandom2dArray(int[,] newArray, int minValue, int maxValue) {
     for (int i = 0; i < newArray.GetLength(0); i++) {
@@ -49,6 +53,17 @@ int[,] SquareArray(int[,] newArray) {
     for (i = 0; i < newArray.GetLength(0); i++) {
         for (j = 0; j < newArray.GetLength(1); j++) {
             if ((i % 2 == 0) && (j % 2 == 0)) newArray[i,j] = newArray[i,j] * newArray[i,j];
+        }
+    }
+    return newArray;
+}
+
+// ВАЖНО обрати внимание на i+=2 !!!!
+int[,] Square2Array(int[,] newArray) {
+    int i, j;
+    for (i = 0; i < newArray.GetLength(0); i+=2) {
+        for (j = 0; j < newArray.GetLength(1); j+=2) {
+            newArray[i,j] = newArray[i,j] * newArray[i,j];
         }
     }
     return newArray;
