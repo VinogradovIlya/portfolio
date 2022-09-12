@@ -8,11 +8,10 @@ int n = Convert.ToInt32(Console.ReadLine());
 int[,] newArray = new int[m,n];
 
 Show2dArray(
-    CreateRandom2dArray(newArray, -10, 10));
+    CreateRandom2dArray(newArray, 0, 10));
 Console.WriteLine();
 
-Show2dArray(
-    Diagonal(newArray));
+Console.WriteLine("{0}", Diagonal(newArray));
 
 int[,] CreateRandom2dArray(int[,] newArray, int minValue, int maxValue) {
     for (int i = 0; i < newArray.GetLength(0); i++) {
@@ -32,12 +31,13 @@ void Show2dArray(int[,] array) {
     }
 }
 
-int[,] Diagonal(int[,] newArray) {
+int Diagonal(int[,] newArray) {
     int i, j;
+    int summ = 0;
     for (i = 0; i < newArray.GetLength(0); i++) {
         for (j = 0; j < newArray.GetLength(1); j++) {
-            if (i == j) newArray[i,j] *= newArray[i,j];
+            if (i == j) summ += newArray[i,j];
         }
     }
-    return newArray;
+    return summ;
 }
