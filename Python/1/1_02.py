@@ -22,4 +22,10 @@ print('Напишите программу, которая на вход при�
 # print(max)
 
 # list
-
+num = [int(i) for i in input().split()] #!
+max_num = num[0]
+for i in range(len(num)):
+    if num[i] > max_num:
+        max_num = num[i]
+print(num)
+print(max_num)
