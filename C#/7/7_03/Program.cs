@@ -42,6 +42,7 @@ int Diagonal(int[,] newArray) {
     return summ;
 }
 
+
 // весь метод в пяти строчках
 // int summ = 0;
 // for (int i = 0; i < newArray.GetLength(0); i++) {
