@@ -4,7 +4,7 @@ from xmlrpc.client import boolean
 print('hello world')
 
 # типы данных и переменная
-# int, float, boolean, str, lis, None
+# int, float, boolean, str, list, None
 a = 123
 b = 1.23
 value = None
