@@ -6,5 +6,10 @@ n = abs(int(input('введите число N: ')))
 if n > 0:
     new_n = -1 * n
     for new_n in range(new_n, n+1):
-        print(new_n, sep=' ', end=' ')
+        print(new_n, end=' ')
 else: print(n)
+
+print('\n')
+
+spam = list(range(-n, n+1))
+print(spam)
