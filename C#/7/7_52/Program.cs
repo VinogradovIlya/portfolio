@@ -32,10 +32,13 @@ void Show2dArray(int[,] array) {
 
 Show2dArray(SummaStolba(newArray, array));
 
+// ?????????
 int[,] SummaStolba(int[,] newArray, int[,] array) {
     for (int i = 0; i < newArray.GetLength(0); i++) {
         for (int j = 0; j < newArray.GetLength(1); j++) {
-            
+            int chislo = 0;
+            chislo += newArray[i, j];
+            Console.Write("{0}", chislo);
         }
     }
     return array;
