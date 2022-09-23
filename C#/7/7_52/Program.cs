@@ -5,7 +5,6 @@ int m = Convert.ToInt32(Console.ReadLine());
 Console.Write("введите n: ");
 int n = Convert.ToInt32(Console.ReadLine());
 int[,] newArray = new int[m,n];
-int[,] array = new int[m,n];
 
 Show2dArray(
     CreateRandom2dArray(newArray, -100, 100));
@@ -20,26 +19,38 @@ int[,] CreateRandom2dArray(int[,] newArray, int minValue, int maxValue) {
     return newArray;
 }
 
-void Show2dArray(int[,] array) {
-    for (int i = 0; i < array.GetLength(0); i++) {
-        for (int j = 0; j < array.GetLength(1); j++) {
-            Console.Write(array[i,j] + " ");
+void Show2dArray(int[,] newArray) {
+    for (int i = 0; i < newArray.GetLength(0); i++) {
+        for (int j = 0; j < newArray.GetLength(1); j++) {
+            Console.Write(newArray[i,j] + " ");
         }
         Console.WriteLine();
     }
 }
 
+SummaStroki(newArray);
+ SummaStolba(newArray);
 
-Show2dArray(SummaStolba(newArray, array));
-
-// ?????????
-int[,] SummaStolba(int[,] newArray, int[,] array) {
-    for (int i = 0; i < newArray.GetLength(0); i++) {
-        for (int j = 0; j < newArray.GetLength(1); j++) {
-            int chislo = 0;
+void SummaStroki(int[,] newArray) {
+    for (int i = 0; i < newArray.GetLength(1); i++) {
+        int chislo = 0;
+        for (int j = 0; j < newArray.GetLength(0); j++) {
             chislo += newArray[i, j];
-            Console.Write("{0}", chislo);
         }
+    Console.Write("{0} ", chislo);
+    Console.WriteLine();
     }
-    return array;
+    Console.WriteLine();
+}
+
+void SummaStolba(int[,] newArray) {
+    for (int i = 0; i < newArray.GetLength(0); i++) {
+        int chislo = 0;
+        for (int j = 0; j < newArray.GetLength(1); j++) {
+            chislo += newArray[j,i];
+        }
+    Console.Write("{0} ", chislo);
+    Console.WriteLine();
+    }
+    Console.WriteLine();
 }
