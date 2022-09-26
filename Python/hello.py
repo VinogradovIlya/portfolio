@@ -1,3 +1,5 @@
+from audioop import add
+from os import remove
 from xmlrpc.client import boolean
 
 
@@ -152,3 +154,56 @@ print(text[0:len(text):6])
 print(text[::6])
 
 # списки
+list.append(" ") # добавить в конец
+list.remove(" ") # удалить
+del list[0] # удалить
+
+# функции
+def new_string(symbol, count):
+    return symbol * count
+
+print(new_string('!', 5))
+
+##3 работа с файлами
+#a -- добавление данных
+# r -- чтение данных
+# w -- запись данных
+
+data = open('file.txt', 'w')
+data.write('pupka')
+data.close()
+
+# или 
+
+with open('file.txt', 'w') as data:
+    data.write('line 1')
+
+
+# кортеж -- неизменяемый список 
+a, b = 3, 4
+a = (3, 4)
+print(a)
+print(type(a))
+
+# множества
+colors = {'red', 'green', 'blue'}
+colors.add('grey') #?
+remove
+colors.discard
+colors.clear
+#попробуй colors.
+
+a = {1, 2, 3, 5, 8}
+b = {2, 5, 8, 13, 21}
+
+c = a.copy
+u = a.union(b)
+i = a.intersection(b)
+dl = difference(b)
+dr = difference(a)
+q = \
+    .union(b) \
+        .diference(a.intersection(b))
+
+#неизменяемые множества
+s = frozenset(a)
