@@ -11,8 +11,8 @@ int one = Convert.ToInt32(input1[0]);
 int two = Convert.ToInt32(input1[1]);
 int three = Convert.ToInt32(input1[2]);
 int four = Convert.ToInt32(input1[3]);
-int step1 = Math.Abs(one - three);
-int step2 = Math.Abs(two - four);
+int step1 = three - one;
+int step2 = four - two;
 int area1 = step1 * step2;
 
 int five = Convert.ToInt32(input2[0]);
