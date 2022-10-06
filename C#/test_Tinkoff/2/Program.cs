@@ -14,18 +14,28 @@ for (int i = 0; i < n; i++) {
     name = Console.ReadLine();
     str = str + name + ' ';
 }
-
+    
 str = str.ToUpper(); // ставит все буквы в верхний регистр (ToLower в нижний)
 // Console.WriteLine(str);
 
 string[] words = str.Split(' '); // делит строчку на слова
 // Console.WriteLine(words[1]);
 
-//как сравнить три имени во всей строчке? (метод CompareTo)
+//как сравнить три имени во всей строчке? (метод CompareTo) мне нужно проверить сколько раз три слова фигурируют в строке
 int j = 0;
 int result = 0;
-string team = words[0] + words[1] + words[2];
-Console.WriteLine(team);
-j += 3;
-team = words[j] + ' ' + words[j+1] + ' ' + words[j+2] + ' ';
-Console.WriteLine(team + ' ');
+// разбивает слова - имена по командам 
+while (j < n*3) { 
+    // string team = words[j+0] + ' ' + words[j+1] + ' ' + words[j+2] + ' ';
+    // Console.WriteLine(team);
+    if ((words[j] && words[j+1] && words[j+2])
+    || (words[j] && words[j+2] && words[j+1]) 
+    || (words[j+2] && words[j+1] && words[j])
+    || (words[j+2] && words[j] && words[j+1])
+    || (words[j+1] && words[j] && words[j+2])
+    || (words[j+1] && words[j+2] && words[j]) == words) {
+        result++;
+    } 
+    j += 3;
+    Console.WriteLine("{0}", result);
+}
