@@ -14,15 +14,18 @@ for (int i = 0; i < n; i++) {
     name = Console.ReadLine();
     str = str + name + ' ';
 }
-str = str.ToUpper();
 
-Console.WriteLine(str);
+str = str.ToUpper(); // ставит все буквы в верхний регистр (ToLower в нижний)
+// Console.WriteLine(str);
 
-//как сравнить три имени во всей строчке?
+string[] words = str.Split(' '); // делит строчку на слова
+// Console.WriteLine(words[1]);
+
+//как сравнить три имени во всей строчке? (метод CompareTo)
 int j = 0;
 int result = 0;
-var team = str[0] + str[1] + str[2];
+string team = words[0] + words[1] + words[2];
 Console.WriteLine(team);
 j += 3;
-team = str[j] + str[j+1] + str[j+2];
-Console.WriteLine(team);
+team = words[j] + ' ' + words[j+1] + ' ' + words[j+2] + ' ';
+Console.WriteLine(team + ' ');
