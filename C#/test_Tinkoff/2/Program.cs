@@ -10,33 +10,38 @@ int n = Convert.ToInt32(Console.ReadLine());
 string name = string.Empty;
 string str = string.Empty;
 
+// чтение данных и сборка в строку
 for (int i = 0; i < n; i++) {
     name = Console.ReadLine();
     str = str + name + ' ';
 }
-    
 str = str.ToUpper(); // ставит все буквы в верхний регистр (ToLower в нижний)
-// Console.WriteLine(str);
-
 string[] words = str.Split(' '); // делит строчку на слова
-// Console.WriteLine(words[1]);
 
 // разбивает слова - имена из строки по командам
+// string[] teams = new string[n]; // создание еще массива
 for (int j = 0; j <= n*3; j+=3) {
     string team = words[j+0] + ' ' + words[j+1] + ' ' + words[j+2] + ' ';
     Console.WriteLine(team);
+    // teams[n-1] = team;
+    // Console.WriteLine(teams);
     if (j > n) break;
 }
-// int j = 0;
-// while (j <= n*3) { 
-//     string team = words[j+0] + ' ' + words[j+1] + ' ' + words[j+2] + ' ';
-//     Console.WriteLine(team);
-//     if (j > n) break;
-//     j += 3;
-// }
 
-// основной метод
-foreach (string s in words) {
-    int result = 0;    
+// основной метод (как работает foreach?)
+int CountRep(string text, string sub ) {
+    int count = 0;
+    int pos = 0;
+    while (true) {
+        pos = text.IndexOf(sub, pos);
+        if (pos != -1) {
+            count++;
+            pos++;
+        } else {
+            break;
+        }
+    }
+    return count;
 }
-// мне нужно проверить сколько раз три слова фигурируют в строке
+ Console.WriteLine( "aba: " + CountRep(words, team)); // ?
+// Console.WriteLine("abc: " + CountRep("ababa, abca, abadon, abek, absek, abtar", "abc"));
