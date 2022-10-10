@@ -23,7 +23,7 @@ for (int i = 0; i < n; i++) {
     str = str + name + ' ';
 }
 str = str.ToUpper(); // ставит все буквы в верхний регистр (ToLower в нижний)
-string[] words = str.Split(' '); // ? // делит строчку на слова
+// string[] words = str.Split(' '); // делит строчку на слова
 
 // основной метод (как работает foreach и IndexOf?)
 int CountRep(string text, string sub ) {
@@ -40,4 +40,12 @@ int CountRep(string text, string sub ) {
     }
     return count;
 }
- Console.WriteLine(CountRep(str, team[0])); // ?
+
+int max = CountRep(str, team[0]);
+for (int k = 0; k < n; k++) {
+    int nextValue = CountRep(str, team[k]);
+    if (nextValue > max) max = nextValue;
+}
+Console.WriteLine("{0}", max);
+// Console.WriteLine($"{max}");
+// Console.WriteLine(max + " ");
