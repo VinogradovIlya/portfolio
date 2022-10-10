@@ -3,32 +3,29 @@ Console.WriteLine("Формат входных данных");
 Console.WriteLine("В первой строке задано одно целое число N (1 ≤ N ≤ 1000) - количество лет, за которые у Ани есть данные. В следующих N строках заданы команды-победители: в каждой строке указаны три разделенных пробелом имени. Каждое имя имеет длину от 1 до 10 символов, а также состоит из заглавных латинских символов ( A, ….., Z).");
 Console.WriteLine("Формат выходных данных");
 Console.WriteLine("В единственной строке выведите число - максимальное число побед команды в одинаковом составе.");
-Console.WriteLine("Пример: 5");
-Console.WriteLine("MIKHAIL\r\nVLADISLAV\r\nGRIGORY\r\nVLADISLAV\r\nMIKHAIL\r\nGRYGORY\r\nILYA IVAN\r\nVLADIMIR\r\nANDREY\r\nVLADIMIR ILYA\r\nVLADIMIR IVAN\r\nANDREY");
+
+// 5
+// MIKHAIL VLADISLAV GRIGORY
+// VLADISLAV MIKHAIL GRYGORY
+// ILYA IVAN VLADIMIR
+// ANDREY VLADIMIR ILYA
+// VLADIMIR IVAN ANDREY
 
 int n = Convert.ToInt32(Console.ReadLine());
 string name = string.Empty;
 string str = string.Empty;
+string[] team = new string[n];
 
-// чтение данных и сборка в строку
+// чтение данных: сборка в строку + разбивка по командам
 for (int i = 0; i < n; i++) {
     name = Console.ReadLine();
+    team[i] = name.ToUpper();
     str = str + name + ' ';
 }
 str = str.ToUpper(); // ставит все буквы в верхний регистр (ToLower в нижний)
-string[] words = str.Split(' '); // делит строчку на слова
+string[] words = str.Split(' '); // ? // делит строчку на слова
 
-// разбивает слова - имена из строки по командам
-// string[] teams = new string[n]; // создание еще массива
-for (int j = 0; j <= n*3; j+=3) {
-    string team = words[j+0] + ' ' + words[j+1] + ' ' + words[j+2] + ' ';
-    Console.WriteLine(team);
-    // teams[n-1] = team;
-    // Console.WriteLine(teams);
-    if (j > n) break;
-}
-
-// основной метод (как работает foreach?)
+// основной метод (как работает foreach и IndexOf?)
 int CountRep(string text, string sub ) {
     int count = 0;
     int pos = 0;
@@ -43,5 +40,4 @@ int CountRep(string text, string sub ) {
     }
     return count;
 }
- Console.WriteLine( "aba: " + CountRep(words, team)); // ?
-// Console.WriteLine("abc: " + CountRep("ababa, abca, abadon, abek, absek, abtar", "abc"));
+ Console.WriteLine(CountRep(str, team[0])); // ?
