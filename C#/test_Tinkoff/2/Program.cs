@@ -72,5 +72,7 @@ if ((n < 1) || (n > 1000)) {
         }
     }
     Proverka(str, team[0]);
+
+// ответ
     Console.WriteLine("{0}", max); // Console.WriteLine($"{max}"); // Console.WriteLine(max + " ");
 }
