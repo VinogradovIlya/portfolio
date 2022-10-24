@@ -18,7 +18,6 @@ int n = Convert.ToInt32(Console.ReadLine());
 if ((n < 1) || (n > 1000)) {
     Console.WriteLine("false");
 } else {
-    string name = string.Empty;
     string str = string.Empty;
     string[] team = new string[n];
 
@@ -71,6 +70,7 @@ if ((n < 1) || (n > 1000)) {
             if (team[i] == teamVersion6) max++;
         }
     }
+    // for (int i = 0; i < n; i++) 
     Proverka(str, team[0]);
 
 // ответ

@@ -30,18 +30,21 @@ int classic(int n, string input) {
 }
 
 // перестроение массива
-//идея: проверять начиная с первого элемента, как выгоднее со следующим или через один
+// идея: проверять начиная с первого элемента, как выгоднее со следующим или через один
 for (int i = 0; i < n; i++) {
     if (i < n-1) {
         string proverka1 = myInput[i];
         string proverka2 = myInput[i+1];
         int sum1 = classic(n, proverka1);
         int sum2 = classic(n, proverka2);
-        Console.WriteLine("{0}, {1} ", proverka1, proverka2);
-        if (sum1 < sum2) {
+        Console.WriteLine("{0}, {1} ", sum1, sum2);
+        if (sum1 > sum2) {
             string temp = myInput[i];
             myInput[i] = myInput[i+1];
             myInput[i+1] = temp;
-        }
+            string changeInput = myInput[i] + ' ' +  myInput[i+1];
+            Console.WriteLine(changeInput);
+            Console.WriteLine("{0}", classic(n, changeInput));
+        } else Console.WriteLine("{0}", classic(n, input));;
     } else break;
 }
