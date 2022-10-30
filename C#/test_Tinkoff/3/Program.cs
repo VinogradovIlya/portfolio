@@ -19,9 +19,10 @@ for (int i = 0; i < n; i++) {
 }
 int[] result = new int[n];
 
-int sum = 0;
+
 // работа с формулой 
 int formula(int n, int[] numbers) {
+    int sum = 0;
     for (int i = 1; i <= n; i++) {
         int ai = numbers[i-1];
         int result = (int)Math.Pow(-1, i-1) * ai;
@@ -31,23 +32,42 @@ int formula(int n, int[] numbers) {
 }
 Console.WriteLine("{0}", formula(n, numbers));
 
+
 // перестроение массива
 // идея: проверять начиная с первого элемента, как выгоднее со следующим или через один
-void Change(int n, int[] numbers) {
-    int[] result = new int[n];
-    int i = 0;
-    int[] chislo1 = { numbers[i], numbers[i+1] };
-    int[] chislo2 = { numbers[i+1], numbers[i] };    
+int count = 0;
+void Change(int n, int[] numbers, int count) {
+    int[] chislo1 = { numbers[count], numbers[count+1] };
+    int[] chislo2 = { numbers[count+1], numbers[count] };    
     int sum1 = formula(n, chislo1);
     int sum2 = formula(n, chislo2);
-    // Console.WriteLine("{0}", sum1);
-    // Console.WriteLine("{0}", sum2);
     if (sum1 < sum2) {
-        result[i] = numbers[i+1];
-        result[i+1] = numbers[i];
+        result[count] = numbers[count+1];
+        result[count+1] = numbers[count];
+    } else { 
+        result[count] = numbers[count];
+        result[count+1] = numbers[count+1];
     }
 }
-Change(n, numbers);
+Change(n, numbers, count);
 
-//ответ
+
+// ответ
 Console.WriteLine("{0}", formula(n, result));
+
+// проверки
+Console.WriteLine("++++++++++++");
+
+for (int i = 0; i < n; i++) {
+    Console.Write(result[i]);
+    Console.Write(' ');
+}
+
+/* проверить с n > 2
+попробовать через цикл while например
+
+проверить с четным и нечетным количеством
+при нечетном количестве добавлять в конце последнюю цифру
+вроде как символ ^ дает возможность листать массив с конца
+
+*/
