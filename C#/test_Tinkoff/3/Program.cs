@@ -21,7 +21,7 @@ int[] result = new int[n];
 
 
 // работа с формулой 
-int formula(int n, int[] numbers) {
+int Formula(int n, int[] numbers) {
     int sum = 0;
     for (int i = 1; i <= n; i++) {
         int ai = numbers[i-1];
@@ -30,33 +30,47 @@ int formula(int n, int[] numbers) {
     }
     return sum;
 }
-Console.WriteLine("{0}", formula(n, numbers));
 
 
 // перестроение массива
 // идея: проверять начиная с первого элемента, как выгоднее со следующим или через один
-int count = 0;
 void Change(int n, int[] numbers, int count) {
-    int[] chislo1 = { numbers[count], numbers[count+1] };
-    int[] chislo2 = { numbers[count+1], numbers[count] };    
-    int sum1 = formula(n, chislo1);
-    int sum2 = formula(n, chislo2);
+    int[] chislo1 = { numbers[count-1], numbers[count] };
+    int[] chislo2 = { numbers[count], numbers[count-1] };    
+    int sum1 = Formula(n, chislo1);
+    int sum2 = Formula(n, chislo2);
     if (sum1 < sum2) {
-        result[count] = numbers[count+1];
-        result[count+1] = numbers[count];
+        result[count] = numbers[count-1];
+        result[count-1] = numbers[count];
     } else { 
         result[count] = numbers[count];
-        result[count+1] = numbers[count+1];
+        result[count-1] = numbers[count-1];
     }
 }
-Change(n, numbers, count);
 
-
-// ответ
-Console.WriteLine("{0}", formula(n, result));
+// основная программа
+int count = 1;
+if (n % 2 == 0) { // n четное
+    
+    while (count != n) {
+        Change(n, numbers, count);
+        count++;
+    }
+    
+    // ответ
+    Console.WriteLine("{0}", Formula(n, result));
+} else { // n нечетное
+    n -= 1;
+    Change(n, numbers, count);
+    // ответ
+    Console.WriteLine("{0}", Formula(n, result));
+}
 
 // проверки
 Console.WriteLine("++++++++++++");
+
+Console.WriteLine("{0}", Formula(n, numbers));
+Console.WriteLine();
 
 for (int i = 0; i < n; i++) {
     Console.Write(result[i]);
@@ -69,5 +83,4 @@ for (int i = 0; i < n; i++) {
 проверить с четным и нечетным количеством
 при нечетном количестве добавлять в конце последнюю цифру
 вроде как символ ^ дает возможность листать массив с конца
-
 */
