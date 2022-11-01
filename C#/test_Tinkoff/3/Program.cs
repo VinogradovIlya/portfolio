@@ -25,7 +25,6 @@ int Formula(int n, int[] numbers) {
     int sum = 0;
     for (int i = 1; i <= n; i++) {
         int ai = numbers[i-1];
-        Console.WriteLine("{0}", ai);
         int output = (int)Math.Pow(-1, i-1) * ai;
         sum = sum + output;
     }
@@ -35,40 +34,42 @@ int Formula(int n, int[] numbers) {
 
 // перестроение массива
 // идея: проверять начиная с первого элемента, как выгоднее со следующим или через один
-int[] Change(int n, int[] numbers) {
-    int zero = 0;
-    int one = 1;
-    int[] chislo1 = { numbers[zero], numbers[one] };
-    int[] chislo2 = { numbers[one], numbers[zero] };    
+int[] Change(int n, int[] numbers, int count) {
+    int[] chislo1 = new int[n];
+    int[] chislo2 = new int[n];
+    chislo1[0] = numbers[count-1];
+    chislo1[1] = numbers[count];
+    chislo2[0] = numbers[count];
+    chislo1[1] = numbers[count-1];
     int sum1 = Formula(n, chislo1);
     int sum2 = Formula(n, chislo2);
     if (sum1 < sum2) {
-        result[zero] = numbers[one];
-        result[one] = numbers[zero];
+        result[count] = numbers[count-1];
+        result[count-1] = numbers[count];
     } else { 
-        result[zero] = numbers[zero];
-        result[one] = numbers[one];
+        result[count] = numbers[count];
+        result[count-1] = numbers[count-1];
     }
     return result;
 }
 
-// // основная программа
-// int count = 1;
-// if (n % 2 == 0) { // n четное
+// основная программа
+int count = 1;
+if (n % 2 == 0) { // n четное
     
-//     while (count != n) {
-         Change(n, numbers);
-//         count++;
-//     }
+    while (count != n) {
+        Change(n, numbers, count);
+        count++;
+    }
     
     // ответ
     Console.WriteLine("{0}", Formula(n, result));
-// } else { // n нечетное
-//     //n -= 1;
-//     Change(n, numbers);
-//     // ответ
-//     Console.WriteLine("{0}", Formula(n, result));
-// }
+} else { // n нечетное
+    //n -= 1;
+    Change(n, numbers, count);
+    // ответ
+    Console.WriteLine("{0}", Formula(n, result));
+}
 
 // проверки
 Console.WriteLine("++++++++++++");
