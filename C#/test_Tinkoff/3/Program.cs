@@ -34,49 +34,45 @@ int Formula(int n, int[] numbers) {
 
 // перестроение массива
 // идея: проверять начиная с первого элемента, как выгоднее со следующим или через один
-int[] Change(int n, int[] numbers, int count) {
+int[] Change(int n, int[] numbers) {
     int[] chislo1 = new int[n];
     int[] chislo2 = new int[n];
-    chislo1[0] = numbers[count-1];
-    chislo1[1] = numbers[count];
-    chislo2[0] = numbers[count];
-    chislo1[1] = numbers[count-1];
-    int sum1 = Formula(n, chislo1);
-    int sum2 = Formula(n, chislo2);
-    if (sum1 < sum2) {
-        result[count] = numbers[count-1];
-        result[count-1] = numbers[count];
-    } else { 
-        result[count] = numbers[count];
-        result[count-1] = numbers[count-1];
+    int i = 0;
+    int j = 1;
+    while (i < n && j < n) {
+        chislo1[i] = numbers[i];
+        chislo1[j] = numbers[j];
+        chislo2[i] = numbers[j];
+        chislo2[j] = numbers[i];
+        int sum1 = Formula(n, chislo1);
+        int sum2 = Formula(n, chislo2);
+        if (sum1 < sum2) {
+            result[i] = numbers[j];
+            result[j] = numbers[i];
+        } else { 
+            result[i] = numbers[i];
+            result[j] = numbers[j];
+        }
+        i+=2;
+        j++;
     }
     return result;
 }
 
-// основная программа
-int count = 1;
-if (n % 2 == 0) { // n четное
-    
-    while (count != n) {
-        Change(n, numbers, count);
-        count++;
-    }
-    
-    // ответ
-    Console.WriteLine("{0}", Formula(n, result));
-} else { // n нечетное
-    //n -= 1;
-    Change(n, numbers, count);
-    // ответ
-    Console.WriteLine("{0}", Formula(n, result));
-}
+
+Change(n, numbers);
+// ответ
+Console.WriteLine("ответ с изменениями");
+Console.WriteLine("{0}", Formula(n, result));
 
 // проверки
 Console.WriteLine("++++++++++++");
 
+Console.WriteLine("ответ без изменений");
 Console.WriteLine("{0}", Formula(n, numbers));
 Console.WriteLine();
 
+Console.WriteLine("мой новый массив");
 for (int i = 0; i < n; i++) {
     Console.Write(result[i]);
     Console.Write(' ');
@@ -84,8 +80,7 @@ for (int i = 0; i < n; i++) {
 Console.WriteLine();
 
 
-/* проверить с n > 2
-попробовать через цикл while например
+/* не корректно работает с n > 2
 
 проверить с четным и нечетным количеством
 при нечетном количестве добавлять в конце последнюю цифру
