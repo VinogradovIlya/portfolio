@@ -54,7 +54,7 @@ int[] Change(int n, int[] numbers) {
             result[j] = numbers[j];
         }
         i+=2;
-        j++;
+        j+=2;
     }
     return result;
 }
