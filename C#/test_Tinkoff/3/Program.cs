@@ -59,30 +59,33 @@ int[] Change(int n, int[] numbers) {
     return result;
 }
 
-
-Change(n, numbers);
-// ответ
-Console.WriteLine("ответ с изменениями");
-Console.WriteLine("{0}", Formula(n, result));
-
-// проверки
-Console.WriteLine("++++++++++++");
-
-Console.WriteLine("ответ без изменений");
-Console.WriteLine("{0}", Formula(n, numbers));
-Console.WriteLine();
-
-Console.WriteLine("мой новый массив");
-for (int i = 0; i < n; i++) {
-    Console.Write(result[i]);
-    Console.Write(' ');
+// сборка методов в один блок
+if (n%2 == 0) {
+    Change(n, numbers);
+    // ответ
+    Console.WriteLine("{0}", Formula(n, result));
+} else {
+    result[n-1] = numbers[n-1];
+    Change(n, numbers);
+    // ответ
+    Console.WriteLine("{0}", Formula(n, result));
 }
-Console.WriteLine();
 
 
-/* не корректно работает с n > 2
+// // проверки
+// Console.WriteLine("++++++++++++");
 
-проверить с четным и нечетным количеством
-при нечетном количестве добавлять в конце последнюю цифру
-вроде как символ ^ дает возможность листать массив с конца
-*/
+// // ответ
+// Console.WriteLine("ответ с изменениями");
+// Console.WriteLine("{0}", Formula(n, result));
+
+// Console.WriteLine("ответ без изменений");
+// Console.WriteLine("{0}", Formula(n, numbers));
+// Console.WriteLine();
+
+// Console.WriteLine("мой новый массив");
+// for (int i = 0; i < n; i++) {
+//     Console.Write(result[i]);
+//     Console.Write(' ');
+// }
+// Console.WriteLine();
