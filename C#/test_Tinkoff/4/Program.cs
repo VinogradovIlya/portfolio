@@ -35,5 +35,7 @@ lol=a
 
 ***********************/
 
-var input = Console.Read();
-Console.WriteLine(input);
+List<string> input = new List<string>(); // инициализация списка (который List)
+foreach (var aboba in input) {
+    Console.WriteLine();
+}
