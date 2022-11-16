@@ -36,6 +36,10 @@ lol=a
 ***********************/
 
 List<string> input = new List<string>(); // инициализация списка (который List)
-foreach (var aboba in input) {
+foreach (var item in input) {
     Console.WriteLine();
 }
+
+// вопрос 1 -- реализация ввода
+// парсер конфигов
+// вопрос 2 -- как реализовать присваивание 
