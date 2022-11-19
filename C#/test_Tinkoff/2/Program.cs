@@ -81,3 +81,9 @@ if ((n < 1) || (n > 1000)) {
 // ответ
     Console.WriteLine("{0}", max); // Console.WriteLine($"{max}"); // Console.WriteLine(max + " ");
 }
+
+
+/**************************************
+комментарии
+StringBuilder (?)
+подлатать CountRep: что если прогонять не text.indexOf, а различные комбинации из текста +-
