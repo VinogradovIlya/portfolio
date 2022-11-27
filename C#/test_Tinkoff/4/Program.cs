@@ -34,15 +34,3 @@ https://www.youtube.com/watch?v=ot-IMy_4ENg&list=PL81SFGIHr5IJFsoWX0qTeQ9_-MFBE5
 
 
 ***********************/
-
-public class Program
-{
-    public static void Main() {
-        string input = "2=2";
-        List<Token> tokens = new Lexer(input).tokenize();
-        foreach (Token token in tokens)
-        {
-            Console.WriteLine(token.getType());
-        }
-    }
-}
