@@ -11,6 +11,7 @@ for (int i = 0; i < n; i++) {
 }
 List<string> inputNSortCopy = new List<string>(inputN);
 inputNSortCopy.Sort();
+
 Console.WriteLine("------"); // test
 foreach (string item in inputNSortCopy) {
 	Console.WriteLine(item);
@@ -19,15 +20,17 @@ Console.WriteLine("------");
 
 // запросы
 string[] inputQ = new string[2];
+List<int> numberZapros = new List<int>();
+List<string> nameZapros = new List<string>();
 for (int i = 0; i < q; i++) {
 	inputQ = Console.ReadLine().Split();
-	int numberZapros = Convert.ToInt32(inputQ[0]);
-	string nameZapros = inputQ[1];
-
-	Sort(inputN, inputNSortCopy, numberZapros, nameZapros);
+	numberZapros.Add(Convert.ToInt32(inputQ[0]));
+	nameZapros.Add(inputQ[1]);
 }
 
 List<int> result = new List<int>(q);
+
+Sort(inputN, inputNSortCopy, numberZapros, nameZapros);
 // --------------------
 // 1. приходит отсортированный список
 // (запрос 2 ab (в списке abc, aboba, ad, a, b))
@@ -35,20 +38,18 @@ List<int> result = new List<int>(q);
 // 3. из нового отсеянного списка выбирается фамилия соответсвующая номеру в запросе (цифра 2 => aboba)
 // 4. в исходном списке ищется указанная фамилия (aboba) и возвращается номер указанной фамилии
 // --------------------
-void Sort(List<string> inputN, List<string> inputNSortCopy, int numberZapros, string nameZapros) {
+void Sort(List<string> inputN, List<string> inputNSortCopy, 
+	List<int> numberZapros, List<string> nameZapros) {
 
-	List<string> test = new List<string>();
 	int vhod;
-	for (int i = 0; i < numberZapros; i++) {
-		vhod = inputNSortCopy.IndexOf(nameZapros); // возвращает первое вхождение
-		test.Add(inputNSortCopy[vhod]);
-		//if (vhod == -1) return result.Add(-1);
-		//inputNSortCopy.Remove(inputNSortCopy[vhod]);
-
-		Console.WriteLine(inputNSortCopy[vhod]);
+	for (int i = 0; i < numberZapros[i]; i++) {
+		vhod = inputNSortCopy.IndexOf(nameZapros[i]); // возвращает int позицию первого вхождения
+		if (numberZapros[i] != 1) {
+			inputNSortCopy.Remove(inputNSortCopy[vhod]); // удаляет ранние вхождения, если нужно больше 1 (2, 3 и тд)
+			result.Add(Convert.ToInt32(inputNSortCopy[vhod]));
+		}
 	}
-	// Console.WriteLine(inputNSortCopy[vhod]);
-
+	
 }
 
 
