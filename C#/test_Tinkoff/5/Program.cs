@@ -9,8 +9,8 @@ List<string> inputN = new List<string>(n);
 for (int i = 0; i < n; i++) {
 	inputN.Add(Console.ReadLine());
 }
-List<string> inputNsortCopy = new List<string>(inputN);
-inputNsortCopy.Sort;
+List<string> inputNSortCopy = new List<string>(inputN);
+inputNSortCopy.Sort();
 
 // запросы
 string[] inputQ = new string[2];
@@ -19,7 +19,7 @@ for (int i = 0; i < q; i++) {
 	int numberZapros = Convert.ToInt32(inputQ[0]);
 	string nameZapros = inputQ[1];
 
-	Sort(inputN, inputQ, numberZapros, nameZapros);
+	Sort(inputN, inputNSortCopy, numberZapros, nameZapros);
 }
 
 List<int> result = new List<int>(q);
@@ -31,14 +31,17 @@ List<int> result = new List<int>(q);
 // 4. в исходном списке ищется указанная фамилия (aboba) и возвращается номер указанной фамилии
 // --------------------
 // использовать indexOf?
-int Sort(List<string> inputN, List<string> inputNSortCopy, int numberZapros, string nameZapros) {
+void Sort(List<string> inputN, List<string> inputNSortCopy, int numberZapros, string nameZapros) {
 
+	int vhod;
 	for (int i = 0; i < numberZapros; i++) {
-		string vhod = inputNSortCopy.IndexOf(nameZapros); // возвращает первое вхождение
-		if (vhod == -1) return result.Add(-1);
-		inputNsortCopy.Remove(vhod);
+		vhod = inputNSortCopy.IndexOf(nameZapros); // возвращает первое вхождение
+		//if (vhod == -1) return result.Add(-1);
+		inputNSortCopy.Remove(inputNSortCopy[vhod]);
+		
+		Console.WriteLine(inputNSortCopy[vhod]);
 	}
-	Console.WriteLine(vhod);
+	// Console.WriteLine(inputNSortCopy[vhod]);
 	
 
 }
