@@ -46,18 +46,14 @@ void Sort(List<string> inputN, List<string> inputNSortCopy,
 
 		for (int j = 0; j < numberZapros[i]; j++) { 
 // циклом прохожу по всем числам из запросов и удаляю более ранние вхождения
-			
-			int vhod = inputNSortCopy.IndexOf(nameZapros[j]); // возвращает int позицию первого вхождения
-			inputNSortCopy.Remove(inputNSortCopy[vhod]);
-		}
+			//Console.Write("{0} ", j);
 
-		foreach (var item in inputNSortCopy)
-		{
-			Console.WriteLine(item);
+			int vhod = inputNSortCopy.IndexOf(nameZapros[i]);
+			Console.Write("{0} ", vhod);
+			//inputNSortCopy.Remove(inputNSortCopy[vhod]);
 		}
+		Console.WriteLine();
 	}
-	
-
 }
 
 
