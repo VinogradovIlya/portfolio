@@ -11,6 +11,11 @@ for (int i = 0; i < n; i++) {
 }
 List<string> inputNSortCopy = new List<string>(inputN);
 inputNSortCopy.Sort();
+Console.WriteLine("------"); // test
+foreach (string item in inputNSortCopy) {
+	Console.WriteLine(item);
+}
+Console.WriteLine("------");
 
 // запросы
 string[] inputQ = new string[2];
@@ -30,19 +35,19 @@ List<int> result = new List<int>(q);
 // 3. из нового отсеянного списка выбирается фамилия соответсвующая номеру в запросе (цифра 2 => aboba)
 // 4. в исходном списке ищется указанная фамилия (aboba) и возвращается номер указанной фамилии
 // --------------------
-// использовать indexOf?
 void Sort(List<string> inputN, List<string> inputNSortCopy, int numberZapros, string nameZapros) {
 
+	List<string> test = new List<string>();
 	int vhod;
 	for (int i = 0; i < numberZapros; i++) {
 		vhod = inputNSortCopy.IndexOf(nameZapros); // возвращает первое вхождение
+		test.Add(inputNSortCopy[vhod]);
 		//if (vhod == -1) return result.Add(-1);
-		inputNSortCopy.Remove(inputNSortCopy[vhod]);
-		
+		//inputNSortCopy.Remove(inputNSortCopy[vhod]);
+
 		Console.WriteLine(inputNSortCopy[vhod]);
 	}
 	// Console.WriteLine(inputNSortCopy[vhod]);
-	
 
 }
 
