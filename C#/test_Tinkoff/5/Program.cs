@@ -40,16 +40,24 @@ Sort(inputN, inputNSortCopy, numberZapros, nameZapros);
 // --------------------
 void Sort(List<string> inputN, List<string> inputNSortCopy, 
 	List<int> numberZapros, List<string> nameZapros) {
+	
+	int count = numberZapros.Count; // == q
+	for (int i = 0; i < count; i++) { // прохожу по всем запросам
 
-	int vhod;
-	for (int i = 0; i < numberZapros[i]; i++) {
-		vhod = inputNSortCopy.IndexOf(nameZapros[i]); // возвращает int позицию первого вхождения
-		if (numberZapros[i] != 1) {
-			inputNSortCopy.Remove(inputNSortCopy[vhod]); // удаляет ранние вхождения, если нужно больше 1 (2, 3 и тд)
-			result.Add(Convert.ToInt32(inputNSortCopy[vhod]));
+		for (int j = 0; j < numberZapros[i]; j++) { 
+// циклом прохожу по всем числам из запросов и удаляю более ранние вхождения
+			
+			int vhod = inputNSortCopy.IndexOf(nameZapros[j]); // возвращает int позицию первого вхождения
+			inputNSortCopy.Remove(inputNSortCopy[vhod]);
+		}
+
+		foreach (var item in inputNSortCopy)
+		{
+			Console.WriteLine(item);
 		}
 	}
 	
+
 }
 
 
