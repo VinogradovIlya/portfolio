@@ -1,4 +1,6 @@
-﻿// ввод данных
+﻿using System.Text.RegularExpressions;
+
+// ввод данных
 string[] input = Console.ReadLine().Split();
 int n, q;
 n = Convert.ToInt32(input[0]); 
