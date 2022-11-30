@@ -15,10 +15,10 @@ List<string> inputNSortCopy = new List<string>(inputN);
 inputNSortCopy.Sort();
 
 Console.WriteLine("------"); // test
-foreach (string item in inputNSortCopy) {
-	Console.WriteLine(item);
-}
-Console.WriteLine("------");
+// foreach (string item in inputNSortCopy) {
+// 	Console.WriteLine(item);
+// }
+// Console.WriteLine("------");
 
 // запросы
 string[] inputQ = new string[2];
@@ -48,23 +48,18 @@ void Sort(List<string> inputN, List<string> inputNSortCopy,
 
 		for (int j = 0; j < numberZapros[i] - 1; j++) { 
 // циклом прохожу по всем числам из запросов и удаляю более ранние вхождения
-			//Console.Write("{0} ", j);
 
-			int vhod = inputNSortCopy.IndexOf(nameZapros[i]);
+			//int vhod = inputNSortCopy.IndexOf(nameZapros[i]);
 			// Console.Write("{0} ", vhod);
-			inputNSortCopy.Remove(inputNSortCopy[vhod]);
-			foreach (var item in inputNSortCopy)
+			//inputNSortCopy.Remove(inputNSortCopy[vhod]);
+			// foreach (var item in inputNSortCopy)
+			// {
+			foreach (string row in inputNSortCopy)
 			{
-				List<string> test = new List<string>() {"a", "ab", "abc", "aboba", "d"};
-			foreach (string row in test)
-			{
-				if (Regex.IsMatch(row, "ab", RegexOptions.IgnoreCase))
+				if (Regex.IsMatch(row, nameZapros[i], RegexOptions.IgnoreCase))
 					Console.WriteLine(row);
-				}
 			}
-			
 		}
-		Console.WriteLine();
 	}
 }
 
@@ -90,7 +85,7 @@ string[] rows = {"Москва— столица Российской Федер
                          "Как и это."};
         foreach (string row in rows)
         {
-            if (Regex.IsMatch(row, "моск", RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(row, "моск", RegexOptions.IgnoreCase)) Указывает, обнаружено ли в указанной входной строке соответствие заданному регулярному выражению, используя указанные параметры сопоставления.
                 Console.WriteLine(row);
             foreach (Match match in Regex.Matches(row, @"\b\w*моск\w*\b", RegexOptions.IgnoreCase))
                 Console.WriteLine("\t\t{0}", match.Value);
