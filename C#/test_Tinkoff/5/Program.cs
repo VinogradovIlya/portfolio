@@ -14,12 +14,6 @@ for (int i = 0; i < n; i++) {
 List<string> inputNSortCopy = new List<string>(inputN);
 inputNSortCopy.Sort();
 
-Console.WriteLine("------"); // test
-// foreach (string item in inputNSortCopy) {
-// 	Console.WriteLine(item);
-// }
-// Console.WriteLine("------");
-
 // запросы
 string[] inputQ = new string[2];
 List<int> numberZapros = new List<int>();
@@ -30,7 +24,7 @@ for (int i = 0; i < q; i++) {
 	nameZapros.Add(inputQ[1]);
 }
 
-List<int> result = new List<int>(q);
+ List<int> result = new List<int>(q);
 
 Sort(inputN, inputNSortCopy, numberZapros, nameZapros);
 // --------------------
@@ -43,17 +37,26 @@ Sort(inputN, inputNSortCopy, numberZapros, nameZapros);
 void Sort(List<string> inputN, List<string> inputNSortCopy, 
 	List<int> numberZapros, List<string> nameZapros) {
 	
+	List<string> surnameList = new List<string>(q);
 	int count = nameZapros.Count; // == q
-	for (int i = 0; i < count; i++) { // прохожу по количеству запросов
-		foreach (string row in inputNSortCopy) {
-			if (Regex.IsMatch(row, nameZapros[0], RegexOptions.IgnoreCase)) {
-				Console.WriteLine(row);
-				// int vhod = inputNSortCopy.IndexOf(nameZapros[i]);
-				// inputNSortCopy.Remove(inputNSortCopy[vhod]);
+	for (int i = 0; i < count; i++) { // прохожу по каждому запросу
+		foreach (string surname in inputNSortCopy) { // прохожу по фамилиям из отсортированного массива
+			if (Regex.IsMatch(surname, nameZapros[i], RegexOptions.IgnoreCase)) { // нахожу однокоренные фамилии
+				surnameList.Add(surname); // добавляю подходящие элементы
 			}
 		}
+
+		for (int j = 1; j < numberZapros[i]; j++) { //удаляю лишние предыдущие фамилии
+			surnameList.RemoveAt(0);
+		}
 	}
-	
+
+	Console.WriteLine("------"); // test
+	foreach (var item in surnameList)
+	{
+		Console.WriteLine(item);
+	}
+
 }
 
 
@@ -61,6 +64,8 @@ void Sort(List<string> inputN, List<string> inputNSortCopy,
 bool Contains(T item): возвращает true, если элемент item есть в списке
 
 int IndexOf(T item): возвращает индекс первого вхождения элемента в списке
+				//int vhod = inputNSortCopy.IndexOf(nameZapros[number]);
+				// inputNSortCopy.Remove(inputNSortCopy[vhod]);
 
 алгоритм метода:
 что входит: фамилии (+ место для хранения отсортированного списка) + условия
