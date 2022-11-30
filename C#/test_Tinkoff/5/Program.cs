@@ -43,24 +43,17 @@ Sort(inputN, inputNSortCopy, numberZapros, nameZapros);
 void Sort(List<string> inputN, List<string> inputNSortCopy, 
 	List<int> numberZapros, List<string> nameZapros) {
 	
-	int count = numberZapros.Count; // == q
-	for (int i = 0; i < count; i++) { // прохожу по всем запросам
-
-		for (int j = 0; j < numberZapros[i] - 1; j++) { 
-// циклом прохожу по всем числам из запросов и удаляю более ранние вхождения
-
-			//int vhod = inputNSortCopy.IndexOf(nameZapros[i]);
-			// Console.Write("{0} ", vhod);
-			//inputNSortCopy.Remove(inputNSortCopy[vhod]);
-			// foreach (var item in inputNSortCopy)
-			// {
-			foreach (string row in inputNSortCopy)
-			{
-				if (Regex.IsMatch(row, nameZapros[i], RegexOptions.IgnoreCase))
-					Console.WriteLine(row);
+	int count = nameZapros.Count; // == q
+	for (int i = 0; i < count; i++) { // прохожу по количеству запросов
+		foreach (string row in inputNSortCopy) {
+			if (Regex.IsMatch(row, nameZapros[0], RegexOptions.IgnoreCase)) {
+				Console.WriteLine(row);
+				// int vhod = inputNSortCopy.IndexOf(nameZapros[i]);
+				// inputNSortCopy.Remove(inputNSortCopy[vhod]);
 			}
 		}
 	}
+	
 }
 
 
