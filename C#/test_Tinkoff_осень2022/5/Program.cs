@@ -24,28 +24,12 @@ for (int i = 0; i < q; i++) {
 	nameZapros.Add(inputQ[1]);
 }
 
-System.Console.WriteLine("----------");
-System.Console.WriteLine("отсортированный лист");
-foreach (var item in inputNSortCopy)
-{
-	System.Console.WriteLine(item);
-}
-
 List<string> surnameList = new List<string>(q);
 void Sorted(List<string> inputNSortCopy, List<string> nameZapros, int i) {
 	foreach (string surname in inputNSortCopy) { // прохожу по фамилиям из отсортированного массива
 		if (Regex.IsMatch(surname, nameZapros[i], RegexOptions.IgnoreCase)) { // нахожу однокоренные фамилии
 			surnameList.Add(surname); // добавляю подходящие элементы
-			// System.Console.WriteLine("------------");
-			// System.Console.WriteLine(surname);
 		}
-	}
-
-	System.Console.WriteLine("------------");
-	System.Console.WriteLine("однокоренной список");
-	foreach (var item in surnameList)
-	{
-		System.Console.WriteLine(item);
 	}
 }
 
@@ -56,23 +40,25 @@ void Result(List<string> surnameList, List<int> numberZapros, int i, List<string
 	int count = numberZapros[i];
 	int chislo;
 	if (count > 1) {
-		int j = numberZapros[i] - 1; // i на один меньше нужен
-		string surname = surnameArray[j]; 
-		
-		System.Console.WriteLine("---------");
-		System.Console.WriteLine($"{surname}");
-
-		// определяю номера искомых фамилий
-		chislo = inputN.IndexOf(surname);
-		chislo++;
-		result.Add(chislo);
+		int j = numberZapros[i]; // i на один меньше нужен
+		if (j > q) { // если номер искомой фамилии заведомо больше списка всех фамилий
+			result.Add(-1);
+		} else {
+			j--;
+			string surname = surnameArray[j];
+			chislo = inputN.IndexOf(surname);
+			chislo++;
+			result.Add(chislo);
+		}
 	} else {
-		chislo = inputN.IndexOf(nameZapros[i]);
-		chislo++;
-		result.Add(chislo);
+		if (inputN.IndexOf(nameZapros[i]) == -1) { // если не присутствует искомая фамилия в списке всех фамилий
+			result.Add(-1);
+		} else {
+			chislo = inputN.IndexOf(nameZapros[i]);
+			chislo++;
+			result.Add(chislo);
+		}
 	}
-	
-	
 }
 
 for (int i = 0; i < q; i++) {
@@ -100,5 +86,4 @@ int IndexOf(T item): возвращает индекс первого вхожд
 // 3. из нового отсеянного списка выбирается фамилия соответсвующая номеру в запросе (цифра 2 => aboba)
 // 4. в исходном списке ищется указанная фамилия (aboba) и возвращается номер указанной фамилии
 // --------------------
-
 */
