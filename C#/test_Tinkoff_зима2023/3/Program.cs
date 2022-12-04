@@ -49,8 +49,9 @@ int Nok(int a, int b, int nod, List<string> result) {
 }
 
 string[] res = result.ToArray();
-AB(res);
-void AB (string[] res) {
+string finish = string.Empty;
+AB(res, finish);
+void AB (string[] res, string finish) {
     string[] one = res[0].Split();
     int ab = Convert.ToInt32(one[2]);
     for (int i = 1; i < res.Length; i++) {
@@ -58,8 +59,8 @@ void AB (string[] res) {
         int step2 = Convert.ToInt32(step1[2]);
         if (ab >= step2) {
             ab = step2;
-            string finish = step1[0] + " " + step1[1];
-            System.Console.WriteLine(finish);
+            finish= step1[0] + " " + step1[1];
         }
     }
+    System.Console.WriteLine(finish);
 }
