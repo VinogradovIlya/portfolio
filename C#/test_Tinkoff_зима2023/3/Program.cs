@@ -7,7 +7,7 @@ List<string> result = new List<string>();
 
 // nok(a, b) = a * b / nod
 int nok = 0;
-int nod = 0;
+int nod;
 
 for (a = 1; a < n; a++) {
     b = n-a;
@@ -48,23 +48,18 @@ int Nok(int a, int b, int nod, List<string> result) {
     return nok;
 }
 
-foreach (var item in result)
-{
-    Console.WriteLine($"{item}");
-}
-
 string[] res = result.ToArray();
 AB(res);
 void AB (string[] res) {
     string[] one = res[0].Split();
     int ab = Convert.ToInt32(one[2]);
-    for (int i = 1; i < res.Length; i++) { // иду по строкам и сравниваю
+    for (int i = 1; i < res.Length; i++) {
         string[] step1 = res[i].Split();
         int step2 = Convert.ToInt32(step1[2]);
-        if (ab > step2) ab = step2;
+        if (ab >= step2) {
+            ab = step2;
+            string finish = step1[0] + " " + step1[1];
+            System.Console.WriteLine(finish);
+        }
     }
-    System.Console.WriteLine($"{ab}");
-
-    // вывожу координаты a и b
-    
 }
