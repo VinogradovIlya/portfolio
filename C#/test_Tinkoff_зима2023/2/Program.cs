@@ -15,7 +15,7 @@ string NumberString (int chislo1, int chislo2, int chislo3) {
     string strX = chislo1.ToString();
     string strY = chislo2.ToString();
     string strZ = chislo3.ToString();
-    return number = strX + strY + strZ;
+    return number = strX + " " + strY + " " + strZ + " ";
 }
 
 List<string> result = new List<string>();
@@ -34,13 +34,12 @@ int Up(int chislo, int chislo1) {
 }
 
 // X<-- Y<-- Z
-while (y > b || z > c) {
+while (y >= b || z >= c) {
     // x y<-- z
     if (z >= b && (z-c) >= 0) {
         y = Up(y, b);
         z = Down(z, c);
         result.Add(NumberString(x, y, z));
-        // System.Console.WriteLine(NumberString(x, y, z));
     }
 
     // x<-- y z
@@ -48,26 +47,19 @@ while (y > b || z > c) {
         x = Up(x, a);
         y = Down(y, b);
         result.Add(NumberString(x, y, z));
-        // System.Console.WriteLine(NumberString(x, y, z));
     }
 }
 
 // по принципу волнового алгоритма
 result.Sort();
 result.Reverse();
-int newXYZ = Convert.ToInt32(result[0]);
-z = newXYZ % 10;
-newXYZ = newXYZ / 10;
-y = newXYZ % 10;
-newXYZ = newXYZ / 10;
-x = newXYZ % 10;
-
-// System.Console.WriteLine($"{x}");
-// System.Console.WriteLine($"{y}");
-// System.Console.WriteLine($"{z}");
+string[] newXYZ = result[0].Split();
+x = Convert.ToInt32(newXYZ[0]);
+y = Convert.ToInt32(newXYZ[1]);
+z = Convert.ToInt32(newXYZ[2]);
 
 // x--> y--> z
-while (x > a || y > b) {
+while (x >= a || y >= b) {
     // x--> y z
     if (x >= a && (x-a) >= 0) {
         x = Down(x, a);
@@ -75,7 +67,6 @@ while (x > a || y > b) {
         if (result.IndexOf(NumberString(x, y, z)) == -1) {
             result.Add(NumberString(x, y, z));
         }
-        // System.Console.WriteLine(NumberString(x, y, z));
     }
 
     // x y--> z
@@ -84,18 +75,16 @@ while (x > a || y > b) {
         z = Up(z, c);
         if (result.IndexOf(NumberString(x, y, z)) == -1) {
             result.Add(NumberString(x, y, z));
-        }
-        // System.Console.WriteLine(NumberString(x, y, z));
+        } else break;
     }
 }
 
 foreach (var item in result.ToList()) {
-    newXYZ = Convert.ToInt32(item);
-    z = newXYZ % 10;
-    newXYZ = newXYZ / 10;
-    y = newXYZ % 10;
-    newXYZ = newXYZ / 10;
-    x = newXYZ % 10;
+    // новое строковое число перебивает в число
+    newXYZ = item.Split();
+    x = Convert.ToInt32(newXYZ[0]);
+    y = Convert.ToInt32(newXYZ[1]);
+    z = Convert.ToInt32(newXYZ[2]);
 
     // шаги в сторону 
     // x--> y z
@@ -104,7 +93,7 @@ foreach (var item in result.ToList()) {
         y = Up(y, b);
         if (result.IndexOf(NumberString(x, y, z)) == -1) {
             result.Add(NumberString(x, y, z));
-        }
+        } else break;
     }
 
     // x y--> z
@@ -113,16 +102,10 @@ foreach (var item in result.ToList()) {
         z = Up(z, c);
         if (result.IndexOf(NumberString(x, y, z)) == -1) {
             result.Add(NumberString(x, y, z));
-        }
+        } else break;
     }
 }
 
-foreach (var item in result)
-{
-    System.Console.WriteLine(item);
-}
-
-System.Console.WriteLine();
 System.Console.WriteLine($"{result.Count}");
 /* 
 удаление из списка дублирующихся эл-тов
