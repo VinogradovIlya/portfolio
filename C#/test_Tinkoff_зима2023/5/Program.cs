@@ -6,29 +6,18 @@ List<string> input = new List<string> (m);
 for (int i = 0; i < m; i++) {
     input.Add(Console.ReadLine());
 }
-input.Sort();
 
-System.Console.WriteLine();
-foreach (string item in input)
-{
-    System.Console.WriteLine(item);
-}
-
-// построение маршрута
+// построение маршрутов
 List<string> path = new List<string> (m);
-for (int i = 1; i < m; i+=2) {
-
-    string[] start = input[i-1].Split();
-    int number1 = Convert.ToInt32(start[0]);
-    int number2 = Convert.ToInt32(start[1]);
-    int number3 = Convert.ToInt32(start[2]);
-
-    string[] finish = input[i].Split();
-    int number11 = Convert.ToInt32(finish[0]);
-    int number21 = Convert.ToInt32(finish[1]);
-    int number31 = Convert.ToInt32(finish[2]);
-
-    if (number2 <= number21) path.Add(input[i-1]); 
+// иду от обратного
+for (int i = n; i > 0; i--) {
+    for (int j = 0; j < m; j++) {
+        string[] finish = input[j].Split();
+        int number = Convert.ToInt32(finish[0]);
+        int number1 = Convert.ToInt32(finish[1]);
+        int number2 = Convert.ToInt32(finish[2]);
+        if (number1 == i) path.Add(input[j]);
+    }
 }
 
 System.Console.WriteLine();
@@ -37,14 +26,29 @@ foreach (string item in path)
     System.Console.WriteLine(item);
 }
 
+
+
 // ответы
-System.Console.WriteLine(path.Count);
+// System.Console.WriteLine(!!!!.Count);
+
+// // костыль
 // string result = string.Empty;
-// foreach (string item in path)
+// for (int i = 1; i < n; i++)
 // {
-//     string[] str = item.Split();
+//     string[] str = path[i-1].Split();
+//     string aero = str[0];
 //     string chet = str[2];
-//     result = chet + " ";
+//     System.Console.WriteLine($"{aero} aero = {chet}");
+//     result = result + chet;
+//     if (i == n-1) {
+//         aero = Convert.ToString(n);
+//         //str = path.Count-1.Split();
+//         int last = path.Count-1;
+//         str = path[last].Split();
+//         chet = str[2];
+//         System.Console.WriteLine($"{aero} aero = {chet}");
+//         result = result + chet;
+//     }
 // }
 // System.Console.WriteLine(result);
 
