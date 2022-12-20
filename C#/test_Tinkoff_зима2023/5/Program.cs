@@ -16,7 +16,7 @@ foreach (string item in input)
 
 // построение маршрута
 List<string> path = new List<string> (m);
-for (int i = 0; i < m; i++) {
+for (int i = 1; i < m; i+=2) {
 
     string[] start = input[i-1].Split();
     int number1 = Convert.ToInt32(start[0]);
@@ -28,7 +28,7 @@ for (int i = 0; i < m; i++) {
     int number21 = Convert.ToInt32(finish[1]);
     int number31 = Convert.ToInt32(finish[2]);
 
-    if (number2 <= number21 && number11 == number2) path.Add(input[i-1]); 
+    if (number2 <= number21) path.Add(input[i-1]); 
 }
 
 System.Console.WriteLine();
