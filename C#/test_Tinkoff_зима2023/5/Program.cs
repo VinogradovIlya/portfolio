@@ -6,53 +6,45 @@ List<string> input = new List<string> (m);
 for (int i = 0; i < m; i++) {
     input.Add(Console.ReadLine());
 }
+input.Sort();
+System.Console.WriteLine();
+foreach (string item in input)
+{
+    System.Console.WriteLine(item);
+}
 
-// построение маршрутов
-List<string> path = new List<string> (m);
-// иду от обратного
-for (int i = n; i > 0; i--) {
-    for (int j = 0; j < m; j++) {
-        string[] finish = input[j].Split();
-        int number = Convert.ToInt32(finish[0]);
-        int number1 = Convert.ToInt32(finish[1]);
-        int number2 = Convert.ToInt32(finish[2]);
-        if (number1 == i) path.Add(input[j]);
-    }
+// построение подходящего маршрута
+List<string> path0 = new List<string> (m);
+foreach (string item in input)
+{
+    string[] numbers = item.Split();
+    int chet = Convert.ToInt32(numbers[2]);
+    if (chet == 0) path0.Add(item);
 }
 
 System.Console.WriteLine();
-foreach (string item in path)
+foreach (string item in path0)
 {
     System.Console.WriteLine(item);
 }
 
 
+List<string> path1 = new List<string> (m);
+foreach (string item in input)
+{
+    string[] numbers = item.Split();
+    int chet = Convert.ToInt32(numbers[2]);
+    if (chet == 1) path1.Add(item);
+}
+
+System.Console.WriteLine();
+foreach (string item in path1)
+{
+    System.Console.WriteLine(item);
+}
 
 // ответы
 // System.Console.WriteLine(!!!!.Count);
-
-// // костыль
-// string result = string.Empty;
-// for (int i = 1; i < n; i++)
-// {
-//     string[] str = path[i-1].Split();
-//     string aero = str[0];
-//     string chet = str[2];
-//     System.Console.WriteLine($"{aero} aero = {chet}");
-//     result = result + chet;
-//     if (i == n-1) {
-//         aero = Convert.ToString(n);
-//         //str = path.Count-1.Split();
-//         int last = path.Count-1;
-//         str = path[last].Split();
-//         chet = str[2];
-//         System.Console.WriteLine($"{aero} aero = {chet}");
-//         result = result + chet;
-//     }
-// }
-// System.Console.WriteLine(result);
-
-
 
 /**************
 работает при четном m
