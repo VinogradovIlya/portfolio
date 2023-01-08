@@ -18,36 +18,73 @@ class Program
 {
     static void Main()
     {
-        int task = 1_00;//0_000;
-
-        List<int> circles = new List<int>();
-        void NewTurn(int number)  // 197 -> 7*100 + 19 == 719 -> 9*100 + 71 == 971 -> 1*100 + 97 == 197
-        {
-            int count = number;
-            while (count != 0)
-            {
-            int temp = number % 10; 
-            temp *= 100;
-            number /= 10;
-            number += temp;
-            circles.Add(number);
-            count /= 10;
-            }
-        }
-
+        int task = 1_000;//_000;
+        
         bool PrimeNumber(int number)
         {
             if (number == 2 || number == 3) return true;
-            for (int i = 2; i < number; i++)
+            else 
             {
-                if (number % i == 0) return false;
+                for (int i = 2; i < number; i++)
+                {
+                    if (number % i == 0) return false;
+                }
+                return true;
             }
-            return true;
+            
         }
 
+        List<int> primeNumber = new List<int>();
         for (int i = 2; i < task; i++)
         {
-            if (PrimeNumber(i)) NewTurn(i);
+            if (PrimeNumber(i) == true) primeNumber.Add(i);
         }
+
+        int NewTurn(int number)
+        {
+            List<int> recurs = new List<int>();
+
+            if (number < 10) return number;
+            else
+            {
+                int temp = number % 10;
+                int temp1 = number / 10;
+                string step1 = string.Empty;
+                step1 = Convert.ToString(temp) + Convert.ToString(temp1);
+                int result = Convert.ToInt32(step1);    
+                return result;
+            }
+        
+        }
+
+        int Digit(int number)
+        {
+            int count = 0;
+            while (number > 0)
+            {
+                number /= 10;
+                count++;
+            }
+            return count;
+        }
+
+        // List<int> variants = new List<int>();
+        foreach (var item in primeNumber)
+        {
+            int count = Digit(item);
+            int value = item;
+        
+            if (count > 1) {
+                for (int i = 0; i < count; i++)
+                {
+                    int step1 = NewTurn(value);
+                    value = step1;
+                    System.Console.WriteLine(value);
+                }
+            }
+
+        }
+
+
     }
 }
