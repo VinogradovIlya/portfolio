@@ -18,73 +18,81 @@ class Program
 {
     static void Main()
     {
-        int task = 1_000;//_000;
+        int task = 1_000_000;
         
-        bool PrimeNumber(int number)
-        {
-            if (number == 2 || number == 3) return true;
-            else 
-            {
-                for (int i = 2; i < number; i++)
-                {
-                    if (number % i == 0) return false;
-                }
-                return true;
-            }
-            
-        }
-
+        // список простых чисел
         List<int> primeNumber = new List<int>();
         for (int i = 2; i < task; i++)
         {
             if (PrimeNumber(i) == true) primeNumber.Add(i);
         }
 
-        int NewTurn(int number)
-        {
-            List<int> recurs = new List<int>();
-
-            if (number < 10) return number;
-            else
-            {
-                int temp = number % 10;
-                int temp1 = number / 10;
-                string step1 = string.Empty;
-                step1 = Convert.ToString(temp) + Convert.ToString(temp1);
-                int result = Convert.ToInt32(step1);    
-                return result;
-            }
-        
-        }
-
-        int Digit(int number)
-        {
-            int count = 0;
-            while (number > 0)
-            {
-                number /= 10;
-                count++;
-            }
-            return count;
-        }
-
-        // List<int> variants = new List<int>();
+        // прохожусь по простым числам, кручу их и проверяю на простоту
+        List<string> result = new List<string>();
         foreach (var item in primeNumber)
         {
-            int count = Digit(item);
-            int value = item;
-        
-            if (count > 1) {
-                for (int i = 0; i < count; i++)
-                {
-                    int step1 = NewTurn(value);
-                    value = step1;
-                    System.Console.WriteLine(value);
-                }
-            }
-
+            if (PrimeNumber(NewTurn(item)) == true) result.Add(NewTurn(item));
         }
 
+        // ответ
+        System.Console.WriteLine(result.Count());
+        
+    }        
+    static bool PrimeNumber(int number)
+    {
+        if (number == 2 || number == 3) return true;
+        else 
+        {
+            for (int i = 2; i < number; i++)
+            {
+                if (number % i == 0) return false;
+            }
+            return true;
+        }    
+    }
+    
+    static bool PrimeNumber(string number)
+    {
+        string[] numbers = number.Split();
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            int num = Convert.ToInt32(numbers[i]);
+            if (PrimeNumber(num) == false) return false;
+        }
+        return true;
+    }
 
+    static string NewTurn(int number)
+    {
+        if (Digit(number) == 1) return System.Convert.ToString(number);
+
+        int stepTest = number;
+        string rst = Convert.ToString(number);
+        for (int i = 1; i < Digit(number); i++)
+        {
+
+            // получение нового числа
+            int temp = stepTest % 10;
+            int temp1 = stepTest / 10;
+            string step1 = string.Empty;
+            step1 = Convert.ToString(temp) + Convert.ToString(temp1);
+            int result = Convert.ToInt32(step1);    
+
+            rst = rst + " " + result;
+
+            stepTest = result;
+        }
+        return rst;
+    }
+
+    static int Digit(int number)
+    {
+        int count = 0;
+        while (number > 0)
+        {
+            number /= 10;
+            count++;
+        }
+        return count;
     }
 }
