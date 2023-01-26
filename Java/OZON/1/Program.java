@@ -15,11 +15,11 @@ public class Program {
 
         // ответ
         for (String i : arr) {
-            System.out.println(math(i));
+            System.out.println(summ(i));
         }
     }
 
-    static int math(String str)
+    static int summ(String str)
     {
         String[] newArr = str.split(" ");
         int a = Integer.parseInt(newArr[0]);
