@@ -1,46 +1,48 @@
-﻿string[] inputNM = Console.ReadLine().Split();
-int n = Convert.ToInt32(inputNM[0]);
-int m = Convert.ToInt32(inputNM[1]);
+﻿using System;
+using System.Collections.Generic;
 
-List<string> input = new List<string> (m);
-for (int i = 0; i < m; i++) {
-    input.Add(Console.ReadLine());
-}
-input.Sort();
-System.Console.WriteLine();
-foreach (string item in input)
+internal class Program
 {
-    System.Console.WriteLine(item);
-}
+    private static void Main(string[] args)
+    {
+        string[] inputNM = System.Console.ReadLine().Split();
+        int n = System.Convert.ToInt32(inputNM[0]);
+        int m = System.Convert.ToInt32(inputNM[1]);
 
-// построение подходящего маршрута
-List<string> path0 = new List<string> (m);
-foreach (string item in input)
-{
-    string[] numbers = item.Split();
-    int chet = Convert.ToInt32(numbers[2]);
-    if (chet == 0) path0.Add(item);
-}
+        List<string> input = new List<string>(m);
+        for (int i = 0; i < m; i++)
+        {
+            input.Add(System.Console.ReadLine());
+        }
+        input.Sort();
+        System.Console.WriteLine();
+        foreach (string item in input)
+        {
+            System.Console.WriteLine(item);
+        }
 
-System.Console.WriteLine();
-foreach (string item in path0)
-{
-    System.Console.WriteLine(item);
-}
+        // построение подходящего маршрута
+        List<string> path = new List<string>(m);
+        for (int i = 1; i < m; i += 2)
+        {
+            string[] start = input[i - 1].Split();
+            int number1 = System.Convert.ToInt32(start[0]);
+            int number2 = System.Convert.ToInt32(start[1]);
+            int number3 = System.Convert.ToInt32(start[2]);
 
+            string[] finish = input[i].Split();
+            int number11 = System.Convert.ToInt32(finish[0]);
+            int number21 = System.Convert.ToInt32(finish[1]);
+            int number31 = System.Convert.ToInt32(finish[2]);
 
-List<string> path1 = new List<string> (m);
-foreach (string item in input)
-{
-    string[] numbers = item.Split();
-    int chet = Convert.ToInt32(numbers[2]);
-    if (chet == 1) path1.Add(item);
-}
+            if (number2 <= number21 && number11 == number2) path.Add(input[i - 1]);
+        }
 
-System.Console.WriteLine();
-foreach (string item in path1)
-{
-    System.Console.WriteLine(item);
+        foreach (string item in path)
+        {
+            System.Console.WriteLine(item);
+        }
+    }
 }
 
 // ответы
