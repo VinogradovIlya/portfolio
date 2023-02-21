@@ -11,7 +11,7 @@ a^2 + b^2 == c^2
 
 class Program
 {
-    static void Main() 
+    static void Main()
     {
         // DateTime StartTime;
         // StartTime = DateTime.Now;
@@ -21,9 +21,9 @@ class Program
         {
             for (int b = a + 1; b < number; b++)
             {
-                int c = (int)Math.Sqrt(a*a + b*b);
-                if (c > b && a + b + c == number && c*c == a*a + b*b) 
-                System.Console.WriteLine("{0}", a*b*c);
+                int c = (int)Math.Sqrt(a * a + b * b);
+                if (c > b && a + b + c == number && c * c == a * a + b * b)
+                    System.Console.WriteLine("{0}", a * b * c);
                 break;
             }
         }

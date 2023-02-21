@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Math;
 
 /**
 https://projecteuler.net/problem=6
