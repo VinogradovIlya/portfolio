@@ -5,6 +5,12 @@
             "type": "java",
             "name": "Launch Program",
             "request": "launch",
+            "mainClass": "Program"
+        },
+        {
+            "type": "java",
+            "name": "Launch Program",
+            "request": "launch",
             "mainClass": "Program",
             "projectName": "portfolio_3f270721"
         },
