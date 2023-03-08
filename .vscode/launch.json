@@ -3,6 +3,37 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Program2",
+            "request": "launch",
+            "mainClass": "Program2",
+            "projectName": "portfolio_3f270721"
+        },
+        {
+            "type": "java",
+            "name": "Launch Guess",
+            "request": "launch",
+            "mainClass": "Guess"
+        },
+        {
+            "type": "java",
+            "name": "Launch MultTable",
+            "request": "launch",
+            "mainClass": "MultTable"
+        },
+        {
+            "type": "java",
+            "name": "Launch Pell",
+            "request": "launch",
+            "mainClass": "Pell"
+        },
+        {
+            "type": "java",
+            "name": "Launch Stars",
+            "request": "launch",
+            "mainClass": "Stars"
+        },
+        {
+            "type": "java",
             "name": "Launch Program",
             "request": "launch",
             "mainClass": "Program"
