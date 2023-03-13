@@ -1,7 +1,0 @@
-/**
- * ComplNum
- */
-public class ComplNum {
-
-    
-}
