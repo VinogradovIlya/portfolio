@@ -8,7 +8,6 @@ public class App {
 
         System.out.println(new SnilsValidatorImpl().validate("90114404441")); // true
 
-
         System.out.println(new SnilsValidatorImpl().validate("901-440S441")); // false
     }
 }
