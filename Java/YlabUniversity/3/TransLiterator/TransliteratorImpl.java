@@ -59,6 +59,4 @@ public class TransliteratorImpl implements Transliterator {
         }
         return stringBuilder.toString();
     }
-
-    // что делать в случае ПРИВЕТ! ?
 }
