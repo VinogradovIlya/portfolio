@@ -5,19 +5,30 @@ package TransLiterator;
  */
 public class TransliteratorImpl implements Transliterator {
 
+    StringBuilder stringBuilder = new StringBuilder();
+
     public String transliterate(String source) {
         String[] arr = source.split(" "); // делим строку на слова
         for (int i = 0; i < arr.length; i++) { // ищем подходящее слово
             if (cyrillic(arr[i]) == true) {
                 char[] chArr = arr[i].toCharArray(); // колдуем над подходящим словом
                 for (int j = 0; j < chArr.length; j++) {
-
+                    switch (chArr[j]) {
+                        case (А):
+                            stringBuilder.append("A");
+                            break;
+                        case (Б):
+                            stringBuilder.append("B");
+                            break;
+                        
+                        default:
+                            break;
+                    }
                 }
             }
         }
     }
 
-    // public boolean testStr() {}
     public boolean cyrillic(String word) {
         // проверка первого символа на верхний регистр и на кириллицу
         return true;
