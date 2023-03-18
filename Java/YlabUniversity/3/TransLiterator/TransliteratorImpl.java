@@ -8,27 +8,24 @@ import java.util.Map;
  */
 public class TransliteratorImpl implements Transliterator {
 
-    StringBuilder stringBuilder = new StringBuilder(); // инкапсуляция?
+    private static final Map<Character, String> alphabet = new HashMap<>(); // инкапсуляция?
 
     public String transliterate(String source) {
-        String[] arr = source.split(" "); // делим строку на слова
-        for (int i = 0; i < arr.length; i++) { // ищем подходящее слово
-            if (cyrillic(arr[i]) == true) {
-                char[] chArr = arr[i].toCharArray(); // колдуем над подходящим словом
-                for (int j = 0; j < chArr.length; j++) {
-                }
+        StringBuilder stringBuilder = new StringBuilder();
+        char[] chArr = source.toCharArray();
+        for (int i = 0; i < chArr.length; i++) {
+            if (alphabet.containsKey(chArr[i])) {
+                stringBuilder.append(
+                        alphabet.get(chArr[i]));
+            } else {
+                stringBuilder.append(chArr[i]);
             }
         }
-        return null;
+        return stringBuilder.toString();
     }
 
-    public boolean cyrillic(String word) { // проверка первого символа на верхний регистр и на кириллицу
-        return true;
-    }
-
-    public Map<Character, String> alphabet = new HashMap<>(); // инкапсуляция? 
-
-    public void alphabet() {
+    // public void alphabet() { // инициализация алфавита
+    static {
         alphabet.put('А', "A");
         alphabet.put('Б', "B");
         alphabet.put('В', "V");
@@ -63,7 +60,30 @@ public class TransliteratorImpl implements Transliterator {
         alphabet.put('Ю', "IU");
         alphabet.put('Я', "IA");
     }
-    /*
-     * что делать в случае ПРИВЕТ! ?
-     */
+
+    // public String transliterate(String source) {
+    // String[] arr = source.split(" "); // делим строку на слова
+    // for (int i = 0; i < arr.length; i++) { // ищем подходящее слово
+    // if (cyrillic(arr[i]) == true) {
+    // char[] chArr = arr[i].toCharArray(); // колдуем над подходящим словом
+    // for (int j = 0; j < chArr.length; j++) {
+    // if (alphabet.containsKey(chArr[j])) {
+    // stringBuilder.append(alphabet.get(chArr[j]));
+    // }
+    // }
+    // }
+    // }
+    // return stringBuilder.toString();
+    // }
+
+    // public boolean cyrillic(String word) { // проверка первого символа на верхний
+    // регистр и на кириллицу
+    // char[] chArr = word.toCharArray();
+    // if (alphabet.containsKey(chArr[0])) {
+    // return true;
+    // } else {
+    // return false;
+    // }
+    // }
+    // что делать в случае ПРИВЕТ! ?
 }
