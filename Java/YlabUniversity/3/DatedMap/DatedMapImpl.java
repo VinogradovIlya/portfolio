@@ -1,26 +1,22 @@
 package DatedMap;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class DatedMapImpl implements DatedMap {
-    private String value;
-    private Date date;
-    private Map<String, DatedMapImpl> map = new HashMap<>();
-
-    public DatedMapImpl(String value) {
-        this.value = value;
-        this.date = new Date();
-    }
+    private Map<String, String> map = new HashMap<>();
+    private Map<String, Instant> dateMap = new HashMap<>();
 
     public void put(String key, String value) {
-        map.put(key, new DatedMapImpl(value));
+        map.put(key, value);
+        dateMap.put(key, Instant.now());
     }
 
     public String get(String key) {
-        return getValue();
+        return map.get(key);
     }
 
     public boolean containsKey(String key) {
@@ -35,18 +31,10 @@ public class DatedMapImpl implements DatedMap {
         return map.keySet();
     }
 
-    public Date getKeyLastInsertionDate(String key) {
-        if (map.containsKey(key)) {
-            return map.get(key).getDate();
+    public Date getKeyLastInsertionDate(String key) { 
+        if (dateMap.containsKey(key)) {
+            return Date.from(dateMap.get(key));
         } else
             return null;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public Date getDate() {
-        return date;
     }
 }
