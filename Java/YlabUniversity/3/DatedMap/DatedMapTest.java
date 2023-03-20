@@ -10,13 +10,12 @@ import java.util.Map;
 public class DatedMapTest {
 
     public static void main(String[] args) {
-        Map<String, DatedMapImpl> testMap = new HashMap<>();
+        Map<String, DatedMapImpl> testMap = new HashMap<>(); // 1
+        // Map<String, String> testMap = new HashMap<>();
 
-        DatedMapImpl datMapImpl = new DatedMapImpl("alpha");
-
-        testMap.put("A", new DatedMapImpl("alpha")); // 1
-        testMap.put("B", new DatedMapImpl("beta")); // 1
-        // testMap.put("C", "beta"); // 2
+        // testMap.put("A", "alpha");
+        // testMap.put("B", "beta");
+        testMap.put("C", new DatedMapImpl("test")); // 1
 
         System.out.println(testMap.get("A"));
         System.out.println(testMap.get("B"));
@@ -35,7 +34,6 @@ public class DatedMapTest {
         System.out.println();
 
         System.out.println(testMap.get("C").getDate()); // 1
-        System.out.println(testMap.get("C").getDate()); // 1 
-        // getKeyLastInsertionDate
+        // System.out.println(testMap.getKeyLastInsertionDate("A"));
     }
 }
