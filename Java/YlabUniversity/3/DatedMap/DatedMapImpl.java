@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class DatedMapImpl implements DatedMap {
-    String key;
-    private String value;
+    // String key;
+    private String key, value;
     private Date date;
     private Map<String, DatedMapImpl> map = new HashMap<>();
 

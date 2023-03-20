@@ -34,6 +34,6 @@ public class DatedMapTest {
         System.out.println();
 
         System.out.println(testMap.get("C").getDate()); // 1
-        // System.out.println(testMap.getKeyLastInsertionDate("A"));
+        // System.out.println(testMap.getKeyLastInsertionDate("C"));
     }
 }
