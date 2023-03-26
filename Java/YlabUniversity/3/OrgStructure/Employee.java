@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Employee implements OrgStructureParser {
+public class Employee {
 
     private Long id;
     private Long bossId;
@@ -67,46 +67,37 @@ public class Employee implements OrgStructureParser {
     }
 
     public List<Employee> getSubordinate() {
+        for (Employee employee : subordinate) {
+            employee.print();
+        }
         return subordinate;
     }
 
-    public Employee parseStructure(File csvFile) throws IOException {
-        List<String> str = new ArrayList<>();
-
+    public void setSubordinate(File csvFile) {
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-
-            String line = reader.readLine(); // заполнение коллекции
+            String line = reader.readLine();
             while (line != null) {
+                Employee employee = new Employee();
                 line = reader.readLine();
-                str.add(line);
-            }
 
-            for (String string : str) { // считывание строки и превращение в работника(employee)
-                String[] strArr = string.split(";");
-                Long id = Long.parseLong(strArr[0]);
-                if (!strArr[1].isEmpty()) {
-                    Long bossId = Long.parseLong(strArr[1]);
-                } else {
-                    String name = strArr[2];
-                    String position = strArr[3];
-                    Employee boss = new Employee(id, null, name, position);
-                    return boss;
+                String[] parameters = line.split(";");
+                employee.setId(Long.parseLong(parameters[0]));
+                if (parameters[1].isEmpty()) {
+                    continue;
                 }
-
-                // Employee employee = new Employee(id, bossId, name, position);
-                // subordinate.add(employee);
-                // return employee;
+                employee.setBossId(Long.parseLong(parameters[1]));
+                employee.setName(parameters[2]);
+                employee.setPosition(parameters[3]);
+                subordinate.add(employee);
             }
-        } catch (IOException e) {
+            } catch (NullPointerException e) {
             System.out.println(e.getClass().getSimpleName());
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
         }
-        return null;
     }
 
-    public void printEmployee(Employee employee) {
-        System.out.println(employee.getId() + " "
-                + employee.getBossId() + " "
-                + employee.getName() + " "
-                + employee.getPosition());
+    public void print() {
+        System.out.println(getId() + " " + getBossId() + " " + getName() + " " + getPosition());
     }
 }
