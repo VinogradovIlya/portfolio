@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "LqCZExIv1hPIxjhu7wgLxHU3Imrb70XYfgHsLT+hnP7T02Do/5arxyZn0UAN7c8WJSpu+REipBwKWwj9dw3Ukw==",
+  "success": true,
+  "projectFilePath": "/Users/umpabook/portfolio/C#/projecteuler/1/1.csproj",
+  "expectedPackageFiles": [
+    "/Users/umpabook/.nuget/packages/microsoft.netcore.app.ref/6.0.14/microsoft.netcore.app.ref.6.0.14.nupkg.sha512",
+    "/Users/umpabook/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.14/microsoft.aspnetcore.app.ref.6.0.14.nupkg.sha512",
+    "/Users/umpabook/.nuget/packages/microsoft.netcore.app.host.osx-arm64/6.0.14/microsoft.netcore.app.host.osx-arm64.6.0.14.nupkg.sha512"
+  ],
+  "logs": []
+}

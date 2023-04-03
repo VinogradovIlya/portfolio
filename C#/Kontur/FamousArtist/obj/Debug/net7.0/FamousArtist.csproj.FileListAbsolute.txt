@@ -1,0 +1,15 @@
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/bin/Debug/net7.0/FamousArtist
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/bin/Debug/net7.0/FamousArtist.deps.json
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/bin/Debug/net7.0/FamousArtist.runtimeconfig.json
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/bin/Debug/net7.0/FamousArtist.dll
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/bin/Debug/net7.0/FamousArtist.pdb
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/obj/Debug/net7.0/FamousArtist.csproj.AssemblyReference.cache
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/obj/Debug/net7.0/FamousArtist.GeneratedMSBuildEditorConfig.editorconfig
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/obj/Debug/net7.0/FamousArtist.AssemblyInfoInputs.cache
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/obj/Debug/net7.0/FamousArtist.AssemblyInfo.cs
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/obj/Debug/net7.0/FamousArtist.csproj.CoreCompileInputs.cache
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/obj/Debug/net7.0/FamousArtist.dll
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/obj/Debug/net7.0/refint/FamousArtist.dll
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/obj/Debug/net7.0/FamousArtist.pdb
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/obj/Debug/net7.0/FamousArtist.genruntimeconfig.cache
+/Users/umpabook/portfolio/C#/Kontur/FamousArtist/obj/Debug/net7.0/ref/FamousArtist.dll

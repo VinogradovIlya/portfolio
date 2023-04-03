@@ -1,0 +1,15 @@
+/Users/umpabook/portfolio/C#/projecteuler/1/bin/Debug/net6.0/1
+/Users/umpabook/portfolio/C#/projecteuler/1/bin/Debug/net6.0/1.deps.json
+/Users/umpabook/portfolio/C#/projecteuler/1/bin/Debug/net6.0/1.runtimeconfig.json
+/Users/umpabook/portfolio/C#/projecteuler/1/bin/Debug/net6.0/1.dll
+/Users/umpabook/portfolio/C#/projecteuler/1/bin/Debug/net6.0/1.pdb
+/Users/umpabook/portfolio/C#/projecteuler/1/obj/Debug/net6.0/1.csproj.AssemblyReference.cache
+/Users/umpabook/portfolio/C#/projecteuler/1/obj/Debug/net6.0/1.GeneratedMSBuildEditorConfig.editorconfig
+/Users/umpabook/portfolio/C#/projecteuler/1/obj/Debug/net6.0/1.AssemblyInfoInputs.cache
+/Users/umpabook/portfolio/C#/projecteuler/1/obj/Debug/net6.0/1.AssemblyInfo.cs
+/Users/umpabook/portfolio/C#/projecteuler/1/obj/Debug/net6.0/1.csproj.CoreCompileInputs.cache
+/Users/umpabook/portfolio/C#/projecteuler/1/obj/Debug/net6.0/1.dll
+/Users/umpabook/portfolio/C#/projecteuler/1/obj/Debug/net6.0/refint/1.dll
+/Users/umpabook/portfolio/C#/projecteuler/1/obj/Debug/net6.0/1.pdb
+/Users/umpabook/portfolio/C#/projecteuler/1/obj/Debug/net6.0/1.genruntimeconfig.cache
+/Users/umpabook/portfolio/C#/projecteuler/1/obj/Debug/net6.0/ref/1.dll
