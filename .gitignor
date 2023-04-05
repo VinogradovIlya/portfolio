@@ -1,3 +1,2 @@
-!*.java
-!*.cs
-!*.pdf
+!portfolio/**/*.class
+!src/**/*.class
