@@ -66,12 +66,17 @@ while move != '0':
     if move == '1':
         event = input("Какое событие важно для вас?\n")
         create(event)
+        show()
     if move == '2':
         event = input('Какое событие хотите обновить?\n')
+        show()
         update(event)
+        show()
     if move == '3':
+        show()
         event = input('Какое событие хотите удалить?\n')
         delete(event)
+        show()
     if move == '4':
         show()
     move = input(
