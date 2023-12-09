@@ -1,6 +1,9 @@
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
+import os
+import json
+import pprint
 
 
 class Controller:
@@ -8,11 +11,53 @@ class Controller:
         self.model = model
         self.view = view
 
-        self.view.handle_date_selection.connect(self.model.set_selected_date)
-        self.model.date_selected.connect(self.view.show_selected_date)
+    def save(self):
+        """ метод записи в json файл """
+        os.chdir(self.model.DIR)
+        self.model.take_info()
+        # обработка исключений
+        try:
+            # открытие файла в режиме чтения
+            with open(self.model.DIR / 'my work time.json', 'r', encoding='utf-8') as file:
+                # загрузка файла в список
+                data = json.load(file)
+        except FileNotFoundError:
+            data = {}
+        if 'work' not in data:
+            data['work'] = {}
+        data['work'][self.model.date_selected] = self.model.surname_list
+        with open(self.model.DIR / 'my work time.json', 'w', encoding='utf-8') as file:
+            json.dump(data, file, ensure_ascii=False)
 
-    def open_add_screen(self):
-        self.view.main_win.setCurrentWidget(self.view.layout_widget)
+    # def load_file(self):
+    #     try:
+    #         with open(self.model.DIR / 'my work time.json', "r") as file:
+    #             file_content = file.read()
+    #             # Используем pprint для форматированного вывода содержимого файла
+    #             pretty_content = pprint.pformat(file_content)
 
-    def open_main_screen(self):
-        self.view.main_win.setCurrentWidget(self.view.main_win)
+    #             self.view.text_edit.setPlainText(pretty_content)
+    #     except FileNotFoundError:
+    #         self.view.text_edit.setPlainText("File not found.")
+    #     except Exception as e:
+    #         self.view.text_edit.setPlainText(
+    #             "An error occurred while loading the file:\n" + str(e))
+
+    def load_file(self):
+        os.chdir(self.model.DIR)
+        try:
+            with open(self.model.DIR / 'my work time.json', "r") as file:
+                file_content = file.read()
+                pretty_content = json.dumps(json.loads(
+                    file_content), indent=4, ensure_ascii=False)
+                self.view.text_edit.setPlainText(pretty_content)
+        except FileNotFoundError:
+            self.view.text_edit.setPlainText("File not found.")
+        except Exception as e:
+            self.view.text_edit.setPlainText(
+                "An error occurred while loading the file:\n" + str(e))
+
+    def final_move(self):
+        """ сохранение и оповещение о готовности """
+        self.save()
+        self.view.done()
