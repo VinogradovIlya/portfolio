@@ -15,11 +15,8 @@ class Controller:
         """ метод записи в json файл """
         os.chdir(self.model.DIR)
         self.model.take_info()
-        # обработка исключений
         try:
-            # открытие файла в режиме чтения
             with open(self.model.DIR / 'my work time.json', 'r', encoding='utf-8') as file:
-                # загрузка файла в список
                 data = json.load(file)
         except FileNotFoundError:
             data = {}
@@ -44,6 +41,7 @@ class Controller:
     #             "An error occurred while loading the file:\n" + str(e))
 
     def load_file(self):
+        """ метод для чтения json файла из папки """
         os.chdir(self.model.DIR)
         try:
             with open(self.model.DIR / 'my work time.json', "r") as file:
