@@ -1,7 +1,6 @@
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
-import os
 import json
 import pprint
 
@@ -13,10 +12,12 @@ class Controller:
 
     def save(self):
         """ метод записи в json файл """
-        os.chdir(self.model.DIR)
-        self.model.take_info()
+        self.take_info()
+        # обработка исключений
         try:
+            # открытие файла в режиме чтения
             with open(self.model.DIR / 'my work time.json', 'r', encoding='utf-8') as file:
+                # загрузка файла в список
                 data = json.load(file)
         except FileNotFoundError:
             data = {}
@@ -41,8 +42,6 @@ class Controller:
     #             "An error occurred while loading the file:\n" + str(e))
 
     def load_file(self):
-        """ метод для чтения json файла из папки """
-        os.chdir(self.model.DIR)
         try:
             with open(self.model.DIR / 'my work time.json', "r") as file:
                 file_content = file.read()
@@ -59,3 +58,10 @@ class Controller:
         """ сохранение и оповещение о готовности """
         self.save()
         self.view.done()
+
+    def take_info(self):
+        self.model.set_selected_date()
+        self.model.set_surname_list()
+
+    def open_main_win(self):
+        self.view.main_win.setCurrentIndex(0)
