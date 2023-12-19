@@ -1,0 +1,8 @@
+в папке door_configuration:
+vim door_1.conf
+2j
+ww
+diw
+a
+OPEN
+ZZ

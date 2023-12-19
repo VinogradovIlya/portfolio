@@ -1,0 +1,2 @@
+All:
+	gcc -Wall -Wextra -Werror data_process.c data_module_entry.c
