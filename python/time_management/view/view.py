@@ -26,19 +26,19 @@ class View_window(QMainWindow):
         2 кнопки: добавить/удалить/обновить и посмотреть результат
         """
         btn_add = QPushButton('Добавить часы')
-        # переход к новому экрану
         btn_add.clicked.connect(self.add_screen_ui)
         btn_show = QPushButton('Показать отработанные часы')
         btn_show.clicked.connect(self.res_screen_ui)
 
-        # создание лэйаута (направляющей линии, где будут наши виджеты (кнопки, текст и тд))
         layout_widget = QWidget()
         v_layout = QVBoxLayout()
-        # добавление виджетов на направляющие линии и расположение
+
         v_layout.addWidget(
             btn_add, alignment=Qt.AlignmentFlag.AlignCenter)
         v_layout.addWidget(
             btn_show, alignment=Qt.AlignmentFlag.AlignCenter)
+        v_layout.setStretchFactor(btn_add, 2)
+        v_layout.setStretchFactor(btn_show, 2)
         layout_widget.setLayout(v_layout)
         self.main_win.addWidget(layout_widget)
 
@@ -68,8 +68,12 @@ class View_window(QMainWindow):
 
         self.c_line.addWidget(self.cal, alignment=Qt.AlignmentFlag.AlignCenter)
         self.new_line()
-        self.c_line.addWidget(btn_add)
+        stratch_line = QHBoxLayout()
+        stratch_line.addStretch(1)
+        stratch_line.addWidget(btn_add, 2)
+        stratch_line.addStretch(1)
         self.c_line.addLayout(bottom_h_line)
+        self.c_line.addLayout(stratch_line)
         layout_widget.setLayout(self.c_line)
         self.main_win.addWidget(layout_widget)
         self.main_win.setCurrentWidget(layout_widget)
@@ -81,7 +85,6 @@ class View_window(QMainWindow):
         self.text_edit.setReadOnly(True)
         # self.controller.load_file()
         self.sql_controller.output()
-        # self.sql_ontroller.print_type_lesson()
 
         btn_back = QPushButton('Назад')
         btn_back.clicked.connect(self.controller.open_main_win)
