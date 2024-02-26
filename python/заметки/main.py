@@ -41,6 +41,7 @@ def del_note():
         with open('notes_data.json', 'w') as file:
             json.dump(notes, file, sort_keys=True,
                       ensure_ascii=False, indent=4)
+        done()
     else:
         warning = QMessageBox()
         warning.setText('Выберите заметку для удаления')
@@ -129,10 +130,7 @@ except FileNotFoundError:
     }
     with open(DIR/'notes_data.json', 'w', encoding='utf-8') as file:
         json.dump(notes, file, sort_keys=True, ensure_ascii=False, indent=4)
-    with open("notes_data.json", "r", encoding='utf-8') as file:
-        notes = json.load(file)
     list_notes.addItems(notes)
-
 
 
 main_win.show()
