@@ -14,7 +14,7 @@ app = QApplication([])
 main_win = QWidget()
 
 
-def show_note() -> None:
+def show_note():
     key = list_notes.selectedItems()[0].text()
     field_note.setText(notes[key]['text'])
     list_tags.clear()
@@ -62,6 +62,62 @@ def save_note():
         warning.exec()
 
 
+def add_tag():
+    if list_notes.selectedItems():
+        key = list_notes.selectedItems()[0].text()
+        tag = tag_line.text()
+        if not tag in notes[key]['tags'] and tag != '':
+            notes[key]['tags'].append(tag)
+            list_tags.addItem(tag)
+            tag_line.clear()
+        with open('notes_data.json', 'w') as file:
+            json.dump(notes, file, sort_keys=True, ensure_ascii=False)
+        done()
+    else:
+        warning = QMessageBox()
+        warning.setText('Выберите заметку для добавления тэга')
+        warning.exec()
+
+
+def delete_tag():
+    if list_tags.selectedItems():
+        key = list_notes.selectedItems()[0].text()
+        tag = list_tags.selectedItems()[0].text()
+        notes[key]["теги"].remove(tag)
+        list_tags.clear()
+        list_tags.addItems(notes[key]["теги"])
+        with open("notes_data.json", "w") as file:
+            json.dump(notes, file, sort_keys=True, ensure_ascii=False)
+        done()
+    else:
+        warning = QMessageBox()
+        warning.setText("Тег для удаления не выбран!")
+        warning.exec()
+
+
+def search_tag():
+    tag = tag_line.text()
+    if button_search_tags.text() == "Искать заметки по тегу" and tag:
+        notes_filtered = {}  # тут будут заметки с выделенным тегом
+        for note in notes:
+            if tag in notes[note]["tags"]:
+                notes_filtered[note] = notes[note]
+        button_search_tags.setText("Сбросить поиск")
+        list_notes.clear()
+        list_tags.clear()
+        list_notes.addItems(notes_filtered)
+    elif button_search_tags.text() == "Сбросить поиск":
+        tag_line.clear()
+        list_notes.clear()
+        list_tags.clear()
+        list_notes.addItems(notes)
+        button_search_tags.setText("Искать заметки по тегу")
+    else:
+        warning = QMessageBox()
+        warning.setText("error")
+        warning.exec()
+
+
 def done():
     done = QMessageBox()
     done.setText('Выполнено')
@@ -101,26 +157,28 @@ add_right_layout.addWidget(button_save_notes)
 label_tags = QLabel('Список тегов')
 list_tags = QListWidget()
 add_h2_line = QHBoxLayout()
-button_create_tags = QPushButton('Добавить к заметке')
+button_add_tags = QPushButton('Добавить к заметке')
+button_add_tags.clicked.connect(add_tag)
 button_remove_tags = QPushButton('Открепить от заметки')
+button_remove_tags.clicked.connect(delete_tag)
 tag_line = QLineEdit()
 tag_line.setPlaceholderText('Введите тег')
-add_h2_line.addWidget(button_create_tags)
+add_h2_line.addWidget(button_add_tags)
 add_h2_line.addWidget(button_remove_tags)
-button_save_tags = QPushButton('Искать заметки по тегу')
+button_search_tags = QPushButton('Искать заметки по тегу')
+button_search_tags.clicked.connect(search_tag)
 
 add_right_layout.addWidget(label_tags)
 add_right_layout.addWidget(list_tags)
 add_right_layout.addWidget(tag_line)
 add_right_layout.addLayout(add_h2_line)
-add_right_layout.addWidget(button_save_tags)
+add_right_layout.addWidget(button_search_tags)
 
 list_notes.itemClicked.connect(show_note)
 
 try:
     with open("notes_data.json", "r", encoding='utf-8') as file:
         notes = json.load(file)
-    list_notes.addItems(notes)
 except FileNotFoundError:
     notes = {
         'Добро пожаловать': {
@@ -130,7 +188,7 @@ except FileNotFoundError:
     }
     with open(DIR/'notes_data.json', 'w', encoding='utf-8') as file:
         json.dump(notes, file, sort_keys=True, ensure_ascii=False, indent=4)
-    list_notes.addItems(notes)
+list_notes.addItems(notes)
 
 
 main_win.show()
