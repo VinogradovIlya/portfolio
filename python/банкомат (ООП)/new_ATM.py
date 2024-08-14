@@ -35,8 +35,8 @@ class Atm:
     def __getattribute__(self, currency: str) -> Any:
         """ Метод для работы с попыткой обращения к атрибутам экземпляра """
         if currency != '_rub':
-            raise AttributeError('1')
-            # 'Ведутся технические работы, пока что возможна только работа в рублях')
+            raise AttributeError(
+            'Ведутся технические работы, пока что возможна только работа в рублях')
         return object.__getattribute__(self, currency)
 
     def __setattr__(self, name, value) -> None:
