@@ -23,7 +23,7 @@ P. S.
 * [x] Любое действие выводит сумму денег
 
 ## new_ATM.py
-Данный класс необходим для работы с финансами пользователя: пополнение и снятие + проверки на корректность использования. В данном классе, мне дали совет на [stackoverflow](#https://stackoverflow.com/questions/78876052/is-the-problem-with-getattribute-or-getattr-what-else-can-be-fixed-in-t)
+Данный класс необходим для работы с финансами пользователя: пополнение и снятие + проверки на корректность использования. В данном классе, мне дали совет на [stackoverflow](https://stackoverflow.com/questions/78876052/is-the-problem-with-getattribute-or-getattr-what-else-can-be-fixed-in-t)
 
 ## main.py
 Демонстрационный файл для работы с классами и демонстрации работы проекта
