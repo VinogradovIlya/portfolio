@@ -3,34 +3,42 @@ from typing import Any
 
 
 class Atm:
+    __slots__ = ('_rub', '_count')
+
     def __init__(self, rub: int | float = 0) -> None:
         """ Метод инициализации экземпляра """
         self._rub = Decimal(rub)
         self._count = 0
 
-    def add_rub(self, money: int | float) -> None:
+    def add_rub(self, money: Decimal) -> None:
         """ Метод для работы с начислением рублей экземпляра """
-        money = Decimal(money)
-        if money > 0:
+        if money > 0 and self.check50(money):
             self += money
         else:
             raise ValueError('Некорректное значение')
 
-    def take_rub(self, money: int | float | Decimal = 0) -> None:
+    def take_rub(self, money: Decimal) -> None:
         """ Метод для работы со списанием рублей экземпляра """
         if money > self._rub:
             raise ValueError('Сумма больше, чем денег на счете')
-        percent = money * 1.015
+        elif money <= 0:
+            raise ValueError('Некорректное значение')
+        percent = money * Decimal(1.015)
         if not 30 < percent < 600:
             if percent < 30:
                 percent = 30
             elif percent > 600:
                 percent = 600
-        self -= percent  # доделать in place вычитание
+        self -= percent
 
-    def check50(self, money: int | float | Decimal = 0) -> None:
+    def count(self) -> None:
+        """ Метод для проверки количества операций"""
+        self._count += 1
+        if not self._count % 3:
+            self *= Decimal(0.97)
+
+    def check50(self, money: Decimal) -> None:
         """ Метод для проверки кратности 50 """
-        money = Decimal(money)
         if money % 50:
             raise ValueError('Значение должно быть кратным 50')
         return not money % 50
@@ -38,27 +46,30 @@ class Atm:
     def check_wealth(self):
         """ Метод для списания налога на богатство """
         if self._rub > 5_000_000:
-            self._rub *= 0.9
+            self._rub *= Decimal(0.9)
 
     def __str__(self) -> str:
         """ Метод для строчного представления экземпляра """
-        return f'rub = {self._rub}'
+        return f'rub = {self._rub:0.2f}'
 
     def __repr__(self) -> str:
         """ Метод для представления экземпляра для программиста"""
         return f'Atm({self._rub})'
 
-    def __iadd__(self, money: int | float | Decimal) -> Any:
-        """ Метод для сложения экземпляра и числа \n(вспомогательный метод для начисления рублей) """
+    def __iadd__(self, money: Decimal) -> Any:
+        """ Метод для сложения экземпляра и числа \n(вспомогательный метод для вычисления рублей) """
         self._rub = self._rub + money
         return Atm(self._rub)
 
-    # def __getattribute__(self, currency: str) -> Any:
-    #     """ Метод для работы с попыткой обращения к атрибутам экземпляра """
-    #     if not currency in ('_rub', '_count'):
-    #         raise AttributeError(
-    #             'Error 1: Ведутся технические работы, пока что возможна только работа в рублях')
-    #     return object.__getattribute__(self, currency)
+    def __isub__(self, money: Decimal):
+        """ Метод для вычитания экземпляра и числа \n(вспомогательный метод для вычисления рублей) """
+        self._rub = self._rub - money
+        return Atm(self._rub)
+
+    def __imul__(self, money: Decimal):
+        """ Метод для вычитания экземпляра и числа \n(вспомогательный метод для вычисления рублей) """
+        self._rub = self._rub * money
+        return Atm(self._rub)
 
     def __setattr__(self, name, value) -> None:
         """ Метод для попытки присвоения значения атрибуту экземпляра """
@@ -72,7 +83,7 @@ class Atm:
         return None
 
     def __delattr__(self, item):
-        if item in ('_rub', '_count'):
+        if item in self.__slots__:
             setattr(self, item, 0)
         else:
             object.__delattr__(self, item)
