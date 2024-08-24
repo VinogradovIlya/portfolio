@@ -3,6 +3,7 @@ from typing import Any
 
 
 class Atm:
+    """ Класс банкомат для работы с рублями пользователя """
     __slots__ = ('_rub', '_count')
 
     def __init__(self, rub: int | float = 0) -> None:
@@ -73,7 +74,7 @@ class Atm:
 
     def __setattr__(self, name, value) -> None:
         """ Метод для попытки присвоения значения атрибуту экземпляра """
-        if not name in ('_rub', '_count'):
+        if not name in self.__slots__:
             raise AttributeError(
                 'Error 2: Ведутся технические работы, пока что возможна только работа в рублях')
         return object.__setattr__(self, name, value)
