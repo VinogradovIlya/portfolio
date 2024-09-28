@@ -1,46 +1,41 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-int input(int *a, int size);
+#define NMAX 10
+
+int input(int *a);
 void qsortRecursive(int *a, int size);
-void output(int *a, int size);
+void output(int *a);
 
 int main() {
-    int size;
-    if (scanf("%d", &size) != 1 && getchar() != '\n') {
+    int data[10];
+    if (input(data) == 1) {
         printf("n/a");
     } else {
-        int *data = malloc(size * sizeof(int));
-        if (input(data, size) == 1) {
-            printf("n/a");
-        } else {
-            qsortRecursive(data, size);
-            output(data, size);
-            free(data);
-        }
+        qsortRecursive(data, NMAX);
+        output(data);
     }
 
     return 0;
 }
 
-int input(int *a, int size) {
+int input(int *a) {
     int error = 0;
-    for (int i = 0; i < size && error == 0; i++) {
+    for (int i = 0; i < 10 && error == 0; i++) {
         char ch;
         int validate = scanf("%d%c", &a[i], &ch);
-        if (validate != 1 && ch != ' ' && i < size - 1) {
+        if (validate != 1 && ch != ' ' && i < 10 - 1) {
             error = 1;
-        } else if (validate != 1 && ch != '\n' && i == size - 1) {
+        } else if (validate != 1 && ch != '\n' && i == 10 - 1) {
             error = 1;
         }
     }
     return error;
 }
 
-void output(int *a, int size) {
-    for (int i = 0; i < size; i++) {
+void output(int *a) {
+    for (int i = 0; i < NMAX; i++) {
         printf("%d", a[i]);
-        if (i < size - 1) {
+        if (i < NMAX - 1) {
             printf(" ");
         }
     }

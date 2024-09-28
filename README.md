@@ -1,8 +1,13 @@
 # Описание
+
 В данной папке находятся мои работы на языках Python и C. 
+
 ## [C](https://github.com/IlyaVinigradov/portfolio/tree/main/C)
-Проекты на Си были написаны во время участия в school21 от Сбербанка.
-## [Python (PyQt6, Pandas)](https://github.com/IlyaVinigradov/portfolio/tree/main/python)
+
+Проекты на Си были написаны во время участия в school21 от Сбербанка. Где я научился работать с указателями, структурами, динамически выделять память, работать с файлами.
+
+## [Python (PyQt6, Pandas, MySQL, pywebio, aiogram)](https://github.com/IlyaVinigradov/portfolio/tree/main/python)
+
 На Python я писал для себя с применением различных библиотек: PyQt6, Pandas. В папке есть несколько учебных проектов на PyQt6: я написал приложение по ведению заметок и по учету рабочего времени (мне нужно было считать количество проведенных уроков в определенные дни) с сохранением в БД. В качестве языка по работе с БД я выбрал MySQL.
 1. [time_management (PyQt6, MySQl, применение паттерна MVC)](https://github.com/IlyaVinigradov/portfolio/tree/main/python/time_management)
 2. [заметки (PyQt6)](https://github.com/IlyaVinigradov/portfolio/tree/main/python/%D0%B7%D0%B0%D0%BC%D0%B5%D1%82%D0%BA%D0%B8%20%2B%20pyqt6)
