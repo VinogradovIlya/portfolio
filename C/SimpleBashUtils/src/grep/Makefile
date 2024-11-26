@@ -13,5 +13,8 @@ all: s21_grep
 
 rebuild: clear all
 
+test_rebuild: clear
+	gcc -o s21_grep $(SOURCE)
+
 clang:
 	clang-format -i *.c *.h

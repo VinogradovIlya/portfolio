@@ -3,24 +3,39 @@
 #include "../common/base.h"
 
 int main(int argc, char **argv) {
-  int flags = 0;
-  if (argc == 1) {
-    read_and_print_input();
-  } else {
-    if (argv[1][0] == '-') {
-      process_flags(argv[1], &flags);
+  int flags = 0, start_read = 0;
+  for (int i = 1; i < argc && start_read == 0; i++) {
+    if (argv[i][0] == '-') {
+      process_flags(argc, argv, &flags);
+    } else {
+      start_read = i;
     }
-    for (int i = (flags ? 2 : 1); i < argc; ++i) {
+  }
+  if (start_read == 0) {
+    print_file(NULL, flags);
+  } else {
+    for (int i = start_read; i < argc; i++) {
       print_file(argv[i], flags);
     }
   }
   return 0;
 }
 
-void process_flags(const char *flag_str, int *flags) {
-  while (*flag_str != '\0') {
-    parse_flag(*flag_str, flags);
-    flag_str++;
+void process_flags(int argc, char **argv, int *flags) {
+  int opt;
+  while ((opt = getopt_long(argc, argv, "bneEstv", long_options, NULL)) != -1) {
+    switch (opt) {
+      case 'b':
+      case 'n':
+      case 'e':
+      case 's':
+      case 't':
+      case 'v':
+        parse_flag((char)opt, flags);
+        break;
+      default:
+        fprintf(stderr, "Usage: %s [OPTION]... [FILE]...\n", argv[0]);
+    }
   }
 }
 
@@ -53,28 +68,29 @@ void parse_flag(char flag, int *flags) {
   }
 }
 
-void read_and_print_input() {  // добавить работу с флагами
-  char s;
-  while (scanf("%c", &s) != EOF) {
-    printf("%c", s);
+void print_line_number_if_needed(int *line_number, int flags, int c) {
+  int show_line_numbers = flags & FLAG_NUMBER;
+  int number_non_blank = flags & FLAG_NUMBER_NONBLANK;
+  if (show_line_numbers || (number_non_blank && c != '\n')) {
+    if (!number_non_blank || c != '\n') {
+      print_line_number(line_number);
+    }
   }
 }
 
 void print_line_number(int *line_number) { printf("%6d\t", (*line_number)++); }
 
 void print_file(char *file, int flags) {
-  FILE *f = fopen(file, "r");
+  FILE *f = (file == NULL) ? stdin : fopen(file, "r");
   if (f != NULL) {
-    int line_number = 1, c, last_char = 0, blank_lines_count = 0;
+    int line_number = 1, c, last_char = 0, blank_lines_count = 0,
+        is_first_line = 1;
     int show_line_numbers = flags & FLAG_NUMBER;
     int number_non_blank = flags & FLAG_NUMBER_NONBLANK;
     int show_end_marker = flags & FLAG_SHOW_ENDS;
     int squeeze_blank = flags & FLAG_SQUEEZE_BLANK;
     int show_tabs = flags & FLAG_SHOW_TABS;
-
-    if (show_line_numbers || number_non_blank) {
-      print_line_number(&line_number);
-    }
+    int show_nonprinting = flags & FLAG_SHOW_NONPRINTING;
     while ((c = fgetc(f)) != EOF) {
       if (squeeze_blank && c == '\n' && last_char == '\n') {
         blank_lines_count++;
@@ -82,23 +98,32 @@ void print_file(char *file, int flags) {
       } else {
         blank_lines_count = 0;
       }
-      if (last_char == '\n' &&
-          (show_line_numbers || (number_non_blank && c != '\n'))) {
-        print_line_number(&line_number);
+      if (is_first_line ||
+          (last_char == '\n' &&
+           (show_line_numbers || (number_non_blank && c != '\n')))) {
+        print_line_number_if_needed(&line_number, flags, c);
+        is_first_line = 0;
       }
-      if (c == '\t' && show_tabs) {
+      if (c < 32 && c != '\n' && c != '\t' && show_nonprinting) {
+        printf("^%c", c + 64);
+      } else if (c == 127 && show_nonprinting) {
+        printf("^?");
+      } else if (c == '\t' && show_tabs) {
         printf("^I");
-      } else if (c == '\n' && show_end_marker) {
-        putc('$', stdout);
+      } else if (c == '\n') {
+        if (show_end_marker) {
+          fputc('$', stdout);
+        }
         putc(c, stdout);
       } else {
         putc(c, stdout);
       }
       last_char = c;
     }
-    fclose(f);
-  } else {
+    if (file != NULL) {
+      fclose(f);
+    }
+  } else if (file != NULL) {
     fprintf(stderr, "s21_cat: %s: %s\n", file, strerror(errno));
-    exit(errno);
   }
 }

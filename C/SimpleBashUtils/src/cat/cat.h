@@ -18,7 +18,7 @@ static struct option long_options[] = {
 
 void print_file(char *path, int flags);
 void read_and_print_input();
-void process_flags(const char *flag_str, int *flags);
+void process_flags(int argc, char **argv, int *flags);
 void parse_flag(char flag, int *flags);
 void print_line_number(int *line_number);
 
