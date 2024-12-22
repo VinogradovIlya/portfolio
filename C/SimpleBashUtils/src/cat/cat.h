@@ -9,6 +9,7 @@
 #define FLAG_SHOW_NONPRINTING 32
 
 #include <getopt.h>
+#include <stddef.h>
 
 static struct option long_options[] = {
     {"number-nonblank", no_argument, NULL, 'b'},
