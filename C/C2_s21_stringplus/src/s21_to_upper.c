@@ -5,7 +5,7 @@ char _s21_upper(char c);
 void *s21_to_upper(const char *str) {
   s21_size_t len = s21_strlen(str);
   char *new_str = s21_NULL;
-  if (len != 0) {
+  if (str != s21_NULL) {
     new_str = (char *)malloc(len + 1);
     if (new_str != s21_NULL) {
       s21_strncpy(new_str, str, len);

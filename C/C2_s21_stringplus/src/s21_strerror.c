@@ -1,5 +1,4 @@
 #include "s21_string.h"
-#include "string.h"
 
 #define ERROR "Unknown error "
 #define MIN_ERRLIST -1
@@ -133,10 +132,10 @@ char *s21_strerror(int errnum) {
 
   if (errnum <= MIN_ERRLIST || errnum >= MAX_ERRLIST) {
 #if defined(__APPLE__)
-    sprintf(result, "Unknown error: %d", errnum);
+    s21_sprintf(result, "Unknown error: %d", errnum);
 
 #elif defined(__linux__)
-    sprintf(result, "Unknown error %d", errnum);
+    s21_sprintf(result, "Unknown error %d", errnum);
 #endif
   } else {
     s21_strncpy(result, (errorList[errnum]), 512);

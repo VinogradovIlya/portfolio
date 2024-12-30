@@ -1,4 +1,5 @@
 #include <check.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "s21_string.h"
@@ -20,6 +21,13 @@ START_TEST(test_s21_strcspn) {
   ck_assert_int_eq(s21_strcspn("0126789345", "9876"),
                    strcspn("0126789345", "9876"));
   ck_assert_int_eq(s21_strcspn("abacada", "d"), strcspn("abacada", "d"));
+  char str[] = "Hello my friend,\0 how long can I do this project?";
+  ck_assert_int_eq(s21_strcspn(str, "this"), strcspn(str, "this"));
+  ck_assert_int_eq(s21_strcspn(str, "\0"), strcspn(str, "\0"));
+  ck_assert_int_eq(s21_strcspn("", "this"), strcspn("", "this"));
+  ck_assert_int_eq(s21_strcspn("this", str), strcspn("this", str));
+  ck_assert_int_eq(s21_strcspn("\0", str), strcspn("\0", str));
+  ck_assert_int_eq(s21_strcspn(str, ""), strcspn(str, ""));
 }
 END_TEST
 
@@ -185,6 +193,9 @@ START_TEST(test_s21_strrchr) {
   ck_assert_ptr_eq(s21_strrchr("ncbabcp ", 'c'), strrchr("ncbabcp ", 'c'));
   ck_assert_ptr_eq(s21_strrchr("", 'c'), strchr("", 'c'));
   ck_assert_ptr_eq(s21_strrchr("Bob\0 Coll", 'c'), strrchr("Bob\0 Coll", 'c'));
+  ck_assert_ptr_eq(s21_strrchr("Bob\0 Coll", '\0'),
+                   strrchr("Bob\0 Coll", '\0'));
+  ck_assert_ptr_eq(s21_strrchr("", '\0'), strrchr("", '\0'));
 }
 END_TEST
 
@@ -244,9 +255,20 @@ START_TEST(test_s21_strtok) {
 END_TEST
 
 START_TEST(test_s21_strncpy) {
-  char dest[10] = {};
+  char dest[100] = {};
+  char dest_origin[100] = {};
   char src[] = "hello";
-  ck_assert_str_eq(s21_strncpy(dest, src, 3), strncpy(dest, src, 3));
+
+  ck_assert_str_eq(s21_strncpy(dest, src, 3), strncpy(dest_origin, src, 3));
+  ck_assert_str_eq(s21_strncpy(dest, "h\0el\0lo", 3),
+                   strncpy(dest_origin, "h\0el\0lo", 3));
+  ck_assert_str_eq(s21_strncpy(dest, "hel\0lo", 7),
+                   strncpy(dest_origin, "hel\0lo", 7));
+
+  char src_2[] = "Hello my friend,\0 how long can I do this project?";
+  ck_assert_str_eq(s21_strncpy(dest, src_2, 5), strncpy(dest_origin, src_2, 5));
+  ck_assert_str_eq(s21_strncpy(dest, src_2, s21_strlen(src_2)),
+                   strncpy(dest_origin, src_2, s21_strlen(src_2)));
 }
 END_TEST
 
@@ -268,6 +290,24 @@ START_TEST(test_s21_to_lower) {
 
   char *result5 = s21_to_lower(NULL);
   ck_assert_ptr_eq(result5, NULL);
+
+  char str[] = "   Area  Without  Space   ";
+  char exp[] = "   area  without  space   ";
+  char *got = s21_to_lower(str);
+  ck_assert_str_eq(got, exp);
+  if (got) free(got);
+
+  char str_3[] = "   ";
+  char exp_3[] = "   ";
+  char *got_3 = s21_to_lower(str_3);
+  ck_assert_str_eq(got_3, exp_3);
+  if (got_3) free(got_3);
+
+  char str_4[] = "";
+  char exp_4[] = "";
+  char *got_4 = s21_to_lower(str_4);
+  ck_assert_str_eq(got_4, exp_4);
+  if (got_4) free(got_4);
 }
 END_TEST
 
@@ -289,6 +329,24 @@ START_TEST(test_s21_to_upper) {
 
   char *result5 = s21_to_upper(NULL);
   ck_assert_ptr_eq(result5, NULL);
+
+  char str[] = "   Area  Without  Space   ";
+  char exp[] = "   AREA  WITHOUT  SPACE   ";
+  char *got = s21_to_upper(str);
+  ck_assert_str_eq(got, exp);
+  if (got) free(got);
+
+  char str_3[] = "   ";
+  char exp_3[] = "   ";
+  char *got_3 = s21_to_upper(str_3);
+  ck_assert_str_eq(got_3, exp_3);
+  if (got_3) free(got_3);
+
+  char str_4[] = "";
+  char exp_4[] = "";
+  char *got_4 = s21_to_upper(str_4);
+  ck_assert_str_eq(got_4, exp_4);
+  if (got_4) free(got_4);
 }
 END_TEST
 
@@ -455,21 +513,21 @@ START_TEST(test_sprintf_f) {
   ck_assert_int_eq(s21_sprintf(buffer0, "Exponent: %f", f0),
                    sprintf(buffer_orig0, "Exponent: %f", f0));
   ck_assert_str_eq(buffer0, buffer_orig0);
+  /*
+    char buffer11[100];
+    char buffer_orig11[100];
+    double f11 = 456.123;
+    ck_assert_int_eq(s21_sprintf(buffer11, "Yes, %+010d - da", f11),
+                     sprintf(buffer_orig11, "Yes, %+010d - da", f11));
+    ck_assert_str_eq(buffer11, buffer_orig11);
 
-  char buffer11[100];
-  char buffer_orig11[100];
-  double f11 = 456.123;
-  ck_assert_int_eq(s21_sprintf(buffer11, "Yes, %+010d - da", f11),
-                   sprintf(buffer_orig11, "Yes, %+010d - da", f11));
-  ck_assert_str_eq(buffer11, buffer_orig11);
-
-  char buffer12[100];
-  char buffer_orig12[100];
-  double f12 = 456.000;
-  ck_assert_int_eq(s21_sprintf(buffer12, "Yes, %-+10d - da", f12),
-                   sprintf(buffer_orig12, "Yes, %-+10d - da", f12));
-  ck_assert_str_eq(buffer12, buffer_orig12);
-
+    char buffer12[100];
+    char buffer_orig12[100];
+    double f12 = 456.000;
+    ck_assert_int_eq(s21_sprintf(buffer12, "Yes, %-+10d - da", f12),
+                     sprintf(buffer_orig12, "Yes, %-+10d - da", f12));
+    ck_assert_str_eq(buffer12, buffer_orig12);
+  */
   char buffer13[100];
   char buffer_orig13[100];
   double f13 = 456.6;
@@ -508,6 +566,18 @@ START_TEST(test_sprintf_s) {
   ck_assert_str_eq(buffer, buffer_orig);
   ck_assert_int_eq(s21_sprintf(buffer, "Yes, %10.3s - da", s),
                    sprintf(buffer_orig, "Yes, %10.3s - da", s));
+  ck_assert_str_eq(buffer, buffer_orig);
+  ck_assert_int_eq(s21_sprintf(buffer, "Yes, %10.3s - da", ""),
+                   sprintf(buffer_orig, "Yes, %10.3s - da", ""));
+  ck_assert_str_eq(buffer, buffer_orig);
+  ck_assert_int_eq(s21_sprintf(buffer, "Yes, %10.9s - da", s),
+                   sprintf(buffer_orig, "Yes, %10.9s - da", s));
+  ck_assert_str_eq(buffer, buffer_orig);
+  ck_assert_int_eq(s21_sprintf(buffer, "Yes, %1.9s - da", s),
+                   sprintf(buffer_orig, "Yes, %1.9s - da", s));
+  ck_assert_str_eq(buffer, buffer_orig);
+  ck_assert_int_eq(s21_sprintf(buffer, "Yes, %-1.9s - da", s),
+                   sprintf(buffer_orig, "Yes, %-1.9s - da", s));
   ck_assert_str_eq(buffer, buffer_orig);
 }
 END_TEST

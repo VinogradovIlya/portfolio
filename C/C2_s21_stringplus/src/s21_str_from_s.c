@@ -5,7 +5,7 @@ s21_size_t s21_str_from_s(char *str, va_list *args, params params) {
   char *insert_string_flags = s21_NULL;
   s21_size_t size_insert_string = s21_strlen(insert_string);
 
-  if (params.accuracy != -1) {
+  if (params.accuracy != -1 && size_insert_string > (size_t)params.accuracy) {
     size_insert_string = params.accuracy;
   }
 

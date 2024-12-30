@@ -2,17 +2,13 @@
 
 char *s21_strrchr(const char *str, int c) {
   char *result = s21_NULL;
-  unsigned char uc = (unsigned char)c;
-  int flag = 1;
-  s21_size_t len_str = s21_strlen(str);
-
-  while (len_str != 0 && flag) {
-    if (*(str + len_str - 1) == uc) {
-      result = (char *)(str + len_str - 1);
-      flag = 0;
+  while (*str) {
+    if ((unsigned char)*str == (unsigned char)c) {
+      result = (char *)str;
     }
-    len_str--;
+    str++;
   }
+  if (c == '\0') result = (char *)str;
 
   return result;
 }

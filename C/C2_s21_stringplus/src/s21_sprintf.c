@@ -26,7 +26,6 @@ s21_size_t s21_sprintf(char *str, const char *format, ...) {
   return count;
 }
 
-#include <stdio.h>
 s21_size_t s21_parse_format(s21_size_t i, const char *format, params *params,
                             va_list *args) {
   char *ch;

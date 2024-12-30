@@ -23,18 +23,10 @@ gcov_report:
 	done
 	gcovr --html-details -o index.html --exclude tests.c
 	rm -f *.gcda *.gcno *.a main coverage.info *.gcov *.o
-#ifeq ($(OS), Darwin)
-#	gcovr --html-details -o index.html --exclude tests.c
-#	rm -f *.gcda *.gcno *.a main coverage.info *.gcov *.o
-#else
-#	gcovr --html-details -o index.html --exclude tests.c
-##	lcov --capture --directory . --output-file coverage.info --exclude '*/tests.c'
-##	genhtml coverage.info --output-directory coverage
-#	rm -f *.gcda *.gcno *.a main coverage.info *.gcov *.o
-#endif
+
 
 clean:
-	rm -f *.gcda *.gcno *.a main coverage.info *.gcov *.o
+	rm -f *.gcda *.gcno *.a main coverage.info *.gcov *.o log.txt
 ifeq ($(OS), Darwin)
 	rm -f *.css
 	rm -rf *.html
@@ -45,6 +37,8 @@ else
 endif
 
 rebuild: clean s21_string.a test gcov_report
+
+rebuild_test: clean s21_string.a test
 
 brew:
 ifeq ($(OS), Darwin)
@@ -60,5 +54,14 @@ endif
 clang:
 	clang-format -i *.c
 	clang-format -i *.h
+	
+cppcheck:
+	cppcheck --enable=all --suppress=missingIncludeSystem *.c *.h
+
+valgrind: 
+	valgrind --log-file=log.txt --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all -s ./main
+	grep errors log.txt -n
+
+
 	
 	
