@@ -1,0 +1,56 @@
+{% extends 'exhibition_app/base.html' %}
+
+{% block title %}Добавить кошку{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Добавить кошку</h1>
+    
+    <form method="post" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="colors">Окрас:</label>
+            <input type="text" id="colors" name="colors" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="mounts">Возраст (месяцев):</label>
+            <input type="number" id="mounts" name="mounts" min="0" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="kitten_breed">Порода:</label>
+            <input type="text" id="kitten_breed" name="kitten_breed" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Описание:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="photo">Фото:</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="kitten_owner">Владелец:</label>
+            <select id="kitten_owner" name="kitten_owner" required>
+                <option value="">Выберите владельца</option>
+                {% for owner in owners %}
+                <option value="{{ owner.id }}">{{ owner.surname }} {{ owner.name }} {{ owner.patronymic }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Добавить кошку</button>
+    </form>
+    
+    {% if message %}
+    <div class="message {% if error %}error{% else %}success{% endif %}">
+        {{ message }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

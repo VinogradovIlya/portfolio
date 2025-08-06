@@ -1,0 +1,61 @@
+{% extends 'exhibition_app/base.html' %}
+
+{% block title %}Оценить котенка{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Оценить котенка</h1>
+    
+    <form method="post" class="form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="cat">Выберите котенка:</label>
+            <select id="cat" name="cat" required>
+                <option value="">Выберите котенка</option>
+                {% for cat in cats %}
+                <option value="{{ cat.id }}" {% if selected_cat == cat.id|stringformat:"s" %}selected{% endif %}>
+                    {{ cat.kitten_breed }} - {{ cat.colors }} ({{ cat.kitten_owner.surname }} {{ cat.kitten_owner.name }})
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="author">Ваше имя:</label>
+            <select id="author" name="author" required>
+                <option value="">Выберите ваше имя</option>
+                {% for owner in owners %}
+                <option value="{{ owner.id }}">
+                    {{ owner.surname }} {{ owner.name }} {{ owner.patronymic }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="rating">Оценка:</label>
+            <div class="rating-stars">
+                <input type="radio" id="star5" name="rating" value="5" required>
+                <label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1">★</label>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Отправить оценку</button>
+    </form>
+    
+    {% if message %}
+    <div class="message {% if error %}error{% else %}success{% endif %}">
+        {{ message }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 
