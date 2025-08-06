@@ -1,0 +1,73 @@
+{% extends 'exhibition_app/base.html' %}
+
+{% block title %}Рейтинги котят{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Рейтинги котят</h1>
+    
+    <div class="actions">
+        <a href="{% url 'exhibition_app:add_rating' %}" class="btn btn-primary">Добавить оценку</a>
+    </div>
+    
+    {% if cats_with_ratings %}
+    <div class="ratings-grid">
+        {% for cat in cats_with_ratings %}
+        <div class="rating-card">
+            {% if cat.photo %}
+            <img src="{{ cat.photo.url }}" alt="Фото кошки" class="cat-photo">
+            {% else %}
+            <div class="no-photo">Нет фото</div>
+            {% endif %}
+            
+            <div class="rating-info">
+                <h3>{{ cat.kitten_breed }}</h3>
+                <p><strong>Окрас:</strong> {{ cat.colors }}</p>
+                <p><strong>Владелец:</strong> {{ cat.kitten_owner.surname }} {{ cat.kitten_owner.name }}</p>
+                
+                <div class="rating-summary">
+                    <div class="rating-stars-display">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= cat.average_rating %}
+                                <span class="star filled">★</span>
+                            {% else %}
+                                <span class="star">☆</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="rating-details">
+                        <p class="rating-score">{{ cat.average_rating|floatformat:1 }}/5</p>
+                        <p class="rating-count">{{ cat.ratings_count }} оценок</p>
+                    </div>
+                </div>
+                
+                {% if cat.recent_ratings %}
+                <div class="recent-ratings">
+                    <h4>Последние оценки:</h4>
+                    {% for rating in cat.recent_ratings %}
+                    <div class="rating-item">
+                        <span class="rating-author">{{ rating.author.surname }} {{ rating.author.name }}</span>
+                        <span class="rating-value">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= rating.rating %}
+                                    <span class="star filled">★</span>
+                                {% else %}
+                                    <span class="star">☆</span>
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-ratings">
+        <p>Пока нет оценок. <a href="{% url 'exhibition_app:add_rating' %}">Добавить первую оценку</a></p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

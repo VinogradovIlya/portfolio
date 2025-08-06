@@ -1,0 +1,36 @@
+{% extends 'exhibition_app/base.html' %}
+
+{% block title %}Главная - Выставка кошек{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <div class="hero">
+        <h1>Добро пожаловать на выставку кошек!</h1>
+        <p>Здесь вы можете управлять информацией о кошках и их владельцах</p>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-card">
+            <h3>{{ cats_count }}</h3>
+            <p>Кошек в базе</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ owners_count }}</h3>
+            <p>Владельцев</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ breeds_count }}</h3>
+            <p>Пород</p>
+        </div>
+    </div>
+    
+    <div class="quick-actions">
+        <h2>Быстрые действия</h2>
+        <div class="action-buttons">
+            <a href="{% url 'exhibition_app:add_cat' %}" class="btn btn-primary">Добавить кошку</a>
+            <a href="{% url 'exhibition_app:add_owner' %}" class="btn btn-secondary">Добавить владельца</a>
+            <a href="{% url 'exhibition_app:list_cats' %}" class="btn btn-info">Посмотреть всех кошек</a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

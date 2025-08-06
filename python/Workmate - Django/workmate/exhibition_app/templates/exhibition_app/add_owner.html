@@ -1,0 +1,36 @@
+{% extends 'exhibition_app/base.html' %}
+
+{% block title %}Добавить владельца{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Добавить владельца кошки</h1>
+    
+    <form method="post" class="form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="surname">Фамилия:</label>
+            <input type="text" id="surname" name="surname" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="patronymic">Отчество:</label>
+            <input type="text" id="patronymic" name="patronymic" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Добавить владельца</button>
+    </form>
+    
+    {% if message %}
+    <div class="message {% if error %}error{% else %}success{% endif %}">
+        {{ message }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

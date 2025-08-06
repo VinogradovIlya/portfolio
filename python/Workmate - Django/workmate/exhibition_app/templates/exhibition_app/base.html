@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Выставка кошек{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'exhibition_app/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'exhibition_app:home' %}">Главная</a></li>
+                <li><a href="{% url 'exhibition_app:add_cat' %}">Добавить кошку</a></li>
+                <li><a href="{% url 'exhibition_app:add_owner' %}">Добавить владельца</a></li>
+                <li><a href="{% url 'exhibition_app:list_cats' %}">Список кошек</a></li>
+                <li><a href="{% url 'exhibition_app:add_rating' %}">Оценить котенка</a></li>
+                <li><a href="{% url 'exhibition_app:ratings' %}">Рейтинги</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Выставка кошек</p>
+    </footer>
+</body>
+</html> 

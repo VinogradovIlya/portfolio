@@ -1,0 +1,63 @@
+{% extends 'exhibition_app/base.html' %}
+
+{% block title %}Редактировать кошку{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Редактировать кошку</h1>
+    
+    <form method="post" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="colors">Окрас:</label>
+            <input type="text" id="colors" name="colors" value="{{ cat.colors }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="mounts">Возраст (месяцев):</label>
+            <input type="number" id="mounts" name="mounts" value="{{ cat.mounts }}" min="0" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="kitten_breed">Порода:</label>
+            <input type="text" id="kitten_breed" name="kitten_breed" value="{{ cat.kitten_breed }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Описание:</label>
+            <textarea id="description" name="description" rows="4" required>{{ cat.description }}</textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="photo">Фото:</label>
+            <input type="file" id="photo" name="photo" accept="image/*">
+            {% if cat.photo %}
+            <p class="current-photo">Текущее фото: {{ cat.photo.name }}</p>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="kitten_owner">Владелец:</label>
+            <select id="kitten_owner" name="kitten_owner" required>
+                {% for owner in owners %}
+                <option value="{{ owner.id }}" {% if owner.id == cat.kitten_owner.id %}selected{% endif %}>
+                    {{ owner.surname }} {{ owner.name }} {{ owner.patronymic }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="button-group">
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            <a href="{% url 'exhibition_app:list_cats' %}" class="btn btn-secondary">Отмена</a>
+        </div>
+    </form>
+    
+    {% if message %}
+    <div class="message {% if error %}error{% else %}success{% endif %}">
+        {{ message }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 
