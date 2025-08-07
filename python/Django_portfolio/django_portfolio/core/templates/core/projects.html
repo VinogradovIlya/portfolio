@@ -1,0 +1,269 @@
+{% extends 'core/base.html' %}
+{% block title %}Мои проекты - Python Developer{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Hero секция для проектов -->
+    <section class="section">
+        <div class="text-center">
+            <h1 class="section-title">Мои проекты</h1>
+            <p class="hero-subtitle" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+                Здесь собраны мои лучшие работы. Каждый проект — это результат кропотливого труда и применения современных технологий.
+            </p>
+        </div>
+    </section>
+
+    <!-- Фильтры проектов -->
+    <section class="section">
+        <div class="text-center mb-6">
+            <div class="card" style="display: inline-flex; background: var(--bg-secondary); border-radius: 2rem; padding: 0.5rem; border: none; box-shadow: none;">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th"></i> Все
+                </button>
+                <button class="filter-btn" data-filter="web">
+                    <i class="fas fa-globe"></i> Веб-приложения
+                </button>
+                <button class="filter-btn" data-filter="api">
+                    <i class="fas fa-code"></i> API
+                </button>
+                <button class="filter-btn" data-filter="automation">
+                    <i class="fas fa-robot"></i> Автоматизация
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Сетка проектов -->
+    <section class="section">
+        <div class="projects-grid">
+            <!-- Проект 1 -->
+            <div class="project-card card" data-category="web">
+                <div class="project-image">
+                    <div class="project-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
+                        <i class="fas fa-shopping-cart" style="font-size: 3rem; color: white;"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">E-commerce Platform</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
+                        Полнофункциональная платформа электронной коммерции с системой управления заказами, платежами и аналитикой.
+                    </p>
+                    <div class="project-tech mb-4">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Stripe</span>
+                        <span class="tech-tag">Redis</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="btn btn-primary btn-sm">
+                            <i class="fas fa-external-link-alt"></i> Демо
+                        </a>
+                        <a href="#" class="btn btn-secondary btn-sm">
+                            <i class="fab fa-github"></i> Код
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Проект 2 -->
+            <div class="project-card card" data-category="api">
+                <div class="project-image">
+                    <div class="project-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
+                        <i class="fas fa-chart-line" style="font-size: 3rem; color: white;"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Analytics API</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
+                        REST API для сбора и анализа данных с возможностью генерации отчетов в реальном времени.
+                    </p>
+                    <div class="project-tech mb-4">
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">Celery</span>
+                        <span class="tech-tag">Docker</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="btn btn-primary btn-sm">
+                            <i class="fas fa-external-link-alt"></i> Документация
+                        </a>
+                        <a href="#" class="btn btn-secondary btn-sm">
+                            <i class="fab fa-github"></i> Код
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Проект 3 -->
+            <div class="project-card card" data-category="automation">
+                <div class="project-image">
+                    <div class="project-header" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
+                        <i class="fas fa-cogs" style="font-size: 3rem; color: white;"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Task Automation Bot</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
+                        Telegram бот для автоматизации рутинных задач с интеграцией различных сервисов и API.
+                    </p>
+                    <div class="project-tech mb-4">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Telegram API</span>
+                        <span class="tech-tag">SQLite</span>
+                        <span class="tech-tag">APScheduler</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="btn btn-primary btn-sm">
+                            <i class="fab fa-telegram"></i> Бот
+                        </a>
+                        <a href="#" class="btn btn-secondary btn-sm">
+                            <i class="fab fa-github"></i> Код
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Проект 4 -->
+            <div class="project-card card" data-category="web">
+                <div class="project-image">
+                    <div class="project-header" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
+                        <i class="fas fa-blog" style="font-size: 3rem; color: white;"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Blog Platform</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
+                        Современная платформа для ведения блогов с системой комментариев, тегов и поиска.
+                    </p>
+                    <div class="project-tech mb-4">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Elasticsearch</span>
+                        <span class="tech-tag">AWS S3</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="btn btn-primary btn-sm">
+                            <i class="fas fa-external-link-alt"></i> Демо
+                        </a>
+                        <a href="#" class="btn btn-secondary btn-sm">
+                            <i class="fab fa-github"></i> Код
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Проект 5 -->
+            <div class="project-card card" data-category="api">
+                <div class="project-image">
+                    <div class="project-header" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
+                        <i class="fas fa-cloud" style="font-size: 3rem; color: #2c3e50;"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Weather API</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
+                        API для получения прогнозов погоды с кэшированием данных и поддержкой множественных источников.
+                    </p>
+                    <div class="project-tech mb-4">
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">OpenWeatherMap</span>
+                        <span class="tech-tag">Swagger</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="btn btn-primary btn-sm">
+                            <i class="fas fa-external-link-alt"></i> API
+                        </a>
+                        <a href="#" class="btn btn-secondary btn-sm">
+                            <i class="fab fa-github"></i> Код
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Проект 6 -->
+            <div class="project-card card" data-category="automation">
+                <div class="project-image">
+                    <div class="project-header" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
+                        <i class="fas fa-file-alt" style="font-size: 3rem; color: #2c3e50;"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Document Processor</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
+                        Система автоматической обработки документов с извлечением данных и генерацией отчетов.
+                    </p>
+                    <div class="project-tech mb-4">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">OpenCV</span>
+                        <span class="tech-tag">Tesseract</span>
+                        <span class="tech-tag">Pandas</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="btn btn-primary btn-sm">
+                            <i class="fas fa-download"></i> Демо
+                        </a>
+                        <a href="#" class="btn btn-secondary btn-sm">
+                            <i class="fab fa-github"></i> Код
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section class="section">
+        <div class="card cta-card">
+            <h2 class="cta-title">Заинтересовал какой-то проект?</h2>
+            <p class="cta-text">
+                Давайте обсудим возможности сотрудничества или создадим что-то похожее для вас
+            </p>
+            <a href="#contact" class="btn cta-btn">
+                <i class="fas fa-paper-plane"></i> Обсудить проект
+            </a>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Фильтрация проектов
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Убираем активный класс у всех кнопок
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            // Добавляем активный класс к нажатой кнопке
+            this.classList.add('active');
+            
+            const filter = this.getAttribute('data-filter');
+            const projects = document.querySelectorAll('.project-card');
+            
+            projects.forEach(project => {
+                if (filter === 'all' || project.getAttribute('data-category') === filter) {
+                    project.style.display = 'block';
+                    project.style.animation = 'fadeIn 0.5s ease-in-out';
+                } else {
+                    project.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Анимация появления карточек при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+        const projects = document.querySelectorAll('.project-card');
+        projects.forEach((project, index) => {
+            setTimeout(() => {
+                project.style.opacity = '0';
+                project.style.transform = 'translateY(20px)';
+                project.style.transition = 'all 0.5s ease-in-out';
+                
+                setTimeout(() => {
+                    project.style.opacity = '1';
+                    project.style.transform = 'translateY(0)';
+                }, 100);
+            }, index * 100);
+        });
+    });
+</script>
+{% endblock %}
