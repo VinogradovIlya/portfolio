@@ -232,5 +232,70 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.removeChild(notification);
             }, 300);
         }, 3000);
+    // Анимация появления элементов
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Наблюдаем за карточками
+    document.querySelectorAll('.card, .feature-item, .tech-tag').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+
+    // Анимация счетчиков
+    function animateCounter(element, target, duration = 2000) {
+        let start = 0;
+        const increment = target / (duration / 16);
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= target) {
+                element.textContent = target + (target < 10 ? '' : '+');
+                clearInterval(timer);
+            } else {
+                element.textContent = Math.floor(start) + (target < 10 ? '' : '+');
+            }
+        }, 16);
+    }
+
+    // Запускаем анимацию счетчиков при появлении в зоне видимости
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const statNumbers = entry.target.querySelectorAll('.stat-number');
+                statNumbers.forEach((stat, index) => {
+                    const targets = [5, 2, 100]; // Соответствуют проектам, годам, качеству
+                    setTimeout(() => {
+                        animateCounter(stat, targets[index], 1500);
+                    }, index * 200);
+                });
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const heroStats = document.querySelector('.hero-stats');
+    if (heroStats) {
+        statsObserver.observe(heroStats);
+    }
+
+    // Плавающие элементы с улучшенной анимацией
+    const floatingElements = document.querySelectorAll('.floating-icon');
+    floatingElements.forEach((element, index) => {
+        element.style.animationDelay = `${index * 0.5}s`;
+        element.style.animationDuration = `${3 + index * 0.5}s`;
+    });
     }
 });

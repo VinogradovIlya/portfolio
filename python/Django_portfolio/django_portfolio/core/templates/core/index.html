@@ -1,149 +1,366 @@
 {% extends 'core/base.html' %}
-{% block title %}Python Developer - Главная{% endblock %}
+{% load static %}
+{% block title %}{{ name }} {{ surname }} - Python Developer Portfolio{% endblock %}
 
 {% block content %}
 <div class="container">
     <!-- Hero секция -->
-    <section class="section" style="padding-top: 2rem;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; min-height: 70vh;">
-            <div>
-                <div style="display: inline-block; background: rgba(37, 99, 235, 0.1); color: var(--primary-color); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 500; margin-bottom: 1.5rem;">
-                    <i class="fas fa-rocket"></i> Python Developer
+    <section id="hero" class="section">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-star"></i> Доступен для новых проектов
                 </div>
-                
-                <h1 style="font-size: 3.5rem; font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--text-primary), var(--primary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                    Создаю <span style="color: var(--accent-color);">современные</span><br>
-                    веб-решения
+
+                <h1 class="hero-title">
+                    Привет! Я {{surname}} {{name}},<br>
+                    <span
+                        style="background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); 
+                                 -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                        Python Developer
+                    </span>
                 </h1>
-                
-                <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6;">
-                    Разрабатываю качественные веб-приложения на Python/Django. 
-                    Превращаю идеи в функциональные решения с современным дизайном.
+
+                <p class="hero-subtitle">
+                    Создаю современные веб-приложения на <strong>Django</strong>, автоматизирую бизнес-процессы
+                    и разрабатываю эффективные решения для вашего бизнеса. Превращаю идеи в работающий код.
                 </p>
-                
-                <div style="display: flex; gap: 1rem; align-items: center;">
-                    <a href="#projects" class="btn btn-primary">
-                        <i class="fas fa-eye"></i> Посмотреть проекты
+
+                <div class="hero-buttons">
+                    <a href="{% url 'core:projects' %}" class="btn btn-primary">
+                        <i class="fas fa-laptop-code"></i> Посмотреть проекты
                     </a>
-                    <a href="#contact" class="btn btn-secondary">
-                        <i class="fas fa-paper-plane"></i> Связаться
+                    <a href="{% url 'core:contact' %}" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i> Связаться со мной
                     </a>
                 </div>
-                
-                <!-- Статистика -->
-                <div style="display: flex; gap: 2rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
-                    <div>
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">5+</div>
-                        <div style="color: var(--text-secondary); font-size: 0.875rem;">Проектов</div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">{{ number }}</div>
+                        <div class="stat-label">Завершенных проектов</div>
                     </div>
-                    <div>
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">2+</div>
-                        <div style="color: var(--text-secondary); font-size: 0.875rem;">Года опыта</div>
+                    <div class="stat-item">
+                        <div class="stat-number">4+</div>
+                        <div class="stat-label">Года опыта</div>
                     </div>
-                    <div>
-                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">100%</div>
-                        <div style="color: var(--text-secondary); font-size: 0.875rem;">Качество</div>
+                    <div class="stat-item">
+                        <div class="stat-number">100</div>
+                        <div class="stat-label">% качества кода</div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Правая колонка с анимированной картинкой -->
-            <div style="position: relative; display: flex; justify-content: center; align-items: center;">
-                <div style="position: relative; width: 400px; height: 400px;">
-                    <!-- Анимированные кольца -->
-                    <div style="position: absolute; width: 100%; height: 100%; border: 2px solid rgba(37, 99, 235, 0.2); border-radius: 50%; animation: rotate 10s linear infinite;"></div>
-                    <div style="position: absolute; width: 80%; height: 80%; border: 2px solid rgba(245, 158, 11, 0.3); border-radius: 50%; top: 10%; left: 10%; animation: rotate 8s linear infinite reverse;"></div>
-                    
-                    <!-- Центральный элемент -->
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg);">
-                        <i class="fas fa-code" style="font-size: 4rem; color: white; animation: pulse 2s ease-in-out infinite;"></i>
+
+            <div class="hero-visual">
+                <div class="visual-container">
+                    <div class="rotating-ring"></div>
+                    <div class="rotating-ring-reverse"></div>
+
+                    <div class="central-element">
+                        <div class="central-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
                     </div>
-                    
-                    <!-- Плавающие иконки -->
-                    <div style="position: absolute; top: 20%; right: 10%; background: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow); animation: float 3s ease-in-out infinite;">
-                        <i class="fab fa-python" style="font-size: 1.5rem; color: #3776ab;"></i>
+
+                    <div class="floating-icon floating-icon-1">
+                        <i class="fab fa-django" style="color: var(--primary-color);"></i>
                     </div>
-                    
-                    <div style="position: absolute; bottom: 20%; left: 10%; background: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow); animation: float 3s ease-in-out infinite 1s;">
-                        <i class="fab fa-js-square" style="font-size: 1.5rem; color: #f7df1e;"></i>
+                    <div class="floating-icon floating-icon-2">
+                        <i class="fas fa-database" style="color: var(--accent-color);"></i>
                     </div>
-                    
-                    <div style="position: absolute; top: 60%; right: 20%; background: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow); animation: float 3s ease-in-out infinite 2s;">
-                        <i class="fab fa-html5" style="font-size: 1.25rem; color: #e34f26;"></i>
+                    <div class="floating-icon floating-icon-3">
+                        <i class="fab fa-git-alt" style="color: var(--primary-color);"></i>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Обо мне -->
-    <section id="about" class="section" style="background: var(--bg-secondary); margin: 0 -2rem; padding-left: 2rem; padding-right: 2rem;">
+    <!-- Обо мне секция -->
+    <section id="about" class="section">
         <h2 class="section-title">Обо мне</h2>
-        
-        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: center;">
-            <div>
-                <div class="card" style="text-align: center;">
-                    <div style="width: 120px; height: 120px; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-user" style="font-size: 3rem; color: white;"></i>
+
+        <div class="about-grid">
+            <div class="about-card card">
+                <div class="about-avatar">
+                    <div class="about-avatar">
+                        {% if photo %}
+                        <img src="{% static photo %}" alt="Профиль"
+                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 1rem;">
+                        {% else %}
+                        <i class="fas fa-code"></i>
+                        {% endif %}
                     </div>
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Python Developer</h3>
-                    <p style="color: var(--text-secondary);">Увлеченный разработчик с фокусом на качестве и современных технологиях</p>
+                </div>
+                <h3 class="about-title">Python Developer</h3>
+                <p class="about-text">
+                    Специализируюсь на разработке веб-приложений с использованием современных технологий.
+                    Мой подход — создание масштабируемых, безопасных и производительных решений.
+                </p>
+                <a href="{% url 'core:contact' %}" class="btn btn-primary">
+                    <i class="fas fa-user"></i> Узнать больше
+                </a>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <div>
+                        <h4>Python & Django</h4>
+                        <p>Создание мощных веб-приложений с использованием Django фреймворка</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div>
+                        <h4>Базы данных</h4>
+                        <p>Проектирование и оптимизация БД: PostgreSQL, SQLite, работа с ORM</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-api"></i>
+                    </div>
+                    <div>
+                        <h4>REST API</h4>
+                        <p>Разработка надежных API для интеграции различных систем</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <h4>Автоматизация</h4>
+                        <p>Создание скриптов и ботов для автоматизации бизнес-процессов</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fab fa-git-alt"></i>
+                    </div>
+                    <div>
+                        <h4>Контроль версий</h4>
+                        <p>Профессиональная работа с Git, организация командной разработки</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div>
+                        <h4>Адаптивность</h4>
+                        <p>Создание приложений, работающих на всех устройствах</p>
+                    </div>
                 </div>
             </div>
-            
-            <div>
-                <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--text-primary);">
-                    Почему стоит выбрать меня?
-                </h3>
-                
-                <p style="font-size: 1.125rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.7;">
-                    Я не просто пишу код — я создаю решения. Каждый проект для меня — это возможность 
-                    применить лучшие практики разработки и создать что-то действительно ценное.
-                </p>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div style="width: 40px; height: 40px; background: rgba(37, 99, 235, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-check" style="color: var(--primary-color);"></i>
-                        </div>
-                        <span>Clean Code</span>
+        </div>
+    </section>
+
+    <!-- Технологии -->
+    <section id="technologies" class="section">
+        <h2 class="section-title">Мой стек технологий</h2>
+
+        <div class="tech-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <!-- Backend -->
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: rgba(55, 118, 171, 0.1); border-radius: 50%; 
+                               display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-server" style="color: #3776ab; font-size: 1.5rem;"></i>
                     </div>
-                    
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div style="width: 40px; height: 40px; background: rgba(37, 99, 235, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-rocket" style="color: var(--primary-color);"></i>
-                        </div>
-                        <span>Быстрая разработка</span>
-                    </div>
-                    
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div style="width: 40px; height: 40px; background: rgba(37, 99, 235, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-mobile-alt" style="color: var(--primary-color);"></i>
-                        </div>
-                        <span>Responsive дизайн</span>
-                    </div>
-                    
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div style="width: 40px; height: 40px; background: rgba(37, 99, 235, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-cog" style="color: var(--primary-color);"></i>
-                        </div>
-                        <span>Современные технологии</span>
-                    </div>
+                    <h3 style="color: var(--text-primary); font-size: 1.5rem;">Backend</h3>
                 </div>
+                <div class="tech-list" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Django</span>
+                    <span class="tech-tag">Django REST</span>
+                    <span class="tech-tag">FastAPI</span>
+                    <span class="tech-tag">SQLAlchemy</span>
+                </div>
+            </div>
+
+            <!-- Frontend -->
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: rgba(245, 158, 11, 0.1); border-radius: 50%; 
+                               display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-palette" style="color: #f59e0b; font-size: 1.5rem;"></i>
+                    </div>
+                    <h3 style="color: var(--text-primary); font-size: 1.5rem;">Frontend</h3>
+                </div>
+                <div class="tech-list" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span class="tech-tag">HTML5</span>
+                    <span class="tech-tag">CSS3</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">Bootstrap</span>
+                    <span class="tech-tag">jQuery</span>
+                </div>
+            </div>
+
+            <!-- Базы данных -->
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: rgba(51, 103, 145, 0.1); border-radius: 50%; 
+                               display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-database" style="color: #336791; font-size: 1.5rem;"></i>
+                    </div>
+                    <h3 style="color: var(--text-primary); font-size: 1.5rem;">Базы данных</h3>
+                </div>
+                <div class="tech-list" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">SQLite</span>
+                    <span class="tech-tag">MySQL</span>
+                </div>
+            </div>
+
+            <!-- Инструменты -->
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: rgba(37, 99, 235, 0.1); border-radius: 50%; 
+                               display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-tools" style="color: var(--primary-color); font-size: 1.5rem;"></i>
+                    </div>
+                    <h3 style="color: var(--text-primary); font-size: 1.5rem;">Инструменты</h3>
+                </div>
+                <div class="tech-list" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span class="tech-tag">Git</span>
+                    <!-- <span class="tech-tag">Docker</span> -->
+                    <span class="tech-tag">Linux</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Почему выбирают меня -->
+    <section id="advantages" class="section">
+        <h2 class="section-title">Почему стоит работать со мной</h2>
+
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 style="margin-bottom: 1rem;">Соблюдение сроков</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6;">
+                    Планирую работу так, чтобы всегда укладываться в установленные временные рамки.
+                    Регулярно информирую о прогрессе.
+                </p>
+            </div>
+
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 style="margin-bottom: 1rem;">Качественный код</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6;">
+                    Пишу чистый, документированный код с соблюдением best practices.
+                    Каждое решение продумано и протестировано.
+                </p>
+            </div>
+
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3 style="margin-bottom: 1rem;">Открытое общение</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6;">
+                    Всегда на связи для обсуждения деталей проекта.
+                    Объясняю технические моменты простым языком.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Что я могу для вас сделать -->
+    <section id="services" class="section">
+        <h2 class="section-title">Что я могу для вас сделать</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+            <div class="card">
+                <h3
+                    style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; color: var(--text-primary);">
+                    <i class="fas fa-globe" style="color: var(--primary-color);"></i>
+                    Веб-приложения
+                </h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+                    Создание корпоративных сайтов, интернет-магазинов, CMS, административных панелей на Django.
+                    От простых лендингов до сложных многофункциональных платформ.
+                </p>
+                <ul style="color: var(--text-secondary); margin-left: 1rem;">
+                    <li>Адаптивный дизайн для всех устройств</li>
+                    <li>Быстрая загрузка и оптимизация</li>
+                    <li>Интеграция с внешними API</li>
+                    <li>Система аутентификации и авторизации</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3
+                    style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; color: var(--text-primary);">
+                    <i class="fas fa-robot" style="color: var(--accent-color);"></i>
+                    Автоматизация
+                </h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+                    Создание Telegram-ботов, парсеров данных, скриптов для автоматизации рутинных задач.
+                    Экономьте время на повторяющихся операциях.
+                </p>
+                <ul style="color: var(--text-secondary); margin-left: 1rem;">
+                    <li>Telegram боты для бизнеса</li>
+                    <li>Парсинг и обработка данных</li>
+                    <li>Автоматические отчеты</li>
+                    <li>Интеграция систем</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3
+                    style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; color: var(--text-primary);">
+                    <i class="fas fa-cogs" style="color: var(--primary-color);"></i>
+                    API разработка
+                </h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+                    Создание RESTful API для мобильных приложений, интеграций с другими сервисами.
+                    Полная документация и тестирование.
+                </p>
+                <ul style="color: var(--text-secondary); margin-left: 1rem;">
+                    <li>REST API с Django REST Framework</li>
+                    <li>Аутентификация через токены</li>
+                    <li>Документация API</li>
+                    <li>Тестирование endpoints</li>
+                </ul>
             </div>
         </div>
     </section>
 
     <!-- Призыв к действию -->
-    <section class="section">
-        <div class="card" style="text-align: center; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none;">
-            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Готовы начать проект?</h2>
-            <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.9;">
-                Давайте обсудим ваши идеи и воплотим их в жизнь
+    <section id="cta" class="section">
+        <div class="card cta-card">
+            <h2 class="cta-title">Готовы начать проект?</h2>
+            <p class="cta-text">
+                Обсудим ваши задачи и найдем оптимальное решение.
+                Первая консультация — бесплатно!
             </p>
-            <a href="#contact" class="btn" style="background: white; color: var(--primary-color); font-weight: 600;">
-                <i class="fas fa-paper-plane"></i> Связаться со мной
-            </a>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="{% url 'core:contact' %}" class="btn cta-btn">
+                    <i class="fas fa-paper-plane"></i> Связаться со мной
+                </a>
+                <a href="{% url 'core:projects' %}" class="btn"
+                    style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3);">
+                    <i class="fas fa-eye"></i> Посмотреть работы
+                </a>
+            </div>
         </div>
     </section>
 </div>

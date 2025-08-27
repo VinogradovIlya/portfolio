@@ -11,7 +11,7 @@ Backend-разработчик с опытом работы на Python (Flask, 
 1. Python (Flask, FastAPI, Django, PyQt6)
 2. C/C++ (системное программирование)
 3. СУБД: PostgreSQL
-4. ORM: SQLAlchemy
+4. ORM: SQLAlchemy, Django ORM
 
 **Локация:** Москва  
 **Контакт:** <vivpost@mail.ru>  
@@ -31,7 +31,7 @@ Backend-разработчик с опытом работы на Python (Flask, 
 ### Технологии и инструменты
 
 - **Фреймворки:** Flask, FastAPI, Django, PyQt6
-- **Базы данных и ORM:** PostgreSQL, MySQL, SQLAlchemy
+- **Базы данных и ORM:** PostgreSQL, MySQL, SQLAlchemy, Django ORM
 - **Системы:** Linux (базовая работа с терминалом)
 - **Инструменты:** Git/GitHub, GNU Make
 - **Языки:** Французский (B1), Английский (техническая документация)
@@ -55,17 +55,12 @@ portfolio/
 
 ### Python разработка
 
-**Desktop приложения (PyQt6):**
-
-- **Учет рабочего времени** - трекер для подсчета проведенных уроков, что позволило мне более точно вести учет отработанного времени. В перспективе данное приложение может упросить учет рабочего времени сотрудников
-- **Приложение для ведения заметок** - с сохранением в базу данных
-
 **Веб-разработка:**
 
 - Проекты на **Flask/FastAPI**
 - Проекты на **Django**
 - Работа с **PostgreSQL** и **MySQL**
-- Использование ORM **SQLAlchemy**
+- Использование ORM **SQLAlchemy**, **Django ORM**
 
 *Применяемые библиотеки: Flask, FastAPI, Django, PyQt6, Pandas, SQLAlchemy*
 

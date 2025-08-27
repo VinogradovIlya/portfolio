@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% block title %}Мои проекты - Python Developer{% endblock %}
 
 {% block content %}
@@ -13,206 +14,174 @@
         </div>
     </section>
 
-    <!-- Фильтры проектов -->
+    <!-- Фильтры и поиск -->
     <section class="section">
-        <div class="text-center mb-6">
-            <div class="card" style="display: inline-flex; background: var(--bg-secondary); border-radius: 2rem; padding: 0.5rem; border: none; box-shadow: none;">
-                <button class="filter-btn active" data-filter="all">
-                    <i class="fas fa-th"></i> Все
-                </button>
-                <button class="filter-btn" data-filter="web">
-                    <i class="fas fa-globe"></i> Веб-приложения
-                </button>
-                <button class="filter-btn" data-filter="api">
-                    <i class="fas fa-code"></i> API
-                </button>
-                <button class="filter-btn" data-filter="automation">
-                    <i class="fas fa-robot"></i> Автоматизация
-                </button>
+        <div class="filters-container">
+            <!-- Поиск -->
+            <div class="search-container">
+                <form method="GET" class="search-form">
+                    <div class="search-input-group">
+                        <input 
+                            type="text" 
+                            name="search" 
+                            placeholder="Поиск по названию или описанию проектов..." 
+                            value="{{ search_query }}"
+                            class="search-input"
+                        >
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <!-- Сохраняем текущий фильтр при поиске -->
+                    {% if current_category != 'all' %}
+                        <input type="hidden" name="category" value="{{ current_category }}">
+                    {% endif %}
+                </form>
+            </div>
+
+            <!-- Фильтр по категориям -->
+            <div class="filter-group">
+                <h4 class="filter-title">Категории проектов</h4>
+                <div class="text-center">
+                    <div class="card filter-card">
+                        <a href="?{% if search_query %}search={{ search_query }}&{% endif %}category=all" 
+                           class="filter-btn {% if current_category == 'all' %}active{% endif %}">
+                            <i class="fas fa-th"></i> Все проекты
+                        </a>
+                        {% for category_code, category_name in project_categories %}
+                            <a href="?{% if search_query %}search={{ search_query }}&{% endif %}category={{ category_code }}" 
+                               class="filter-btn {% if current_category == category_code %}active{% endif %}">
+                                {% if category_code == 'c_cpp' %}<i class="fas fa-code"></i>
+                                {% elif category_code == 'python' %}<i class="fab fa-python"></i>
+                                {% elif category_code == 'database' %}<i class="fas fa-database"></i>
+                                {% elif category_code == 'telegram' %}<i class="fab fa-telegram"></i>
+                                {% else %}<i class="fas fa-folder"></i>
+                                {% endif %}
+                                {{ category_name }}
+                            </a>
+                        <!-- {% endfor %}
+                            {% for technologies_code, technologies_name in project_technologies %}
+                            <a href="?{% if search_query %}search={{ search_query }}&{% endif %}technologies={{ technologies_code }}" 
+                               class="filter-btn {% if current_category == technologies_code %}active{% endif %}">
+                                {% if technologies_code == 'c_cpp' %}<i class="fas fa-code"></i>
+                                {% elif technologies_code == 'python' %}<i class="fab fa-python"></i>
+                                {% elif technologies_code == 'database' %}<i class="fas fa-database"></i>
+                                {% elif technologies_code == 'telegram' %}<i class="fab fa-telegram"></i>
+                                {% else %}<i class="fas fa-folder"></i>
+                                {% endif %}
+                                {{ category_name }}
+                            </a>
+                        {% endfor %} -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Счетчик результатов -->
+            <div class="results-count">
+                <p class="text-muted">
+                    {% if search_query or current_category != 'all' %}
+                        Найдено проектов: <strong>{{ projects.count }}</strong>
+                        {% if search_query %}по запросу "{{ search_query }}"{% endif %}
+                        {% if current_category != 'all' %} в категории "{{ current_category }}"{% endif %}
+                    {% else %}
+                        Всего проектов: <strong>{{ projects.count }}</strong>
+                    {% endif %}
+                </p>
             </div>
         </div>
     </section>
 
     <!-- Сетка проектов -->
     <section class="section">
-        <div class="projects-grid">
-            <!-- Проект 1 -->
-            <div class="project-card card" data-category="web">
-                <div class="project-image">
-                    <div class="project-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
-                        <i class="fas fa-shopping-cart" style="font-size: 3rem; color: white;"></i>
+        {% if projects %}
+            <div class="projects-grid" id="projects-grid">
+                {% for project in projects %}
+                <div class="project-card card" data-category="{{ project.category }}">
+                    <div class="project-image">
+                        <div class="project-header" 
+                             style="background: linear-gradient(135deg, 
+                                {% if project.category == 'python' %}#3776ab 0%, #4a90e2 100%
+                                {% elif project.category == 'c_cpp' %}#00599c 0%, #0066cc 100%
+                                {% elif project.category == 'database' %}#336791 0%, #4a7c8a 100%
+                                {% elif project.category == 'telegram' %}#0088cc 0%, #229ed9 100%
+                                {% else %}#667eea 0%, #764ba2 100%
+                                {% endif %}); 
+                             height: 200px; border-radius: 1rem 1rem 0 0; 
+                             display: flex; align-items: center; justify-content: center; 
+                             margin: -2rem -2rem 2rem -2rem;">
+                            {% if project.category == 'python' %}<i class="fab fa-python" style="font-size: 3rem; color: white;"></i>
+                            {% elif project.category == 'c_cpp' %}<i class="fas fa-code" style="font-size: 3rem; color: white;"></i>
+                            {% elif project.category == 'database' %}<i class="fas fa-database" style="font-size: 3rem; color: white;"></i>
+                            {% elif project.category == 'telegram' %}<i class="fab fa-telegram" style="font-size: 3rem; color: white;"></i>
+                            {% else %}<i class="fas fa-folder" style="font-size: 3rem; color: white;"></i>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-                <div class="project-content">
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">E-commerce Platform</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
-                        Полнофункциональная платформа электронной коммерции с системой управления заказами, платежами и аналитикой.
-                    </p>
-                    <div class="project-tech mb-4">
-                        <span class="tech-tag">Django</span>
-                        <span class="tech-tag">PostgreSQL</span>
-                        <span class="tech-tag">Stripe</span>
-                        <span class="tech-tag">Redis</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="btn btn-primary btn-sm">
-                            <i class="fas fa-external-link-alt"></i> Демо
-                        </a>
-                        <a href="#" class="btn btn-secondary btn-sm">
-                            <i class="fab fa-github"></i> Код
-                        </a>
-                    </div>
-                </div>
-            </div>
+                    <div class="project-content">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">{{ project.title }}</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
+                            {{ project.description|truncatewords:30 }}
+                        </p>
+                        
+                        <!-- Категория проекта -->
+                        <div class="project-category">
+                            <span class="category-tag" 
+                                  style="background: {% if project.category == 'python' %}rgba(55, 118, 171, 0.1); color: #3776ab;
+                                         {% elif project.category == 'c_cpp' %}rgba(0, 89, 156, 0.1); color: #00599c;
+                                         {% elif project.category == 'database' %}rgba(51, 103, 145, 0.1); color: #336791;
+                                         {% elif project.category == 'telegram' %}rgba(0, 136, 204, 0.1); color: #0088cc;
+                                         {% else %}rgba(102, 126, 234, 0.1); color: #667eea;{% endif %};">
+                                {% for choice_code, choice_name in project.CATEGORY_CHOICES %}
+                                    {% if choice_code == project.category %}{{ choice_name }}{% endif %}
+                                {% endfor %}
+                            </span>
+                        </div>
 
-            <!-- Проект 2 -->
-            <div class="project-card card" data-category="api">
-                <div class="project-image">
-                    <div class="project-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
-                        <i class="fas fa-chart-line" style="font-size: 3rem; color: white;"></i>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Analytics API</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
-                        REST API для сбора и анализа данных с возможностью генерации отчетов в реальном времени.
-                    </p>
-                    <div class="project-tech mb-4">
-                        <span class="tech-tag">FastAPI</span>
-                        <span class="tech-tag">MongoDB</span>
-                        <span class="tech-tag">Celery</span>
-                        <span class="tech-tag">Docker</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="btn btn-primary btn-sm">
-                            <i class="fas fa-external-link-alt"></i> Документация
-                        </a>
-                        <a href="#" class="btn btn-secondary btn-sm">
-                            <i class="fab fa-github"></i> Код
-                        </a>
-                    </div>
-                </div>
-            </div>
+                        <!-- Дата создания -->
+                        <div class="project-date">
+                            <small>
+                                <i class="fas fa-calendar-alt"></i> {{ project.created_at|date:"d.m.Y" }}
+                            </small>
+                        </div>
 
-            <!-- Проект 3 -->
-            <div class="project-card card" data-category="automation">
-                <div class="project-image">
-                    <div class="project-header" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
-                        <i class="fas fa-cogs" style="font-size: 3rem; color: white;"></i>
+                        <div class="project-links">
+                            <a href="{{ project.github_url }}" target="_blank" class="btn btn-primary btn-sm">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            {% if project.is_featured %}
+                                <span class="featured-badge">
+                                    <i class="fas fa-star"></i> Рекомендуемый
+                                </span>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-                <div class="project-content">
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Task Automation Bot</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
-                        Telegram бот для автоматизации рутинных задач с интеграцией различных сервисов и API.
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Нет результатов -->
+            <div class="no-results">
+                <div class="card">
+                    <i class="fas fa-search" style="font-size: 4rem; color: var(--text-secondary);"></i>
+                    <h3 class="mb-4">Проекты не найдены</h3>
+                    <p class="text-muted mb-4">
+                        {% if search_query %}
+                            По запросу "{{ search_query }}" ничего не найдено.
+                        {% else %}
+                            В данной категории пока нет проектов.
+                        {% endif %}
+                        Попробуйте изменить параметры поиска.
                     </p>
-                    <div class="project-tech mb-4">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Telegram API</span>
-                        <span class="tech-tag">SQLite</span>
-                        <span class="tech-tag">APScheduler</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="btn btn-primary btn-sm">
-                            <i class="fab fa-telegram"></i> Бот
-                        </a>
-                        <a href="#" class="btn btn-secondary btn-sm">
-                            <i class="fab fa-github"></i> Код
-                        </a>
-                    </div>
+                    <a href="{% url 'core:projects' %}" class="btn btn-primary">
+                        <i class="fas fa-refresh"></i> Показать все проекты
+                    </a>
                 </div>
             </div>
-
-            <!-- Проект 4 -->
-            <div class="project-card card" data-category="web">
-                <div class="project-image">
-                    <div class="project-header" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
-                        <i class="fas fa-blog" style="font-size: 3rem; color: white;"></i>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Blog Platform</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
-                        Современная платформа для ведения блогов с системой комментариев, тегов и поиска.
-                    </p>
-                    <div class="project-tech mb-4">
-                        <span class="tech-tag">Django</span>
-                        <span class="tech-tag">PostgreSQL</span>
-                        <span class="tech-tag">Elasticsearch</span>
-                        <span class="tech-tag">AWS S3</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="btn btn-primary btn-sm">
-                            <i class="fas fa-external-link-alt"></i> Демо
-                        </a>
-                        <a href="#" class="btn btn-secondary btn-sm">
-                            <i class="fab fa-github"></i> Код
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Проект 5 -->
-            <div class="project-card card" data-category="api">
-                <div class="project-image">
-                    <div class="project-header" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
-                        <i class="fas fa-cloud" style="font-size: 3rem; color: #2c3e50;"></i>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Weather API</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
-                        API для получения прогнозов погоды с кэшированием данных и поддержкой множественных источников.
-                    </p>
-                    <div class="project-tech mb-4">
-                        <span class="tech-tag">Flask</span>
-                        <span class="tech-tag">Redis</span>
-                        <span class="tech-tag">OpenWeatherMap</span>
-                        <span class="tech-tag">Swagger</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="btn btn-primary btn-sm">
-                            <i class="fas fa-external-link-alt"></i> API
-                        </a>
-                        <a href="#" class="btn btn-secondary btn-sm">
-                            <i class="fab fa-github"></i> Код
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Проект 6 -->
-            <div class="project-card card" data-category="automation">
-                <div class="project-image">
-                    <div class="project-header" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); height: 200px; border-radius: 1rem 1rem 0 0; display: flex; align-items: center; justify-content: center; margin: -2rem -2rem 2rem -2rem;">
-                        <i class="fas fa-file-alt" style="font-size: 3rem; color: #2c3e50;"></i>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.5rem;">Document Processor</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
-                        Система автоматической обработки документов с извлечением данных и генерацией отчетов.
-                    </p>
-                    <div class="project-tech mb-4">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">OpenCV</span>
-                        <span class="tech-tag">Tesseract</span>
-                        <span class="tech-tag">Pandas</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="btn btn-primary btn-sm">
-                            <i class="fas fa-download"></i> Демо
-                        </a>
-                        <a href="#" class="btn btn-secondary btn-sm">
-                            <i class="fab fa-github"></i> Код
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% endif %}
     </section>
 
     <!-- Призыв к действию -->
+    {% if projects %}
     <section class="section">
         <div class="card cta-card">
             <h2 class="cta-title">Заинтересовал какой-то проект?</h2>
@@ -224,46 +193,58 @@
             </a>
         </div>
     </section>
+    {% endif %}
 </div>
 
 <script>
-    // Фильтрация проектов
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            // Убираем активный класс у всех кнопок
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            // Добавляем активный класс к нажатой кнопке
-            this.classList.add('active');
-            
-            const filter = this.getAttribute('data-filter');
-            const projects = document.querySelectorAll('.project-card');
-            
-            projects.forEach(project => {
-                if (filter === 'all' || project.getAttribute('data-category') === filter) {
-                    project.style.display = 'block';
-                    project.style.animation = 'fadeIn 0.5s ease-in-out';
-                } else {
-                    project.style.display = 'none';
-                }
-            });
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    // Используем анимации из вашего существующего JS
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s ease-out';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
     });
 
-    // Анимация появления карточек при загрузке
-    document.addEventListener('DOMContentLoaded', function() {
-        const projects = document.querySelectorAll('.project-card');
-        projects.forEach((project, index) => {
-            setTimeout(() => {
-                project.style.opacity = '0';
-                project.style.transform = 'translateY(20px)';
-                project.style.transition = 'all 0.5s ease-in-out';
-                
-                setTimeout(() => {
-                    project.style.opacity = '1';
-                    project.style.transform = 'translateY(0)';
-                }, 100);
-            }, index * 100);
+    // Подсветка найденного текста в результатах поиска
+    const searchQuery = '{{ search_query|escapejs }}';
+    if (searchQuery) {
+        const projectCards = document.querySelectorAll('.project-card h3, .project-card p');
+        projectCards.forEach(element => {
+            if (element.textContent.toLowerCase().includes(searchQuery.toLowerCase())) {
+                const regex = new RegExp(`(${searchQuery})`, 'gi');
+                element.innerHTML = element.innerHTML.replace(regex, '<mark>$1</mark>');
+            }
         });
-    });
+    }
+
+    // Плавная прокрутка к результатам после фильтрации (используем ваш существующий код)
+    if (window.location.search) {
+        const projectsGrid = document.getElementById('projects-grid');
+        if (projectsGrid) {
+            setTimeout(() => {
+                projectsGrid.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 100);
+        }
+    }
+
+    // Очистка поиска по Escape
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+            }
+        });
+    }
+});
 </script>
 {% endblock %}

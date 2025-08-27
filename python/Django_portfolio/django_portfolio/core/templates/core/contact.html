@@ -1,0 +1,267 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Контакты - {{ name }} {{ surname }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Hero секция -->
+    <section class="section">
+        <div class="text-center">
+            <h1 class="section-title">Контакты</h1>
+            <p class="hero-subtitle" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+                Свяжитесь со мной для обсуждения проектов и сотрудничества
+            </p>
+        </div>
+    </section>
+
+    <!-- Основная информация -->
+    <section class="section">
+        <div class="about-grid" style="display: grid; grid-template-columns: 2fr 3fr; gap: 4rem; align-items: start;">
+            <!-- Левая колонка - фото и контакты (расширенная) -->
+            <div class="about-card">
+                <div class="card profile-card" style="text-align: center; padding: 4rem 3rem;">
+                    <!-- Аватар/Фото (прямоугольная рамка) -->
+                    <div class="profile-photo-container" style="margin-bottom: 2rem;">
+                        {% if photo %}
+                            <img src="{% static photo %}" alt="{{ name }} {{ surname }}" 
+                                 style="width: 280px; height: 350px; border-radius: 1rem; object-fit: cover; 
+                                        border: 3px solid var(--primary-color); box-shadow: var(--shadow-lg); 
+                                        transition: transform 0.3s ease;">
+                        {% else %}
+                            <div style="width: 280px; height: 350px; background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); 
+                                        border-radius: 1rem; margin: 0 auto; display: flex; align-items: center; 
+                                        justify-content: center; box-shadow: var(--shadow-lg);">
+                                <i class="fas fa-user" style="font-size: 5rem; color: white;"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Имя -->
+                    <h2 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 2.5rem; font-weight: 700;">
+                        {{ name }} {{ surname }}
+                    </h2>
+                    
+                    <!-- Должность -->
+                    <div style="display: inline-block; background: rgba(37, 99, 235, 0.1); color: var(--primary-color); 
+                               padding: 0.75rem 1.5rem; border-radius: 2rem; font-size: 1rem; font-weight: 500; margin-bottom: 2rem;">
+                        {{ position }}
+                    </div>
+                    
+                    <!-- Описание -->
+                    {% if description %}
+                    <p style="color: var(--text-secondary); margin-bottom: 3rem; line-height: 1.6; font-size: 1.1rem;">
+                        {{ description }}
+                    </p>
+                    {% endif %}
+                    
+                    <!-- Контактная информация (улучшенная) -->
+                    <div class="contact-info" style="text-align: left;">
+                        <div class="contact-item" style="display: flex; align-items: center; padding: 1rem 0; 
+                                                      border-bottom: 1px solid var(--border-color); transition: all 0.3s ease;">
+                            <div style="width: 50px; height: 50px; background: rgba(37, 99, 235, 0.1); 
+                                       border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fas fa-phone" style="color: var(--primary-color); font-size: 1.25rem;"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Телефон</div>
+                                <a href="tel:{{ phone }}" style="color: var(--text-primary); text-decoration: none; font-weight: 500; font-size: 1.1rem;">
+                                    {{ phone }}
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item" style="display: flex; align-items: center; padding: 1rem 0; 
+                                                      border-bottom: 1px solid var(--border-color); transition: all 0.3s ease;">
+                            <div style="width: 50px; height: 50px; background: rgba(37, 99, 235, 0.1); 
+                                       border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fas fa-envelope" style="color: var(--primary-color); font-size: 1.25rem;"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Email</div>
+                                <a href="mailto:{{ mail }}" style="color: var(--text-primary); text-decoration: none; font-weight: 500; font-size: 1.1rem;">
+                                    {{ mail }}
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item" style="display: flex; align-items: center; padding: 1rem 0; 
+                                                      border-bottom: 1px solid var(--border-color); transition: all 0.3s ease;">
+                            <div style="width: 50px; height: 50px; background: rgba(37, 99, 235, 0.1); 
+                                       border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fab fa-telegram" style="color: var(--primary-color); font-size: 1.25rem;"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Telegram</div>
+                                <a href="https://t.me/{{ tg|slice:'1:' }}" target="_blank" style="color: var(--text-primary); text-decoration: none; font-weight: 500; font-size: 1.1rem;">
+                                    {{ tg }}
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item" style="display: flex; align-items: center; padding: 1rem 0; transition: all 0.3s ease;">
+                            <div style="width: 50px; height: 50px; background: rgba(37, 99, 235, 0.1); 
+                                       border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                <i class="fab fa-github" style="color: var(--primary-color); font-size: 1.25rem;"></i>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.25rem;">GitHub</div>
+                                <a href="{{ github }}" target="_blank" style="color: var(--text-primary); text-decoration: none; font-weight: 500; font-size: 1.1rem;">
+                                    GitHub Profile
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Правая колонка - описание и навыки -->
+            <div>
+                <div class="card">
+                    <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--text-primary);">
+                        О моем опыте
+                    </h3>
+                    
+                    <p style="font-size: 1.125rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.7;">
+                        Я специализируюсь на разработке веб-приложений с использованием Python и Django. 
+                        Мой опыт включает создание полнофункциональных веб-сайтов, API, автоматизацию процессов 
+                        и интеграцию различных сервисов.
+                    </p>
+                    
+                    <p style="font-size: 1.125rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.7;">
+                        Каждый проект для меня - это возможность применить лучшие практики разработки, 
+                        создать что-то действительно полезное и постоянно развивать свои навыки.
+                    </p>
+                </div>
+                
+                <!-- Навыки -->
+                <div class="card" style="margin-top: 2rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-primary);">
+                        Мои навыки
+                    </h3>
+                    
+                    <div class="skills-grid" style="display: grid; gap: 1.5rem;">
+                        {% for skill in skills %}
+                        <div class="skill-item" style="padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 0.5rem; 
+                                                   background: var(--bg-secondary); transition: all 0.3s ease;">
+                            <div class="skill-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <span class="skill-name" style="font-weight: 600; color: var(--text-primary);">{{ skill.name }}</span>
+                                <span class="skill-years" style="color: var(--primary-color); font-weight: 500;">{{ skill.years_experience }} лет</span>
+                            </div>
+                            <div class="skill-description" style="color: var(--text-secondary); line-height: 1.5;">
+                                {{ skill.description }}
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="skill-item" style="padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 0.5rem; 
+                                                   background: var(--bg-secondary); transition: all 0.3s ease;">
+                            <div class="skill-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <span class="skill-name" style="font-weight: 600; color: var(--text-primary);">Python</span>
+                                <span class="skill-years" style="color: var(--primary-color); font-weight: 500;">2+ года</span>
+                            </div>
+                            <div class="skill-description" style="color: var(--text-secondary); line-height: 1.5;">
+                                Разработка веб-приложений, API, автоматизация процессов
+                            </div>
+                        </div>
+                        <div class="skill-item" style="padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 0.5rem; 
+                                                   background: var(--bg-secondary); transition: all 0.3s ease;">
+                            <div class="skill-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <span class="skill-name" style="font-weight: 600; color: var(--text-primary);">Django</span>
+                                <span class="skill-years" style="color: var(--primary-color); font-weight: 500;">2+ года</span>
+                            </div>
+                            <div class="skill-description" style="color: var(--text-secondary); line-height: 1.5;">
+                                Создание полнофункциональных веб-приложений
+                            </div>
+                        </div>
+                        <div class="skill-item" style="padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 0.5rem; 
+                                                   background: var(--bg-secondary); transition: all 0.3s ease;">
+                            <div class="skill-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <span class="skill-name" style="font-weight: 600; color: var(--text-primary);">Базы данных</span>
+                                <span class="skill-years" style="color: var(--primary-color); font-weight: 500;">2+ года</span>
+                            </div>
+                            <div class="skill-description" style="color: var(--text-secondary); line-height: 1.5;">
+                                PostgreSQL, SQLite, работа с ORM
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section class="section">
+        <div class="card" style="text-align: center; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); 
+                            color: white; border: none; padding: 4rem 2rem;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Готовы к сотрудничеству?</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.9;">
+                Давайте обсудим ваш проект и создадим что-то удивительное вместе
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="mailto:{{ mail }}" class="btn" style="background: white; color: var(--primary-color); font-weight: 600;">
+                    <i class="fas fa-envelope"></i> Написать письмо
+                </a>
+                <a href="https://t.me/{{ tg|slice:'1:' }}" target="_blank" class="btn" style="background: rgba(255,255,255,0.2); 
+                                                                                                   color: white; border: 1px solid rgba(255,255,255,0.3);">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+.contact-item:hover {
+    transform: translateX(5px);
+    background: rgba(37, 99, 235, 0.05);
+    padding-left: 1rem;
+    border-radius: 0.5rem;
+}
+
+.skill-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    border-color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .about-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+    
+    .profile-card {
+        padding: 2rem 1.5rem !important;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Анимация появления элементов
+    const elements = document.querySelectorAll('.card, .contact-item, .skill-item');
+    elements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            element.style.transition = 'all 0.6s ease-out';
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+    
+    // Добавляем эффект при наведении на фото
+    const profilePhoto = document.querySelector('img[alt*="profile"], .profile-photo-container img');
+    if (profilePhoto) {
+        profilePhoto.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.05)';
+        });
+        
+        profilePhoto.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    }
+});
+</script>
+{% endblock %}

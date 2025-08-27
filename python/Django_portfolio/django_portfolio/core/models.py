@@ -20,7 +20,8 @@ class Project(models.Model):
         ('c_cpp', 'C/C++'),
         ('python', 'Python'),
         ('database', 'Database'),
-        ('telegram', 'Telegram Bots'),
+        ('devops', 'DevOps'),
+        ('telegram', 'telegram'),
     ]
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -34,3 +35,29 @@ class Project(models.Model):
 
     class Meta:
         ordering = ['created_at']
+
+class Technologies(models.Model):
+    CATEGORY_CHOICES = [
+        ('c_cpp', 'C/C++'),
+        ('gcovr', 'GCOVR'),
+        ('valgrind', 'Valgrind'),
+        ('gnu make', 'GNU Make'),
+        ('check', 'Check'),
+        ('ncurses', 'Ncurses'),
+        ('python', 'Python'),
+        ('flask', 'Flask'),
+        ('fastapi', 'FastAPI'),
+        ('django', 'Django'),
+        ('database', 'Database'),
+        ('mysql', 'MySQL'),
+        ('sqlalchemy', 'SQLAlchemy'),
+        ('postgersql', 'PostgreSQL'),
+        ('django orm', 'Django ORM'),
+        ('devops', 'DevOps'),
+        ('linux', 'Linux'),
+    ]
+    name = models.CharField(max_length=30, choices=CATEGORY_CHOICES)
+    projects = models.ManyToManyField(Project)
+
+    def __str__(self):
+        return f'name: {self.name}'
