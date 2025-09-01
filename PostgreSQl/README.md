@@ -117,8 +117,8 @@ PostgreSQL/
 1. Клонируйте репозиторий:
 
 ```bash
-git clone https://github.com/yourusername/postgresql-portfolio.git
-cd postgresql-portfolio
+git clone git@github.com:VinogradovIlya/portfolio.git
+cd PostgreSQL
 ```
 
 2. Создайте базу данных:
