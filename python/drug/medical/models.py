@@ -112,7 +112,6 @@ class VaccineType(TimeStampedModel):
     name = models.CharField(max_length=100, unique=True, verbose_name='Название')
     description = models.TextField(blank=True, verbose_name='Описание')
     
-    # ✅ ИСПРАВЛЕНО: Используем простое поле выбора вместо сложной связи
     applicable_species = models.JSONField(
         default=list, 
         verbose_name='Применимые виды животных',

@@ -13,6 +13,11 @@ class CustomUserManager(UserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
+        UserProfile.objects.create(
+            user=user,
+            first_name='',
+            last_name=''
+        )
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
@@ -33,7 +38,7 @@ class User(AbstractUser, TimeStampedModel):
 
     username = None
     email = models.EmailField(unique=True, verbose_name='Email')
-    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, verbose_name='Тип пользователя')
+    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, verbose_name='Тип пользователя', default=USER_TYPE_CHOICES[0][0])
     phone = PhoneNumberField(unique=True, region='RU', verbose_name='Телефон')
     city = models.CharField(max_length=100, verbose_name='Город')
     
@@ -82,4 +87,4 @@ class UserProfile(TimeStampedModel):
     @property
     def full_name(self):
         parts = [self.first_name, self.middle_name, self.last_name]
-        return ' '.join(filter(None, parts))
+        return ' '.join(parts)
