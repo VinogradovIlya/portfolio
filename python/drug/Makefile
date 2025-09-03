@@ -4,7 +4,7 @@
 cov: clean
 	coverage run -m pytest
 	
-report:
+report: cov
 	coverage report
 	coverage html
 

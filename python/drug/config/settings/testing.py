@@ -1,5 +1,5 @@
 """
-Testing settings for drug_backend project.
+Testing settings for drug project.
 """
 
 from .base import *
@@ -29,15 +29,8 @@ CACHES = {
     }
 }
 
-# Отключаем миграции для ускорения тестов
-class DisableMigrations:
-    def __contains__(self, item):
-        return True
-    
-    def __getitem__(self, item):
-        return None
-
-MIGRATION_MODULES = DisableMigrations()
+# Factory Boy
+FACTORY_BOY_RANDOM_SEED = 42
 
 # Отключаем логирование в тестах
 LOGGING = {
@@ -51,14 +44,4 @@ LOGGING = {
     'root': {
         'handlers': ['null'],
     },
-    'loggers': {
-        'django': {
-            'handlers': ['null'],
-            'propagate': False,
-        },
-    }
 }
-
-# Отключаем Celery в тестах
-CELERY_TASK_ALWAYS_EAGER = True
-CELERY_TASK_EAGER_PROPAGATES = True
