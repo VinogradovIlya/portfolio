@@ -13,6 +13,7 @@ class CustomUserManager(UserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
+
         UserProfile.objects.create(
             user=user,
             first_name='',
@@ -38,14 +39,17 @@ class User(AbstractUser, TimeStampedModel):
 
     username = None
     email = models.EmailField(unique=True, verbose_name='Email')
-    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, verbose_name='Тип пользователя', default=USER_TYPE_CHOICES[0][0])
+    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES,
+                                 verbose_name='Тип пользователя', default=USER_TYPE_CHOICES[0][0])
     phone = PhoneNumberField(unique=True, region='RU', verbose_name='Телефон')
     city = models.CharField(max_length=100, verbose_name='Город')
-    
-    is_verified = models.BooleanField(default=False, verbose_name='Верифицирован')
+
+    is_verified = models.BooleanField(
+        default=False, verbose_name='Верифицирован')
     is_active = models.BooleanField(default=True, verbose_name='Активен')
     subscriber = models.BooleanField(default=False, verbose_name='Подписчик')
-    last_seen = models.DateTimeField(null=True, blank=True, verbose_name='Последняя активность')
+    last_seen = models.DateTimeField(
+        null=True, blank=True, verbose_name='Последняя активность')
 
     objects = CustomUserManager()
 
@@ -67,14 +71,19 @@ class UserProfile(TimeStampedModel):
         ('f', 'Женский'),
         ('unknown', 'Не указано'),
     ]
-    
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='profile')
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     last_name = models.CharField(max_length=50, verbose_name='Фамилия')
-    middle_name = models.CharField(max_length=50, blank=True, null=True, verbose_name='Отчество')
-    birthday = models.DateField(null=True, blank=True, verbose_name='Дата рождения')
-    gender = models.CharField(max_length=10, choices=GENDERS, default='unknown', verbose_name='Пол')
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, verbose_name='Аватар')
+    middle_name = models.CharField(
+        max_length=50, blank=True, null=True, verbose_name='Отчество')
+    birthday = models.DateField(
+        null=True, blank=True, verbose_name='Дата рождения')
+    gender = models.CharField(
+        max_length=10, choices=GENDERS, default='unknown', verbose_name='Пол')
+    avatar = models.ImageField(
+        upload_to='avatars/', null=True, blank=True, verbose_name='Аватар')
     bio = models.TextField(max_length=500, blank=True, verbose_name='О себе')
 
     class Meta:
@@ -87,4 +96,4 @@ class UserProfile(TimeStampedModel):
     @property
     def full_name(self):
         parts = [self.first_name, self.middle_name, self.last_name]
-        return ' '.join(parts)
+        return ' '.join(filter(None, parts))

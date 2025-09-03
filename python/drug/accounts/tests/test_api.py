@@ -2,7 +2,6 @@ import pytest
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
-# from django.urls import reverse
 from .factories import UserFactory, UserWithProfileFactory
 
 User = get_user_model()
@@ -63,7 +62,8 @@ class TestRegistrationAPI:
         
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert 'password' in response.data
-        assert 'user_type' in response.data
+        assert 'phone' in response.data
+        assert 'city' in response.data
 
 
 class TestLoginAPI:
