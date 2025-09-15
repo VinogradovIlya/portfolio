@@ -59,7 +59,7 @@ class Pet(TimeStampedModel):
     
     description = models.TextField(blank=True, verbose_name='Описание')
     special_needs = models.TextField(blank=True, verbose_name='Особые потребности')
-    is_active = models.BooleanField(default=True, verbose_name='Активен') #?
+    # is_active = models.BooleanField(default=True, verbose_name='Активен') #?
     
     main_photo = models.ImageField(upload_to='pets/main/', null=True, blank=True, verbose_name='Основное фото')
 

@@ -3,14 +3,23 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.utils import timezone
-from .serializers import UserRegistrationSerializer, UserLoginSerializer, UserSerializer
+from .serializers import UserRegistrationSerializer, UserLoginSerializer, UserSerializer#, PasswordRecoverySerializer
+
+
+@api_view(['PUT'])
+@permission_classes([permissions.AllowAny])
+def recovery_view(request):
+    """Восстановление пароля"""
+    serialiser = PasswordRecoverySerializer(data=request.data)
+
+    if serialiser.is_valid():
+        user = serialiser.save()
+        token, created = Token.objects.get(user=user)
 
 
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register_view(request):
-    # что будет, если зарегаться повторно?
-    # восстановление пароля
     """Регистрация нового пользователя"""
     serializer = UserRegistrationSerializer(data=request.data)
     
