@@ -9,6 +9,8 @@ from .serializers import UserRegistrationSerializer, UserLoginSerializer, UserSe
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register_view(request):
+    # что будет, если зарегаться повторно?
+    # восстановление пароля
     """Регистрация нового пользователя"""
     serializer = UserRegistrationSerializer(data=request.data)
     

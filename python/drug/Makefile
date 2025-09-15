@@ -1,6 +1,9 @@
 # tests:
 # 	pytest -v
 
+# env:
+# 	cp .env.develop .env
+
 cov: clean
 	coverage run -m pytest
 	

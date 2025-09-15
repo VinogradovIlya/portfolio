@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import User, UserProfile
+from accounts.models import User
 from core.models import TimeStampedModel
 
 
@@ -45,7 +45,6 @@ class Pet(TimeStampedModel):
         ('unknown', 'Не известно'),
     ]
 
-    # Основная информация
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pets', verbose_name='Владелец')
     name = models.CharField(max_length=50, verbose_name='Кличка')
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE, verbose_name='Порода')
@@ -54,17 +53,14 @@ class Pet(TimeStampedModel):
     color = models.CharField(max_length=20, choices=COLORS, verbose_name='Окрас')
     weight = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True, verbose_name='Вес (кг)')
     
-    # Документы и чипирование
     passport_number = models.CharField(max_length=20, unique=True, null=True, blank=True, verbose_name='Номер паспорта')
     is_chipped = models.BooleanField(default=False, verbose_name='Чипирован')
     chip_number = models.CharField(max_length=50, unique=True, null=True, blank=True, verbose_name='Номер чипа')
     
-    # Дополнительная информация
     description = models.TextField(blank=True, verbose_name='Описание')
     special_needs = models.TextField(blank=True, verbose_name='Особые потребности')
-    is_active = models.BooleanField(default=True, verbose_name='Активен')
+    is_active = models.BooleanField(default=True, verbose_name='Активен') #?
     
-    # Фотографии
     main_photo = models.ImageField(upload_to='pets/main/', null=True, blank=True, verbose_name='Основное фото')
 
     class Meta:
