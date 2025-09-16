@@ -30,10 +30,10 @@ DATABASES = {
 # Cache для разработки
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
     }
 }
-
 # Дополнительные приложения для разработки
 INSTALLED_APPS += [
     # 'debug_toolbar',

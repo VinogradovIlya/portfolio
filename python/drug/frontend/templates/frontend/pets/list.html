@@ -1,0 +1,59 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Мои питомцы - Pet Social Network{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 2rem 0;">
+    <div class="card">
+        <div class="card__header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 class="card__title">Мои питомцы</h2>
+            <a href="{% url 'frontend:pet_create' %}" class="btn btn-primary">
+                Добавить питомца
+            </a>
+        </div>
+        <div class="card__body">
+            {% if pets %}
+                <div class="grid grid--3">
+                    {% for pet in pets %}
+                        <div class="pet-card">
+                            {% if pet.main_photo %}
+                                <img src="{{ pet.main_photo.url }}" alt="{{ pet.name }}" class="pet-card__image">
+                            {% else %}
+                                <div class="pet-card__image" style="display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                                    🐾
+                                </div>
+                            {% endif %}
+                            
+                            <div class="pet-card__body">
+                                <h3 class="pet-card__name">{{ pet.name }}</h3>
+                                <p class="pet-card__breed">{{ pet.breed.get_species_display }} - {{ pet.breed.name }}</p>
+                                
+                                <div style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                                    <div>Возраст: {{ pet.age_in_years }} лет</div>
+                                    <div>Пол: {{ pet.get_gender_display }}</div>
+                                    <div>Окрас: {{ pet.get_color_display }}</div>
+                                </div>
+                                
+                                <div class="pet-card__actions">
+                                    <a href="{% url 'frontend:pet_edit' pet.id %}" class="btn btn-secondary" style="flex: 1;">
+                                        Редактировать
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-state__icon">🐾</div>
+                    <h3 class="empty-state__title">У вас пока нет питомцев</h3>
+                    <p style="margin-bottom: 2rem;">Добавьте своего первого питомца, чтобы начать ведение его медицинской карты</p>
+                    <a href="{% url 'frontend:pet_create' %}" class="btn btn-primary">
+                        Добавить питомца
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
