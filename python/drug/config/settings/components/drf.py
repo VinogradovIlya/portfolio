@@ -26,7 +26,19 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Pet Social Network API',
-    'DESCRIPTION': 'API для социальной сети владельцев питомцев с ветеринарными услугами и маркетплейсом',
+    'DESCRIPTION': '''
+    API для социальной сети владельцев питомцев.
+    
+    ## Аутентификация
+    Используйте Token аутентификацию. После регистрации или входа получите токен
+    и добавляйте в заголовки: `Authorization: Token your_token_here`
+    
+    ## Основные разделы:
+    - Authentication - регистрация, вход, выход
+    - Pets - управление питомцами  
+    - Medical - медицинские записи
+    - Clinics - ветеринарные клиники
+    ''',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'COMPONENT_SPLIT_REQUEST': True,
