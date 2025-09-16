@@ -84,10 +84,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
                   'birthday', 'gender', 'avatar', 'bio', 'full_name')
 
 
-# accounts/serializers.py
 class UserSerializer(serializers.ModelSerializer):
     profile = UserProfileSerializer(read_only=True)
-    
+
     first_name = serializers.CharField(write_only=True, required=False)
     last_name = serializers.CharField(write_only=True, required=False)
     bio = serializers.CharField(write_only=True, required=False)
@@ -105,19 +104,19 @@ class UserSerializer(serializers.ModelSerializer):
         for field in ['first_name', 'last_name', 'bio']:
             if field in validated_data:
                 profile_data[field] = validated_data.pop(field)
-        
+
         # Обновляем User
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
-        
+
         # Обновляем или создаем Profile
         if profile_data:
             profile, created = UserProfile.objects.get_or_create(user=instance)
             for attr, value in profile_data.items():
                 setattr(profile, attr, value)
             profile.save()
-        
+
         return instance
 
 
@@ -128,13 +127,14 @@ class PasswordRecoverySerializer(serializers.Serializer):
         try:
             user = User.objects.get(email=value)
         except User.DoesNotExist:
-            raise serializers.ValidationError("Пользователь с таким email не найден")
+            raise serializers.ValidationError(
+                "Пользователь с таким email не найден")
         return value
 
     def save(self):
         email = self.validated_data['email']
         user = User.objects.get(email=email)
-        
+
         # Здесь логика отправки email
         # Пока просто возвращаем пользователя
         return user
