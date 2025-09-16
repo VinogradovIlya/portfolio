@@ -100,9 +100,9 @@ make migrate
 - Для новых возможностей создавайте feature/* ветки
 
 Ветки:
-├── main (stable, production-ready) ✅
-├── develop (development, latest features) ✅
-└── [feature branches при необходимости]
+├── main (stable, production-ready) ✅  
+├── develop (development, latest features) ✅  
+└── [feature branches при необходимости]  
 
 Tags:
 └── v1.0.0
