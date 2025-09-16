@@ -1,0 +1,24 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 4rem 0; text-align: center;">
+    <h1>🐾 Добро пожаловать в Pet Social Network</h1>
+    <p class="text-muted mb-4">Социальная сеть для владельцев питомцев</p>
+    
+    {% if not user.is_authenticated %}
+        <div>
+            <a href="{% url 'frontend:register' %}" class="btn btn-primary" style="margin-right: 1rem;">
+                Присоединиться
+            </a>
+            <a href="{% url 'frontend:login' %}" class="btn btn-secondary">
+                Войти
+            </a>
+        </div>
+    {% else %}
+        <p>Привет, {{ user.email }}!</p>
+        <a href="{% url 'frontend:profile' %}" class="btn btn-primary">
+            Перейти в профиль
+        </a>
+    {% endif %}
+</div>
+{% endblock %}

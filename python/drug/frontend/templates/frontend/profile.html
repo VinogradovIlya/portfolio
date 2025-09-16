@@ -1,0 +1,91 @@
+<!-- frontend/templates/frontend/profile.html -->
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+<div class="container" style="padding: 2rem 0;">
+    <div class="grid grid--2">
+        <div class="card">
+            <div class="card__header">
+                <h2 class="card__title">Личная информация</h2>
+            </div>
+            <div class="card__body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form__group">
+                        <label for="first_name" class="form__label">Имя</label>
+                        <input 
+                            type="text" 
+                            id="first_name" 
+                            name="first_name" 
+                            class="form__input"
+                            value="{{ user.profile.first_name|default:'' }}"
+                            placeholder="Иван"
+                        >
+                    </div>
+                    
+                    <div class="form__group">
+                        <label for="last_name" class="form__label">Фамилия</label>
+                        <input 
+                            type="text" 
+                            id="last_name" 
+                            name="last_name" 
+                            class="form__input"
+                            value="{{ user.profile.last_name|default:'' }}"
+                            placeholder="Петров"
+                        >
+                    </div>
+                    
+                    <div class="form__group">
+                        <label for="city" class="form__label">Город</label>
+                        <input 
+                            type="text" 
+                            id="city" 
+                            name="city" 
+                            class="form__input"
+                            value="{{ user.city }}"
+                            placeholder="Москва"
+                        >
+                    </div>
+                    
+                    <div class="form__group">
+                        <label for="bio" class="form__label">О себе</label>
+                        <textarea 
+                            id="bio" 
+                            name="bio" 
+                            class="form__textarea"
+                            rows="4"
+                            placeholder="Расскажите о себе..."
+                        >{{ user.profile.bio|default:'' }}</textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        Сохранить изменения
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card__header">
+                <h2 class="card__title">Информация аккаунта</h2>
+            </div>
+            <div class="card__body">
+                <div class="mb-4">
+                    <strong>Email:</strong> {{ user.email }}
+                </div>
+                <div class="mb-4">
+                    <strong>Телефон:</strong> {{ user.phone }}
+                </div>
+                <div class="mb-4">
+                    <strong>Дата регистрации:</strong> {{ user.date_joined|date:"d.m.Y" }}
+                </div>
+                
+                <a href="{% url 'frontend:pets_list' %}" class="btn btn-secondary" style="width: 100%;">
+                    Мои питомцы
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

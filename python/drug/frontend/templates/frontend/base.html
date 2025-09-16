@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pet Social Network{% endblock %}</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'frontend/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'frontend/css/components.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="{% url 'frontend:home' %}" class="nav__logo">🐾 PetSocial</a>
+                
+                <ul class="nav__links">
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'frontend:profile' %}" class="nav__link">Профиль</a></li>
+                        <li><a href="{% url 'frontend:pets_list' %}" class="nav__link">Питомцы</a></li>
+                        <li><a href="{% url 'frontend:logout' %}" class="nav__link">Выход</a></li>
+                    {% else %}
+                        <li><a href="{% url 'frontend:login' %}" class="nav__link">Вход</a></li>
+                        <li><a href="{% url 'frontend:register' %}" class="btn btn-primary">Регистрация</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="container">
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message message--{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- JavaScript -->
+    {% load static %}
+    <script src="{% static 'frontend/js/base.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

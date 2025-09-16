@@ -1,0 +1,60 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Вход - Pet Social Network{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 3rem 0;">
+    <div class="form">
+        <h1 class="text-center mb-4">Добро пожаловать!</h1>
+        <p class="text-center text-muted mb-4">
+            Войдите в свой аккаунт
+        </p>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form__group">
+                <label for="email" class="form__label">Email адрес</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form__input" 
+                    required
+                    placeholder="ivan@example.com"
+                    value="{{ request.POST.email|default:'' }}"
+                >
+            </div>
+            
+            <div class="form__group">
+                <label for="password" class="form__label">Пароль</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form__input" 
+                    required
+                    placeholder="Введите пароль"
+                >
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                Войти
+            </button>
+        </form>
+        
+        <div class="text-center mt-4">
+            <a href="#" class="text-muted text-small">
+                Забыли пароль?
+            </a>
+        </div>
+        
+        <p class="text-center mt-4 text-muted">
+            Нет аккаунта? 
+            <a href="{% url 'frontend:register' %}" style="color: var(--primary-color); text-decoration: none;">
+                Зарегистрироваться
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock %}
