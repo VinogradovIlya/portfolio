@@ -24,7 +24,7 @@ class LikeMixin(models.Model):
     disliked_by = models.ManyToManyField(
         'accounts.User',
         blank=True,
-        related_name="liked_%(class)s",
+        related_name="disliked_%(class)s",
         verbose_name="Дизлайки пользователей"
     )
     likes_count = models.PositiveIntegerField(
