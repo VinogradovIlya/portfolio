@@ -1,9 +1,9 @@
 from django.db import models
 from accounts.models import User
-from core.models import TimeStampedModel
+from core.mixins import TimeStampedMixin
 
 
-class Breed(TimeStampedModel):
+class Breed(TimeStampedMixin):
     """Породы животных"""
     SPECIES_CHOICES = [
         ('cat', 'Кошка'),
@@ -28,7 +28,7 @@ class Breed(TimeStampedModel):
         return f"{self.get_species_display()} - {self.name}"
 
 
-class Pet(TimeStampedModel):
+class Pet(TimeStampedMixin):
     """Питомец"""
     COLORS = [
         ('white', 'Белый'),
@@ -78,7 +78,7 @@ class Pet(TimeStampedModel):
         return today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, self.birthday.day))
 
 
-class PetPhoto(TimeStampedModel):
+class PetPhoto(TimeStampedMixin):
     """Дополнительные фотографии питомца"""
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE, related_name='photos')
     photo = models.ImageField(upload_to='pets/photos/')

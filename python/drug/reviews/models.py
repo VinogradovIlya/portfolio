@@ -2,10 +2,10 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from accounts.models import User
 from clinics.models import Clinic, Veterinarian
-from core.models import TimeStampedModel
+from core.mixins import TimeStampedMixin
 
 
-class Review(TimeStampedModel):
+class Review(TimeStampedMixin):
     """Отзывы о клиниках и ветеринарах"""
     REVIEW_TYPES = [
         ('clinic', 'Отзыв о клинике'),

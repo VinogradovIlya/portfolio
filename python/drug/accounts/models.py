@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-from core.models import TimeStampedModel
+from core.mixins import TimeStampedMixin
 
 
 class CustomUserManager(UserManager):
@@ -28,7 +28,7 @@ class CustomUserManager(UserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class User(AbstractUser, TimeStampedModel):
+class User(AbstractUser, TimeStampedMixin):
     USER_TYPE_CHOICES = [
         ('pet_owner', 'Владелец питомца'),
         ('veterinarian', 'Ветеринар'),
@@ -64,7 +64,7 @@ class User(AbstractUser, TimeStampedModel):
         return f"{self.email} ({self.get_user_type_display()})"
 
 
-class UserProfile(TimeStampedModel):
+class UserProfile(TimeStampedMixin):
     """Базовый профиль для всех пользователей с личными данными"""
     GENDERS = [
         ('m', 'Мужской'),

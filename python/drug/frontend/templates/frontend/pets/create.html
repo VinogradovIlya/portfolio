@@ -5,12 +5,12 @@
 {% block content %}
 <div class="container" style="padding: 2rem 0;">
     <div class="form form--wide">
-        <h1 class="text-center mb-4">Добавить питомца</h1>
+        <h1 class="text-center mb-4">Добавить нового питомца</h1>
         
-        <form method="post">
+        <form method="post" enctype="multipart/form-data" id="pet-form">
             {% csrf_token %}
             
-            <div class="grid grid--2" style="gap: 1.5rem;">
+            <div class="grid grid--2">
                 <div class="form__group">
                     <label for="name" class="form__label">Кличка *</label>
                     <input 
@@ -20,19 +20,33 @@
                         class="form__input" 
                         required
                         placeholder="Барсик"
+                        value="{{ request.POST.name|default:'' }}"
                     >
                 </div>
                 
                 <div class="form__group">
-                    <label for="breed" class="form__label">Порода *</label>
-                    <select id="breed" name="breed" class="form__select" required>
-                        <option value="">Выберите породу</option>
-                        {% for breed in breeds %}
-                            <option value="{{ breed.id }}">{{ breed.get_species_display }} - {{ breed.name }}</option>
-                        {% endfor %}
+                    <label for="species" class="form__label">Вид животного *</label>
+                    <select id="species" name="species" class="form__select" required>
+                        <option value="">Выберите вид</option>
+                        <option value="dog" {% if request.POST.species == 'dog' %}selected{% endif %}>Собака</option>
+                        <option value="cat" {% if request.POST.species == 'cat' %}selected{% endif %}>Кошка</option>
+                        <option value="bird" {% if request.POST.species == 'bird' %}selected{% endif %}>Птица</option>
+                        <option value="fish" {% if request.POST.species == 'fish' %}selected{% endif %}>Рыба</option>
+                        <option value="rodent" {% if request.POST.species == 'rodent' %}selected{% endif %}>Грызун</option>
+                        <option value="reptile" {% if request.POST.species == 'reptile' %}selected{% endif %}>Рептилия</option>
+                        <option value="other" {% if request.POST.species == 'other' %}selected{% endif %}>Другое</option>
                     </select>
                 </div>
-                
+            </div>
+            
+            <div class="form__group">
+                <label for="breed" class="form__label">Порода *</label>
+                <select id="breed" name="breed" class="form__select" required>
+                    <option value="">Сначала выберите вид животного</option>
+                </select>
+            </div>
+            
+            <div class="grid grid--2">
                 <div class="form__group">
                     <label for="birthday" class="form__label">Дата рождения *</label>
                     <input 
@@ -41,30 +55,32 @@
                         name="birthday" 
                         class="form__input" 
                         required
+                        value="{{ request.POST.birthday|default:'' }}"
                     >
                 </div>
                 
                 <div class="form__group">
-                    <label for="gender" class="form__label">Пол *</label>
-                    <select id="gender" name="gender" class="form__select" required>
-                        <option value="">Выберите пол</option>
-                        <option value="m">Мужской</option>
-                        <option value="f">Женский</option>
-                        <option value="unknown">Не известно</option>
+                    <label for="gender" class="form__label">Пол</label>
+                    <select id="gender" name="gender" class="form__select">
+                        <option value="unknown" {% if request.POST.gender == 'unknown' %}selected{% endif %}>Не известно</option>
+                        <option value="m" {% if request.POST.gender == 'm' %}selected{% endif %}>Мужской</option>
+                        <option value="f" {% if request.POST.gender == 'f' %}selected{% endif %}>Женский</option>
                     </select>
                 </div>
-                
+            </div>
+            
+            <div class="grid grid--2">
                 <div class="form__group">
-                    <label for="color" class="form__label">Окрас *</label>
-                    <select id="color" name="color" class="form__select" required>
+                    <label for="color" class="form__label">Окрас</label>
+                    <select id="color" name="color" class="form__select">
                         <option value="">Выберите окрас</option>
-                        <option value="white">Белый</option>
-                        <option value="black">Черный</option>
-                        <option value="grey">Серый</option>
-                        <option value="brown">Коричневый</option>
-                        <option value="red">Рыжий</option>
-                        <option value="multi">Разноцветный</option>
-                        <option value="other">Другой</option>
+                        <option value="white" {% if request.POST.color == 'white' %}selected{% endif %}>Белый</option>
+                        <option value="black" {% if request.POST.color == 'black' %}selected{% endif %}>Черный</option>
+                        <option value="grey" {% if request.POST.color == 'grey' %}selected{% endif %}>Серый</option>
+                        <option value="brown" {% if request.POST.color == 'brown' %}selected{% endif %}>Коричневый</option>
+                        <option value="red" {% if request.POST.color == 'red' %}selected{% endif %}>Рыжий</option>
+                        <option value="multi" {% if request.POST.color == 'multi' %}selected{% endif %}>Разноцветный</option>
+                        <option value="other" {% if request.POST.color == 'other' %}selected{% endif %}>Другой</option>
                     </select>
                 </div>
                 
@@ -76,9 +92,56 @@
                         name="weight" 
                         class="form__input" 
                         step="0.1"
+                        min="0"
                         placeholder="5.5"
+                        value="{{ request.POST.weight|default:'' }}"
                     >
                 </div>
+            </div>
+            
+            <div class="grid grid--2">
+                <div class="form__group">
+                    <label for="passport_number" class="form__label">Номер паспорта</label>
+                    <input 
+                        type="text" 
+                        id="passport_number" 
+                        name="passport_number" 
+                        class="form__input" 
+                        placeholder="ABC123456"
+                        value="{{ request.POST.passport_number|default:'' }}"
+                    >
+                </div>
+                
+                <div class="form__group">
+                    <label for="chip_number" class="form__label">Номер чипа</label>
+                    <input 
+                        type="text" 
+                        id="chip_number" 
+                        name="chip_number" 
+                        class="form__input" 
+                        placeholder="123456789012345"
+                        value="{{ request.POST.chip_number|default:'' }}"
+                    >
+                </div>
+            </div>
+            
+            <div class="form__group">
+                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                    <input type="checkbox" name="is_chipped" value="1" 
+                           {% if request.POST.is_chipped %}checked{% endif %}>
+                    Питомец чипирован
+                </label>
+            </div>
+            
+            <div class="form__group">
+                <label for="main_photo" class="form__label">Фотография</label>
+                <input 
+                    type="file" 
+                    id="main_photo" 
+                    name="main_photo" 
+                    class="form__input" 
+                    accept="image/*"
+                >
             </div>
             
             <div class="form__group">
@@ -87,13 +150,24 @@
                     id="description" 
                     name="description" 
                     class="form__textarea"
-                    rows="4"
-                    placeholder="Расскажите о характере, особенностях питомца..."
-                ></textarea>
+                    rows="3"
+                    placeholder="Расскажите о характере питомца..."
+                >{{ request.POST.description|default:'' }}</textarea>
+            </div>
+            
+            <div class="form__group">
+                <label for="special_needs" class="form__label">Особые потребности</label>
+                <textarea 
+                    id="special_needs" 
+                    name="special_needs" 
+                    class="form__textarea"
+                    rows="3"
+                    placeholder="Аллергии, особенности ухода..."
+                >{{ request.POST.special_needs|default:'' }}</textarea>
             </div>
             
             <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                <button type="submit" class="btn btn-primary" style="flex: 1;">
+                <button type="submit" class="btn btn-primary">
                     Добавить питомца
                 </button>
                 <a href="{% url 'frontend:pets_list' %}" class="btn btn-secondary">
@@ -103,4 +177,52 @@
         </form>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const speciesSelect = document.getElementById('species');
+    const breedSelect = document.getElementById('breed');
+    
+    speciesSelect.addEventListener('change', function() {
+        const selectedSpecies = this.value;
+        
+        // Очищаем список пород
+        breedSelect.innerHTML = '<option value="">Загрузка...</option>';
+        breedSelect.disabled = true;
+        
+        if (selectedSpecies) {
+            // Получаем породы с сервера через AJAX
+            fetch(`{% url 'frontend:get_breeds' %}?species=${selectedSpecies}`)
+                .then(response => response.json())
+                .then(data => {
+                    breedSelect.innerHTML = '';
+                    
+                    // Добавляем пустой вариант
+                    const emptyOption = document.createElement('option');
+                    emptyOption.value = '';
+                    emptyOption.textContent = 'Выберите породу';
+                    breedSelect.appendChild(emptyOption);
+                    
+                    // Добавляем породы
+                    data.breeds.forEach(breed => {
+                        const option = document.createElement('option');
+                        option.value = breed.id;
+                        option.textContent = breed.name;
+                        breedSelect.appendChild(option);
+                    });
+                    
+                    breedSelect.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Ошибка загрузки пород:', error);
+                    breedSelect.innerHTML = '<option value="">Ошибка загрузки</option>';
+                });
+        } else {
+            // Если вид не выбран
+            breedSelect.innerHTML = '<option value="">Сначала выберите вид животного</option>';
+            breedSelect.disabled = true;
+        }
+    });
+});
+</script>
 {% endblock %}

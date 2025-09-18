@@ -7,10 +7,10 @@
     <div class="form form--wide">
         <h1 class="text-center mb-4">Редактировать {{ pet.name }}</h1>
         
-        <form method="post">
+        <form method="post" enctype="multipart/form-data" id="pet-form">
             {% csrf_token %}
             
-            <div class="grid grid--2" style="gap: 1.5rem;">
+            <div class="grid grid--2">
                 <div class="form__group">
                     <label for="name" class="form__label">Кличка *</label>
                     <input 
@@ -19,22 +19,34 @@
                         name="name" 
                         class="form__input" 
                         required
+                        placeholder="Барсик"
                         value="{{ pet.name }}"
                     >
                 </div>
                 
                 <div class="form__group">
-                    <label for="breed" class="form__label">Порода *</label>
-                    <select id="breed" name="breed" class="form__select" required>
-                        <option value="">Выберите породу</option>
-                        {% for breed in breeds %}
-                            <option value="{{ breed.id }}" {% if breed.id == pet.breed.id %}selected{% endif %}>
-                                {{ breed.get_species_display }} - {{ breed.name }}
-                            </option>
-                        {% endfor %}
+                    <label for="species" class="form__label">Вид животного *</label>
+                    <select id="species" name="species" class="form__select" required>
+                        <option value="">Выберите вид</option>
+                        <option value="dog" {% if pet.breed.species == 'dog' %}selected{% endif %}>Собака</option>
+                        <option value="cat" {% if pet.breed.species == 'cat' %}selected{% endif %}>Кошка</option>
+                        <option value="bird" {% if pet.breed.species == 'bird' %}selected{% endif %}>Птица</option>
+                        <option value="fish" {% if pet.breed.species == 'fish' %}selected{% endif %}>Рыба</option>
+                        <option value="rodent" {% if pet.breed.species == 'rodent' %}selected{% endif %}>Грызун</option>
+                        <option value="reptile" {% if pet.breed.species == 'reptile' %}selected{% endif %}>Рептилия</option>
+                        <option value="other" {% if pet.breed.species == 'other' %}selected{% endif %}>Другое</option>
                     </select>
                 </div>
-                
+            </div>
+            
+            <div class="form__group">
+                <label for="breed" class="form__label">Порода *</label>
+                <select id="breed" name="breed" class="form__select" required>
+                    <option value="{{ pet.breed.id }}" selected>{{ pet.breed.name }}</option>
+                </select>
+            </div>
+            
+            <div class="grid grid--2">
                 <div class="form__group">
                     <label for="birthday" class="form__label">Дата рождения *</label>
                     <input 
@@ -48,18 +60,19 @@
                 </div>
                 
                 <div class="form__group">
-                    <label for="gender" class="form__label">Пол *</label>
-                    <select id="gender" name="gender" class="form__select" required>
-                        <option value="">Выберите пол</option>
+                    <label for="gender" class="form__label">Пол</label>
+                    <select id="gender" name="gender" class="form__select">
+                        <option value="unknown" {% if pet.gender == 'unknown' %}selected{% endif %}>Не известно</option>
                         <option value="m" {% if pet.gender == 'm' %}selected{% endif %}>Мужской</option>
                         <option value="f" {% if pet.gender == 'f' %}selected{% endif %}>Женский</option>
-                        <option value="unknown" {% if pet.gender == 'unknown' %}selected{% endif %}>Не известно</option>
                     </select>
                 </div>
-                
+            </div>
+            
+            <div class="grid grid--2">
                 <div class="form__group">
-                    <label for="color" class="form__label">Окрас *</label>
-                    <select id="color" name="color" class="form__select" required>
+                    <label for="color" class="form__label">Окрас</label>
+                    <select id="color" name="color" class="form__select">
                         <option value="">Выберите окрас</option>
                         <option value="white" {% if pet.color == 'white' %}selected{% endif %}>Белый</option>
                         <option value="black" {% if pet.color == 'black' %}selected{% endif %}>Черный</option>
@@ -79,10 +92,66 @@
                         name="weight" 
                         class="form__input" 
                         step="0.1"
-                        value="{{ pet.weight|default:'' }}"
+                        min="0"
                         placeholder="5.5"
+                        value="{{ pet.weight }}"
                     >
                 </div>
+            </div>
+            
+            <div class="grid grid--2">
+                <div class="form__group">
+                    <label for="passport_number" class="form__label">Номер паспорта</label>
+                    <input 
+                        type="text" 
+                        id="passport_number" 
+                        name="passport_number" 
+                        class="form__input" 
+                        placeholder="ABC123456"
+                        value="{{ pet.passport_number }}"
+                    >
+                </div>
+                
+                <div class="form__group">
+                    <label for="chip_number" class="form__label">Номер чипа</label>
+                    <input 
+                        type="text" 
+                        id="chip_number" 
+                        name="chip_number" 
+                        class="form__input" 
+                        placeholder="123456789012345"
+                        value="{{ pet.chip_number }}"
+                    >
+                </div>
+            </div>
+            
+            <div class="form__group">
+                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                    <input type="checkbox" name="is_chipped" value="1" 
+                           {% if pet.is_chipped %}checked{% endif %}>
+                    Питомец чипирован
+                </label>
+            </div>
+            
+            {% if pet.main_photo %}
+            <div class="form__group">
+                <label class="form__label">Текущая фотография</label>
+                <img src="{{ pet.main_photo.url }}" alt="{{ pet.name }}" 
+                     style="max-width: 200px; border-radius: var(--radius);">
+            </div>
+            {% endif %}
+            
+            <div class="form__group">
+                <label for="main_photo" class="form__label">
+                    {% if pet.main_photo %}Изменить фотографию{% else %}Добавить фотографию{% endif %}
+                </label>
+                <input 
+                    type="file" 
+                    id="main_photo" 
+                    name="main_photo" 
+                    class="form__input" 
+                    accept="image/*"
+                >
             </div>
             
             <div class="form__group">
@@ -91,13 +160,24 @@
                     id="description" 
                     name="description" 
                     class="form__textarea"
-                    rows="4"
-                    placeholder="Расскажите о характере, особенностях питомца..."
+                    rows="3"
+                    placeholder="Расскажите о характере питомца..."
                 >{{ pet.description }}</textarea>
             </div>
             
+            <div class="form__group">
+                <label for="special_needs" class="form__label">Особые потребности</label>
+                <textarea 
+                    id="special_needs" 
+                    name="special_needs" 
+                    class="form__textarea"
+                    rows="3"
+                    placeholder="Аллергии, особенности ухода..."
+                >{{ pet.special_needs }}</textarea>
+            </div>
+            
             <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                <button type="submit" class="btn btn-primary" style="flex: 1;">
+                <button type="submit" class="btn btn-primary">
                     Сохранить изменения
                 </button>
                 <a href="{% url 'frontend:pets_list' %}" class="btn btn-secondary">
@@ -107,4 +187,62 @@
         </form>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const speciesSelect = document.getElementById('species');
+    const breedSelect = document.getElementById('breed');
+    const currentBreedId = {{ pet.breed.id }};
+    
+    speciesSelect.addEventListener('change', function() {
+        const selectedSpecies = this.value;
+        
+        // Очищаем список пород
+        breedSelect.innerHTML = '<option value="">Загрузка...</option>';
+        breedSelect.disabled = true;
+        
+        if (selectedSpecies) {
+            // Получаем породы с сервера через AJAX
+            fetch(`{% url 'frontend:get_breeds' %}?species=${selectedSpecies}`)
+                .then(response => response.json())
+                .then(data => {
+                    breedSelect.innerHTML = '';
+                    
+                    // Добавляем пустой вариант
+                    const emptyOption = document.createElement('option');
+                    emptyOption.value = '';
+                    emptyOption.textContent = 'Выберите породу';
+                    breedSelect.appendChild(emptyOption);
+                    
+                    // Добавляем породы
+                    data.breeds.forEach(breed => {
+                        const option = document.createElement('option');
+                        option.value = breed.id;
+                        option.textContent = breed.name;
+                        // Выбираем текущую породу
+                        if (breed.id === currentBreedId) {
+                            option.selected = true;
+                        }
+                        breedSelect.appendChild(option);
+                    });
+                    
+                    breedSelect.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Ошибка загрузки пород:', error);
+                    breedSelect.innerHTML = '<option value="">Ошибка загрузки</option>';
+                });
+        } else {
+            // Если вид не выбран
+            breedSelect.innerHTML = '<option value="">Сначала выберите вид животного</option>';
+            breedSelect.disabled = true;
+        }
+    });
+    
+    // Загружаем породы для текущего вида при загрузке страницы
+    if (speciesSelect.value) {
+        speciesSelect.dispatchEvent(new Event('change'));
+    }
+});
+</script>
 {% endblock %}

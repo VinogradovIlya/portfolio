@@ -1,10 +1,10 @@
 from django.db import models
 from pets.models import Pet
 from clinics.models import Veterinarian, Clinic, Service
-from core.models import TimeStampedModel
+from core.mixins import TimeStampedMixin
 
 
-class MedicalRecord(TimeStampedModel):
+class MedicalRecord(TimeStampedMixin):
     """Медицинская карта питомца"""
     pet = models.OneToOneField(
         Pet, on_delete=models.CASCADE, related_name='medical_record')
@@ -18,7 +18,7 @@ class MedicalRecord(TimeStampedModel):
         return f"Карта {self.pet.name}"
 
 
-class Appointment(TimeStampedModel):
+class Appointment(TimeStampedMixin):
     """Запись на прием"""
     STATUS_CHOICES = [
         ('scheduled', 'Запланирована'),
@@ -63,7 +63,7 @@ class Appointment(TimeStampedModel):
         return f"{self.pet.name} - {self.veterinarian} ({self.scheduled_date})"
 
 
-class MedicalVisit(TimeStampedModel):
+class MedicalVisit(TimeStampedMixin):
     """Посещение ветеринара"""
     medical_record = models.ForeignKey(
         MedicalRecord, on_delete=models.CASCADE, related_name='visits')
@@ -98,7 +98,7 @@ class MedicalVisit(TimeStampedModel):
         return f"{self.medical_record.pet.name} - {self.visit_date.date()}"
 
 
-class VaccineType(TimeStampedModel):
+class VaccineType(TimeStampedMixin):
     """Типы вакцин"""
     SPECIES_CHOICES = [
         ('cat', 'Кошки'),
@@ -135,7 +135,7 @@ class VaccineType(TimeStampedModel):
         return pet.breed.species in self.applicable_species
 
 
-class Vaccination(TimeStampedModel):
+class Vaccination(TimeStampedMixin):
     """Вакцинация"""
     visit = models.ForeignKey(
         MedicalVisit, on_delete=models.CASCADE, related_name='vaccinations')
@@ -158,7 +158,7 @@ class Vaccination(TimeStampedModel):
         return f"{self.vaccine_type.name} - {self.vaccination_date}"
 
 
-class Treatment(TimeStampedModel):
+class Treatment(TimeStampedMixin):
     """Лечебная процедура"""
     visit = models.ForeignKey(
         MedicalVisit, on_delete=models.CASCADE, related_name='treatments')
@@ -179,7 +179,7 @@ class Treatment(TimeStampedModel):
         return f"{self.procedure_type.name} - {self.visit.visit_date.date()}"
 
 
-class ProcedureType(TimeStampedModel):
+class ProcedureType(TimeStampedMixin):
     """Типы процедур"""
     CATEGORY_CHOICES = [
         ('treatment', 'Лечение'),

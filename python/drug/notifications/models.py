@@ -1,9 +1,9 @@
 from django.db import models
 from accounts.models import User
-from core.models import TimeStampedModel
+from core.mixins import TimeStampedMixin
 
 
-class Notification(TimeStampedModel):
+class Notification(TimeStampedMixin):
     """Уведомления пользователей"""
     NOTIFICATION_TYPES = [
         ('appointment_reminder', 'Напоминание о записи'),

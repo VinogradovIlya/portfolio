@@ -2,10 +2,10 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
 from accounts.models import User
-from core.models import TimeStampedModel
+from core.mixins import TimeStampedMixin
 
 
-class ProductCategory(TimeStampedModel):
+class ProductCategory(TimeStampedMixin):
     """Категории товаров"""
     name = models.CharField(max_length=100, unique=True, verbose_name='Название')
     slug = models.SlugField(max_length=100, unique=True, verbose_name='URL slug')
@@ -31,7 +31,7 @@ class ProductCategory(TimeStampedModel):
         return self.name
 
 
-class Product(TimeStampedModel):
+class Product(TimeStampedMixin):
     """Товары для животных"""
     STATUS_CHOICES = [
         ('draft', 'Черновик'),
@@ -114,7 +114,7 @@ class Product(TimeStampedModel):
         return self.name
 
 
-class ProductTag(TimeStampedModel):
+class ProductTag(TimeStampedMixin):
     """Теги товаров"""
     name = models.CharField(max_length=50, unique=True, verbose_name='Название')
     slug = models.SlugField(max_length=50, unique=True, verbose_name='URL slug')
@@ -132,7 +132,7 @@ class ProductTag(TimeStampedModel):
         return self.name
 
 
-class Brand(TimeStampedModel):
+class Brand(TimeStampedMixin):
     """Бренды товаров"""
     name = models.CharField(max_length=100, unique=True, verbose_name='Название')
     slug = models.SlugField(max_length=100, unique=True, verbose_name='URL slug')
@@ -154,7 +154,7 @@ class Brand(TimeStampedModel):
         return self.name
 
 
-class Cart(TimeStampedModel):
+class Cart(TimeStampedMixin):
     """Корзина покупателя"""
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='cart', verbose_name='Пользователь')
 
@@ -174,7 +174,7 @@ class Cart(TimeStampedModel):
         return f"Корзина {self.user.email}"
 
 
-class CartItem(TimeStampedModel):
+class CartItem(TimeStampedMixin):
     """Товар в корзине"""
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items', verbose_name='Корзина')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
@@ -199,7 +199,7 @@ class CartItem(TimeStampedModel):
         return f"{self.product.name} x {self.quantity}"
 
 
-class Order(TimeStampedModel):
+class Order(TimeStampedMixin):
     """Заказы"""
     STATUS_CHOICES = [
         ('pending', 'В ожидании'),
@@ -260,7 +260,7 @@ class Order(TimeStampedModel):
         return f"Заказ {self.order_number}"
 
 
-class OrderItem(TimeStampedModel):
+class OrderItem(TimeStampedMixin):
     """Товар в заказе"""
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', verbose_name='Заказ')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
@@ -280,7 +280,7 @@ class OrderItem(TimeStampedModel):
         return f"{self.product.name} x {self.quantity}"
 
 
-class ProductReview(TimeStampedModel):
+class ProductReview(TimeStampedMixin):
     """Отзывы на товары"""
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_reviews', verbose_name='Товар')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='product_reviews', verbose_name='Автор')

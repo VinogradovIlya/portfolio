@@ -1,11 +1,11 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from accounts.models import User, UserProfile
-from core.models import TimeStampedModel
+from core.mixins import TimeStampedMixin
 import json
 
 
-class Clinic(TimeStampedModel):
+class Clinic(TimeStampedMixin):
     """Ветеринарная клиника"""
     admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_clinics', verbose_name='Администратор')
     name = models.CharField(max_length=200, verbose_name='Название клиники')
@@ -42,7 +42,7 @@ class Clinic(TimeStampedModel):
         return self.name
 
 
-class Veterinarian(TimeStampedModel):
+class Veterinarian(TimeStampedMixin):
     """Ветеринар"""
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='veterinarian_profile')
     profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='veterinarian_data')
@@ -69,7 +69,7 @@ class Veterinarian(TimeStampedModel):
         return f"Доктор {self.profile.full_name}"
 
 
-class Specialization(TimeStampedModel):
+class Specialization(TimeStampedMixin):
     """Специализации ветеринаров"""
     name = models.CharField(max_length=100, unique=True, verbose_name='Название')
     description = models.TextField(blank=True, verbose_name='Описание')
@@ -82,7 +82,7 @@ class Specialization(TimeStampedModel):
         return self.name
 
 
-class ClinicVeterinarian(TimeStampedModel):
+class ClinicVeterinarian(TimeStampedMixin):
     """Связь ветеринара с клиникой"""
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
     veterinarian = models.ForeignKey(Veterinarian, on_delete=models.CASCADE)
@@ -97,7 +97,7 @@ class ClinicVeterinarian(TimeStampedModel):
         unique_together = ('clinic', 'veterinarian')
 
 
-class Service(TimeStampedModel):
+class Service(TimeStampedMixin):
     """Услуги клиники"""
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE, related_name='services')
     name = models.CharField(max_length=200, verbose_name='Название услуги')
@@ -115,7 +115,7 @@ class Service(TimeStampedModel):
         return f"{self.clinic.name} - {self.name}"
 
 
-class ServiceCategory(TimeStampedModel):
+class ServiceCategory(TimeStampedMixin):
     """Категории услуг"""
     name = models.CharField(max_length=100, unique=True, verbose_name='Название')
     description = models.TextField(blank=True, verbose_name='Описание')

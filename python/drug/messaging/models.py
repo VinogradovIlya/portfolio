@@ -2,10 +2,10 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from accounts.models import User
-from core.models import TimeStampedModel
+from core.mixins import TimeStampedMixin
 
 
-class Conversation(TimeStampedModel):
+class Conversation(TimeStampedMixin):
     """Диалоги между пользователями"""
     CONVERSATION_TYPES = [
         ('private', 'Личная переписка'),
@@ -38,7 +38,7 @@ class Conversation(TimeStampedModel):
         return f"Диалог: {' - '.join(participant_names)}"
 
 
-class ConversationParticipant(TimeStampedModel):
+class ConversationParticipant(TimeStampedMixin):
     """Участники диалога"""
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE, verbose_name='Диалог')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
@@ -56,7 +56,7 @@ class ConversationParticipant(TimeStampedModel):
         return f"{self.user.email} в {self.conversation}"
 
 
-class Message(TimeStampedModel):
+class Message(TimeStampedMixin):
     """Сообщения"""
     MESSAGE_TYPES = [
         ('text', 'Текстовое сообщение'),
@@ -88,7 +88,7 @@ class Message(TimeStampedModel):
         return f"Сообщение от {self.sender.email} в {self.conversation}"
 
 
-class MessageAttachment(TimeStampedModel):
+class MessageAttachment(TimeStampedMixin):
     """Вложения в сообщениях"""
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='attachments', verbose_name='Сообщение')
     file_name = models.CharField(max_length=255, verbose_name='Имя файла')
@@ -103,7 +103,7 @@ class MessageAttachment(TimeStampedModel):
         return f"Вложение: {self.file_name}"
 
 
-class MessageRead(TimeStampedModel):
+class MessageRead(TimeStampedMixin):
     """Прочтение сообщений"""
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='read_by', verbose_name='Сообщение')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
