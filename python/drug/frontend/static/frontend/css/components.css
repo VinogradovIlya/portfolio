@@ -318,3 +318,332 @@
         padding: 1rem;
     }
 }
+
+/* Under Construction Page Styles */
+.under-construction {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+.under-construction__icon {
+    font-size: 6rem;
+    margin-bottom: 2rem;
+    animation: wobble 2s ease-in-out infinite;
+}
+
+.under-construction__title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+}
+
+.under-construction__subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    line-height: 1.5;
+}
+
+/* Анимация для иконки */
+@keyframes wobble {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-5deg);
+    }
+    75% {
+        transform: rotate(5deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .under-construction {
+        padding: 2rem 1rem;
+    }
+    
+    .under-construction__icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .under-construction__title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .under-construction__subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+}
+
+/* Post Styles */
+.posts-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.post-card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.post-card__header {
+    padding: 1.5rem 1.5rem 0;
+}
+
+.post-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.post-author__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-author__avatar--placeholder {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.post-author__info {
+    flex: 1;
+}
+
+.post-author__name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.post-date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.post-card__content {
+    padding: 1rem 1.5rem;
+}
+
+.post-content {
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.post-photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.post-photo {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius);
+}
+
+.post-card__actions {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    background: var(--secondary-color);
+}
+
+.post-actions {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.post-action {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.post-action:hover {
+    color: var(--primary-color);
+}
+
+.post-action__icon {
+    font-size: 1.1rem;
+}
+
+.post-action__count {
+    font-weight: 500;
+}
+
+/* Посты в профиле */
+.user-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.user-posts .post-card {
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+}
+
+.user-posts .post-card__header {
+    display: none; /* Скрываем автора в профиле */
+}
+
+.user-posts .post-card__content {
+    padding-top: 1.5rem;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.post-stats {
+    display: flex;
+    gap: 1rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Under Construction Page Styles */
+.under-construction {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+.under-construction__icon {
+    font-size: 6rem;
+    margin-bottom: 2rem;
+    animation: wobble 2s ease-in-out infinite;
+}
+
+.under-construction__title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+}
+
+.under-construction__subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    line-height: 1.5;
+}
+
+/* Анимация для иконки */
+@keyframes wobble {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-5deg);
+    }
+    75% {
+        transform: rotate(5deg);
+    }
+}
+
+/* Пагинация */
+.pagination-wrapper {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.pagination__link {
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.pagination__link:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.pagination__current {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .under-construction {
+        padding: 2rem 1rem;
+    }
+    
+    .under-construction__icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .under-construction__title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .under-construction__subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .post-card__header,
+    .post-card__content,
+    .post-card__actions {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .post-actions {
+        gap: 1rem;
+    }
+    
+    .post-photos {
+        grid-template-columns: 1fr;
+    }
+}

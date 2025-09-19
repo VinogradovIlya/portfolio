@@ -24,6 +24,8 @@
                 
                 <ul class="nav__links">
                     {% if user.is_authenticated %}
+                        <li><a href="{% url 'frontend:posts_feed' %}" class="nav__link">Лента</a></li>
+                        <li><a href="{% url 'frontend:under_construction' %}" class="nav__link">Услуги</a></li>
                         <li><a href="{% url 'frontend:profile' %}" class="nav__link">Профиль</a></li>
                         <li><a href="{% url 'frontend:pets_list' %}" class="nav__link">Питомцы</a></li>
                         <li><a href="{% url 'frontend:logout' %}" class="nav__link">Выход</a></li>

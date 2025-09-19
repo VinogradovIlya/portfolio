@@ -1,0 +1,199 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Лента новостей - Pet Social Network{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 2rem 0;">
+    <div style="margin-bottom: 2rem;">
+        <h1>Лента новостей</h1>
+        <p class="text-muted">Последние посты от пользователей сообщества</p>
+    </div>
+
+    <!-- Форма создания поста для авторизованных пользователей -->
+    {% if user.is_authenticated %}
+    <div class="card" style="margin-bottom: 2rem;">
+        <div class="card__body">
+            <form method="post" action="{% url 'frontend:create_post' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form__group">
+                    <textarea 
+                        name="content" 
+                        class="form__textarea" 
+                        placeholder="Поделитесь новостями о ваших питомцах..."
+                        rows="3"
+                        maxlength="200"
+                        required
+                    ></textarea>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                    <input type="file" name="photos" accept="image/*" multiple style="font-size: 0.9rem;">
+                    <button type="submit" class="btn btn-primary">Опубликовать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Список постов -->
+    {% if posts %}
+        <div class="posts-feed">
+            {% for post in posts %}
+                <article class="post-card">
+                    <div class="post-card__header">
+                        <div class="post-author">
+                            {% if post.author.profile.avatar %}
+                                <img src="{{ post.author.profile.avatar.url }}" alt="{{ post.author.profile.full_name }}" class="post-author__avatar">
+                            {% else %}
+                                <div class="post-author__avatar post-author__avatar--placeholder">
+                                    {{ post.author.profile.first_name.0|default:post.author.email.0|upper }}
+                                </div>
+                            {% endif %}
+                            
+                            <div class="post-author__info">
+                                <div class="post-author__name">
+                                    {{ post.author.profile.full_name|default:post.author.email }}
+                                </div>
+                                <time class="post-date">{{ post.created_at|timesince }} назад</time>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="post-card__content">
+                        <p class="post-content">{{ post.content }}</p>
+                        
+                        <!-- Фотографии к посту -->
+                        {% if post.photos.all %}
+                            <div class="post-photos">
+                                {% for photo in post.photos.all %}
+                                    <img src="{{ photo.photo.url }}" alt="Фото к посту" class="post-photo">
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="post-card__actions">
+                        <div class="post-actions">
+                            {% if user.is_authenticated %}
+                                <button class="post-action post-action--like" data-post-id="{{ post.id }}">
+                                    <span class="post-action__icon">👍</span>
+                                    <span class="post-action__count">{{ post.likes_count }}</span>
+                                </button>
+                                
+                                <button class="post-action post-action--dislike" data-post-id="{{ post.id }}">
+                                    <span class="post-action__icon">👎</span>
+                                    <span class="post-action__count">{{ post.dislikes_count }}</span>
+                                </button>
+                            {% else %}
+                                <span class="post-action">
+                                    <span class="post-action__icon">👍</span>
+                                    <span class="post-action__count">{{ post.likes_count }}</span>
+                                </span>
+                                
+                                <span class="post-action">
+                                    <span class="post-action__icon">👎</span>
+                                    <span class="post-action__count">{{ post.dislikes_count }}</span>
+                                </span>
+                            {% endif %}
+                            
+                            <span class="post-action">
+                                <span class="post-action__icon">💬</span>
+                                <span class="post-action__count">{{ post.comments_count_actual }}</span>
+                            </span>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+        
+        <!-- Пагинация -->
+        {% if posts.has_other_pages %}
+            <div class="pagination-wrapper">
+                <div class="pagination">
+                    {% if posts.has_previous %}
+                        <a href="?page={{ posts.previous_page_number }}" class="pagination__link">‹ Предыдущая</a>
+                    {% endif %}
+                    
+                    <span class="pagination__current">
+                        Страница {{ posts.number }} из {{ posts.paginator.num_pages }}
+                    </span>
+                    
+                    {% if posts.has_next %}
+                        <a href="?page={{ posts.next_page_number }}" class="pagination__link">Следующая ›</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+        
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-state__icon">📝</div>
+            <h3 class="empty-state__title">Постов пока нет</h3>
+            <p>Станьте первым, кто поделится новостями о своих питомцах!</p>
+            {% if user.is_authenticated %}
+                <button onclick="document.querySelector('textarea').focus()" class="btn btn-primary" style="margin-top: 1rem;">
+                    Написать пост
+                </button>
+            {% else %}
+                <a href="{% url 'frontend:login' %}" class="btn btn-primary" style="margin-top: 1rem;">
+                    Войти и написать пост
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+<script>
+// AJAX для лайков/дизлайков
+document.addEventListener('DOMContentLoaded', function() {
+    const likeButtons = document.querySelectorAll('.post-action--like');
+    const dislikeButtons = document.querySelectorAll('.post-action--dislike');
+    
+    likeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const postId = this.dataset.postId;
+            fetch(`/api/posts/${postId}/like/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.querySelector('.post-action__count').textContent = data.likes_count;
+                // Обновляем дизлайки тоже
+                const dislikeBtn = document.querySelector(`[data-post-id="${postId}"].post-action--dislike`);
+                if (dislikeBtn) {
+                    dislikeBtn.querySelector('.post-action__count').textContent = data.dislikes_count;
+                }
+            })
+            .catch(error => console.error('Ошибка:', error));
+        });
+    });
+    
+    dislikeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const postId = this.dataset.postId;
+            fetch(`/api/posts/${postId}/dislike/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.querySelector('.post-action__count').textContent = data.dislikes_count;
+                // Обновляем лайки тоже
+                const likeBtn = document.querySelector(`[data-post-id="${postId}"].post-action--like`);
+                if (likeBtn) {
+                    likeBtn.querySelector('.post-action__count').textContent = data.likes_count;
+                }
+            })
+            .catch(error => console.error('Ошибка:', error));
+        });
+    });
+});
+</script>
+{% endblock %}

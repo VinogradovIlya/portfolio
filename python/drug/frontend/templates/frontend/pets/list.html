@@ -1,4 +1,3 @@
-<!-- frontend/templates/frontend/pets/list.html -->
 {% extends 'frontend/base.html' %}
 
 {% block title %}Мои питомцы - Pet Social Network{% endblock %}
@@ -62,5 +61,47 @@
             </a>
         </div>
     {% endif %}
+    
+    <!-- Посты пользователя -->
+    <div style="margin-top: 3rem;">
+        <h2 style="margin-bottom: 1.5rem;">Мои посты</h2>
+        
+        {% if user_posts %}
+            <div class="user-posts">
+                {% for post in user_posts %}
+                    <article class="post-card">
+                        <div class="post-card__content">
+                            <p class="post-content">{{ post.content }}</p>
+                            <div class="post-meta">
+                                <time class="post-date">{{ post.created_at|date:"d.m.Y H:i" }}</time>
+                                <div class="post-stats">
+                                    <span>👍 {{ post.likes_count }}</span>
+                                    <span>👎 {{ post.dislikes_count }}</span>
+                                    <span>💬 {{ post.comments_count_actual }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+            
+            {% if user_posts|length >= 5 %}
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <a href="{% url 'frontend:user_posts' user.id %}" class="btn btn-secondary">
+                        Посмотреть все посты
+                    </a>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-state__icon">📝</div>
+                <h3 class="empty-state__title">Вы еще не написали ни одного поста</h3>
+                <p>Поделитесь новостями о ваших питомцах с сообществом!</p>
+                <a href="{% url 'frontend:posts_feed' %}" class="btn btn-primary" style="margin-top: 1rem;">
+                    Написать пост
+                </a>
+            </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

@@ -10,14 +10,24 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '0.0.0.0',
-    '.ngrok.io',  # для тестирования с мобильных устройств
+    'web',  # имя сервиса в Docker
+    '*.ngrok-free.app',
+    '*.ngrok.io',  # для тестирования с мобильных устройств
 ]
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': os.environ.get('DB_NAME', 'drug_database'),
+    #     'USER': os.environ.get('DB_USER', 'willames'),
+    #     'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
+    #     'HOST': os.environ.get('DB_HOST', 'localhost'),
+    #     'PORT': os.environ.get('DB_PORT', '5432'),
+    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME', 'drug_database'),
-        'USER': os.environ.get('DB_USER', 'willames'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
         'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '5432'),
@@ -53,6 +63,13 @@ INTERNAL_IPS = [
 # Менее строгие настройки CORS для разработки
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+
+# CSRF настройки для ngrok
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.ngrok-free.app',
+    'https://*.ngrok.io',
+    'https://*.ngrok.app',
+]
 
 # Логирование для разработки (более подробное)
 LOGGING['root']['level'] = 'DEBUG'

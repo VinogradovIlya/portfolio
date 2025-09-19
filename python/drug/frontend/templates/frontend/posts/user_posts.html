@@ -1,0 +1,100 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Посты {{ posts_user.profile.full_name|default:posts_user.email }} - Pet Social Network{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 2rem 0;">
+    <div style="margin-bottom: 2rem;">
+        <h1>Посты пользователя {{ posts_user.profile.full_name|default:posts_user.email }}</h1>
+        <p class="text-muted">Все публикации автора</p>
+    </div>
+
+    {% if posts %}
+        <div class="posts-feed">
+            {% for post in posts %}
+                <article class="post-card">
+                    <div class="post-card__header">
+                        <div class="post-author">
+                            {% if post.author.profile.avatar %}
+                                <img src="{{ post.author.profile.avatar.url }}" alt="{{ post.author.profile.full_name }}" class="post-author__avatar">
+                            {% else %}
+                                <div class="post-author__avatar post-author__avatar--placeholder">
+                                    {{ post.author.profile.first_name.0|default:post.author.email.0|upper }}
+                                </div>
+                            {% endif %}
+                            
+                            <div class="post-author__info">
+                                <div class="post-author__name">
+                                    {{ post.author.profile.full_name|default:post.author.email }}
+                                </div>
+                                <time class="post-date">{{ post.created_at|date:"d.m.Y H:i" }}</time>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="post-card__content">
+                        <p class="post-content">{{ post.content }}</p>
+                        
+                        <!-- Фотографии к посту -->
+                        {% if post.photos.all %}
+                            <div class="post-photos">
+                                {% for photo in post.photos.all %}
+                                    <img src="{{ photo.photo.url }}" alt="Фото к посту" class="post-photo">
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="post-card__actions">
+                        <div class="post-actions">
+                            <span class="post-action">
+                                <span class="post-action__icon">👍</span>
+                                <span class="post-action__count">{{ post.likes_count }}</span>
+                            </span>
+                            
+                            <span class="post-action">
+                                <span class="post-action__icon">👎</span>
+                                <span class="post-action__count">{{ post.dislikes_count }}</span>
+                            </span>
+                            
+                            <span class="post-action">
+                                <span class="post-action__icon">💬</span>
+                                <span class="post-action__count">{{ post.comments_count_actual }}</span>
+                            </span>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+        
+        <!-- Пагинация -->
+        {% if posts.has_other_pages %}
+            <div class="pagination-wrapper">
+                <div class="pagination">
+                    {% if posts.has_previous %}
+                        <a href="?page={{ posts.previous_page_number }}" class="pagination__link">‹ Предыдущая</a>
+                    {% endif %}
+                    
+                    <span class="pagination__current">
+                        Страница {{ posts.number }} из {{ posts.paginator.num_pages }}
+                    </span>
+                    
+                    {% if posts.has_next %}
+                        <a href="?page={{ posts.next_page_number }}" class="pagination__link">Следующая ›</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+        
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-state__icon">📝</div>
+            <h3 class="empty-state__title">У пользователя пока нет постов</h3>
+            <p>{{ posts_user.profile.full_name|default:posts_user.email }} еще не опубликовал ни одного поста.</p>
+            <a href="{% url 'frontend:posts_feed' %}" class="btn btn-primary" style="margin-top: 1rem;">
+                Вернуться к ленте
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

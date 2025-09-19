@@ -21,7 +21,8 @@ packaging==25.0
 phonenumbers==9.0.12
 pillow==11.3.0
 pluggy==1.6.0
-psycopg2==2.9.10
+# psycopg2==2.9.10
+psycopg2-binary==2.9.10
 pyaes==1.6.1
 Pygments==2.19.2
 Pyrogram==2.0.106

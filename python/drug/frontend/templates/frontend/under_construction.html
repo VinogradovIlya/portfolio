@@ -1,0 +1,18 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}В разработке - Pet Social Network{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 4rem 0;">
+    <div class="under-construction">
+        <div class="under-construction__icon">🔧</div>
+        <h1 class="under-construction__title">Мы работаем над тем, чтобы сделать наш сайт лучше</h1>
+        <p class="under-construction__subtitle">
+            Данный раздел находится в разработке. Скоро здесь появится новый функционал!
+        </p>
+        <a href="{% url 'frontend:home' %}" class="btn btn-primary">
+            Вернуться на главную
+        </a>
+    </div>
+</div>
+{% endblock %}

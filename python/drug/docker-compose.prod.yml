@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Django приложение
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.development
+      - DEBUG=True
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./media:/app/media
+      - ./static:/app/static
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py populate_breeds &&
+             python manage.py create_test_users &&
+             python manage.py runserver 0.0.0.0:8000"
+
+  # PostgreSQL база данных
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: drug_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: testpass123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Redis для кеша
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+
+  # ngrok для внешнего доступа
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    volumes:
+      - ./ngrok.yml:/etc/ngrok.yml
+    ports:
+      - 4040:4040
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
