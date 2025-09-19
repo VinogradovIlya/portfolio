@@ -10,11 +10,6 @@ class Post(TimeStampedMixin, LikeMixin):
     content = models.CharField(
         max_length=200, verbose_name='Описание', blank=True)
 
-    comment_by = models.ManyToManyField(
-        User, blank=True, related_name='commented_posts')
-
-    comments_count = models.PositiveIntegerField(default=0)
-
     class Meta:
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
@@ -28,19 +23,19 @@ class Post(TimeStampedMixin, LikeMixin):
 
     @property
     def comments_count_actual(self):
-        return self.comment_by.count()
+        return self.comments.count()
 
 
 class Comment(TimeStampedMixin, LikeMixin):
     """Комментарии к постам"""
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='comments')
+        User, on_delete=models.CASCADE, related_name='comments', verbose_name='Автор')
     post = models.ForeignKey(
-        Post, on_delete=models.CASCADE, related_name='comments')
+        Post, on_delete=models.CASCADE, related_name='comments', verbose_name='Пост')
     body = models.TextField(verbose_name='Текст комментария')
 
     parent = models.ForeignKey(
-        'self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+        'self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies', verbose_name='Родительский комментарий')
 
     class Meta:
         verbose_name = 'Комментарий'
@@ -76,13 +71,5 @@ class PostPhoto(TimeStampedMixin, LikeMixin):
         verbose_name_plural = 'Фото к постам'
         ordering = ['created_at']
 
-
-class PostLike(TimeStampedMixin):
-    """Лайки постов"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ('user', 'post')
-        verbose_name = 'Лайк поста'
-        verbose_name_plural = 'Лайки постов'
+    def __str__(self):
+        return f'Фото к посту: {self.post.content[:30]}...'
